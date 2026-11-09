@@ -1,8 +1,8 @@
-# Implementation Plan: XAWARS Design System
+# Implementation Plan: Master Siege Design System
 
 ## Overview
 
-This plan implements the XAWARS Design System in layers: foundation tokens first, then semantic tokens, then core UI components, then composite patterns. Each task builds incrementally so the system is usable at every checkpoint. The existing `globals.css` and `Button.tsx` will be refactored to align with the full token architecture.
+This plan implements the Master Siege Design System in layers: foundation tokens first, then semantic tokens, then core UI components, then composite patterns. Each task builds incrementally so the system is usable at every checkpoint. The existing `globals.css` and `Button.tsx` will be refactored to align with the full token architecture.
 
 ## Tasks
 

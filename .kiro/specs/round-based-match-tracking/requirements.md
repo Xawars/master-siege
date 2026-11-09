@@ -6,7 +6,7 @@ Introduces a Match container between the existing Deployment and Round levels. A
 
 ## Glossary
 
-- **Tracker**: The Xawars RNG client application (Next.js SPA persisting to localStorage)
+- **Tracker**: The Master Siege client application (Next.js SPA persisting to localStorage)
 - **Match**: A named container within a Deployment representing a single competitive game, bound to a specific map
 - **Round**: A single round played within a Match, recording site, kills, deaths, and outcome
 - **Deployment**: An existing entity representing an operator session (unchanged by this feature)

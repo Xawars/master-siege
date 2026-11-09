@@ -66,8 +66,8 @@ export function TacticalEntry({ children, onComplete }: TacticalEntryProps) {
               : 'opacity-0 scale-95'
           }`}
         >
-          <span className="text-yellow-500">Xawars</span>{' '}
-          <span className="text-white">RNG</span>
+          <span className="text-yellow-500">Master</span>{' '}
+          <span className="text-white">Siege</span>
         </h1>
 
         {/* Typed text */}

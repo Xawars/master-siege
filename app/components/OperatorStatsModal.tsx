@@ -67,7 +67,7 @@ function OperatorRow({
     try {
       const dataUrl = await toPng(node, { cacheBust: true, backgroundColor: '#09090b' });
       const link = document.createElement('a');
-      link.download = `xawars-${stat.id}-stats.png`;
+      link.download = `master-siege-${stat.id}-stats.png`;
       link.href = dataUrl;
       link.click();
     } catch (err) {

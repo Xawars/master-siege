@@ -1,4 +1,4 @@
-# Xawars RNG - Feature Specifications
+# Master Siege - Feature Specifications
 
 This document provides detailed requirements, user stories, and technical implementation notes for all pending features.
 
@@ -68,7 +68,7 @@ Features specifically designed to help create thumbnails and video descriptions.
 
 ### Requirements
 - **"Copy Summary" Button**: Copy a text block to clipboard:
-  > Xawars RNG Run #42
+  > Master Siege Run #42
   > Final Score: 100 Kills / 14 Deaths
   > MVPs: Sledge (14), Ash (12)
 - **Streamer Mode**:

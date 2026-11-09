@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This feature improves the UI/UX of the Map Advisor component in the xawars-rng Rainbow Six Siege operator randomizer app. The Map Advisor currently allows users to select a map, site, and side (attack/defense) to receive operator recommendations. These improvements introduce guided step indicators, a more prominent side toggle, tiered recommendation layouts, team composition summaries, site nickname badges, animated transitions, and strategy tips to create a more polished and informative experience.
+This feature improves the UI/UX of the Map Advisor component in the master-siege Rainbow Six Siege operator randomizer app. The Map Advisor currently allows users to select a map, site, and side (attack/defense) to receive operator recommendations. These improvements introduce guided step indicators, a more prominent side toggle, tiered recommendation layouts, team composition summaries, site nickname badges, animated transitions, and strategy tips to create a more polished and informative experience.
 
 ## Glossary
 

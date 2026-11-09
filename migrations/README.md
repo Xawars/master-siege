@@ -2,7 +2,7 @@
 
 ## Overview
 
-This folder contains SQL migrations for the XAWARS RNG Supabase database. Migrations are numbered sequentially and should be run in order via the Supabase SQL Editor.
+This folder contains SQL migrations for the Master Siege Supabase database. Migrations are numbered sequentially and should be run in order via the Supabase SQL Editor.
 
 ## How to Run
 

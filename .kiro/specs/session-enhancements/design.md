@@ -2,7 +2,7 @@
 
 ## Overview
 
-Session Enhancements adds three motivational features to XAWARS RNG: a hot streak indicator for real-time feedback during killing sprees, a session summary modal for end-of-session performance review, and map win/loss tracking for long-term map outcome analysis.
+Session Enhancements adds three motivational features to Master Siege: a hot streak indicator for real-time feedback during killing sprees, a session summary modal for end-of-session performance review, and map win/loss tracking for long-term map outcome analysis.
 
 The design follows the same architectural patterns as the existing map-performance-tracking feature:
 - **Pure logic modules** for data transformations and computations

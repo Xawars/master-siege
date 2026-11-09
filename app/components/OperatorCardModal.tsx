@@ -28,7 +28,7 @@ export function OperatorCardModal({ item, operatorKills, operatorDeaths, onClose
         backgroundColor: '#09090b',
       });
       const link = document.createElement('a');
-      link.download = `xawars-${item.operator.id}-card.png`;
+      link.download = `master-siege-${item.operator.id}-card.png`;
       link.href = dataUrl;
       link.click();
     } catch (err) {

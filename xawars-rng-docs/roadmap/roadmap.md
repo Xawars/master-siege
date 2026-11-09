@@ -1,8 +1,8 @@
-# XAWARS RNG Roadmap
+# Master Siege Roadmap
 
 ## Vision
 
-XAWARS RNG starts as a Rainbow Six Siege operator randomizer and progression tracker, then evolves into a complete learning and mastery platform for competitive players.
+Master Siege starts as a Rainbow Six Siege operator randomizer and progression tracker, then evolves into a complete learning and mastery platform for competitive players.
 
 The long-term goal is to help players improve through:
 
@@ -208,7 +208,7 @@ Create progression systems.
 
 ## Goal
 
-Transform XAWARS RNG from a tracker into a learning platform.
+Transform Master Siege from a tracker into a learning platform.
 
 ## Features
 
@@ -392,7 +392,7 @@ A user can:
 
 # Long-Term Product Vision
 
-XAWARS RNG is not just an operator randomizer.
+Master Siege is not just an operator randomizer.
 
 It evolves into a complete Rainbow Six Siege improvement platform where players can:
 

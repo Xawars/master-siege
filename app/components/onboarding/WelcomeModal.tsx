@@ -95,7 +95,7 @@ export function WelcomeModal({ onDeploy }: WelcomeModalProps) {
       <div
         role="dialog"
         aria-modal="true"
-        aria-label="Welcome to XAWARS"
+        aria-label="Welcome to Master Siege"
         className="fixed z-80 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-zinc-900 border border-zinc-700 rounded-2xl shadow-2xl w-full max-w-[420px] overflow-hidden"
       >
         {/* Skip button */}

@@ -2,7 +2,7 @@
 
 ## Overview
 
-Map Performance Tracking extends XAWARS RNG with per-map performance insights by introducing a map attribution layer on top of the existing kill/death recording system. Users select a map during active deployments, and the system accumulates per-operator-per-map statistics (kills, deaths, matches). These statistics surface in two places: the Mastery Detail Modal (per-operator map breakdown) and the Map Advisor (personalized "best operators on this map" recommendations).
+Map Performance Tracking extends Master Siege with per-map performance insights by introducing a map attribution layer on top of the existing kill/death recording system. Users select a map during active deployments, and the system accumulates per-operator-per-map statistics (kills, deaths, matches). These statistics surface in two places: the Mastery Detail Modal (per-operator map breakdown) and the Map Advisor (personalized "best operators on this map" recommendations).
 
 The design follows the existing architecture patterns:
 - **Data layer**: Pure functions for stat computation, `usePersistedState` for localStorage, Supabase via `syncQueue` for authenticated users

@@ -10,7 +10,7 @@ This document outlines how to make authenticated users feel recognized, in contr
 
 After login, the user sees:
 
-- The XAWARS RNG logo
+- The Master Siege logo
 - View mode tabs
 - A mute button and reset button
 - No indication of who they are
@@ -43,12 +43,12 @@ After logging in to any modern app, users expect:
 
 Current header layout:
 ```
-[XAWARS RNG] [Roulette | Map Advisor]          [🔇] [Reset Run]
+[Master Siege] [Roulette | Map Advisor]          [🔇] [Reset Run]
 ```
 
 Proposed header layout:
 ```
-[XAWARS RNG] [Roulette | Map Advisor]          [🔇] [Reset Run] [👤 Agent Name ▾]
+[Master Siege] [Roulette | Map Advisor]          [🔇] [Reset Run] [👤 Agent Name ▾]
 ```
 
 The account indicator sits at the far right of the header, after the utility buttons. It's always visible, never hidden behind a hamburger menu.
@@ -140,7 +140,7 @@ Opens below the AccountIndicator on click. Closes on outside click or Escape.
 
 ### Tactical/Gaming Styling
 
-To match the XAWARS aesthetic:
+To match the Master Siege aesthetic:
 
 - Menu background: `bg-zinc-900` with `border border-zinc-700`
 - Items on hover: `bg-white/5` with left yellow accent bar

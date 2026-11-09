@@ -16,7 +16,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "XAWARS RNG",
+  title: "Master Siege",
   description: "Rainbow Six Siege operator randomizer",
 };
 

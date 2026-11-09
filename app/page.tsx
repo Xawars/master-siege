@@ -756,7 +756,7 @@ function HomeContent() {
         <header className="shrink-0 flex items-center justify-between py-3 border-b border-white/10">
           <div className="flex items-center gap-4">
             <h1 className="text-xl font-black uppercase italic tracking-tighter text-yellow-500">
-              Xawars <span className="text-white">RNG</span>
+              Master <span className="text-white">Siege</span>
             </h1>
             <div className="flex bg-zinc-800 rounded-lg p-0.5">
               {(['mastery', 'map-advisor', 'strats'] as const).map((tab) => (

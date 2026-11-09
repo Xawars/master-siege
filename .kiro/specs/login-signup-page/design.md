@@ -2,7 +2,7 @@
 
 ## Overview
 
-This design adds a dedicated authentication page at `/login` for the XA Wars RNG app. The page provides email/password login and signup, OAuth social login (Google, Discord), client-side form validation, and proper loading/redirect states. It integrates with the existing `AuthContext` and Supabase backend, reuses the app's dark gaming visual theme, and follows accessibility best practices.
+This design adds a dedicated authentication page at `/login` for the Master Siege app. The page provides email/password login and signup, OAuth social login (Google, Discord), client-side form validation, and proper loading/redirect states. It integrates with the existing `AuthContext` and Supabase backend, reuses the app's dark gaming visual theme, and follows accessibility best practices.
 
 The implementation is a single Next.js page route (`app/login/page.tsx`) composed of several focused client components. No new backend or API routes are needed since all auth operations are handled by the existing `AuthContext` which wraps Supabase client-side SDK calls.
 

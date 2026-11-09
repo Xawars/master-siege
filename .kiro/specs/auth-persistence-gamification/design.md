@@ -2,7 +2,7 @@
 
 ## Overview
 
-This design introduces three interconnected systems to the XA Wars RNG app:
+This design introduces three interconnected systems to the Master Siege app:
 
 1. **Authentication** — Email/password registration and login, OAuth (Google/Discord), session management, and guest mode
 2. **Cloud Persistence** — Migration from localStorage to a cloud database (Supabase) for all user data, with offline resilience

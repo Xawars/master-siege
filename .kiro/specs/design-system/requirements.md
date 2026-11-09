@@ -2,13 +2,13 @@
 
 ## Introduction
 
-XAWARS is a Rainbow Six Siege operator randomizer and content creation tool built with Next.js, Tailwind CSS v4, and Supabase. This design system defines the visual language, component patterns, and interaction principles that unify the entire application. The system targets competitive R6 Siege players and content creators who expect a dark, tactical, high-contrast gaming aesthetic with fast, responsive interactions.
+Master Siege is a Rainbow Six Siege operator randomizer and content creation tool built with Next.js, Tailwind CSS v4, and Supabase. This design system defines the visual language, component patterns, and interaction principles that unify the entire application. The system targets competitive R6 Siege players and content creators who expect a dark, tactical, high-contrast gaming aesthetic with fast, responsive interactions.
 
 The design system serves as a living reference for all UI development — ensuring consistency across the operator randomizer, map advisor, content generator, creator tools, and authentication flows.
 
 ## Design Philosophy
 
-The XAWARS design system is guided by these core principles:
+The Master Siege design system is guided by these core principles:
 
 1. **Fast tactical readability over visual decoration** — Every element earns its place by communicating information. Ornament without purpose is removed.
 2. **Competitive-game-inspired hierarchy** — Information is ranked like a HUD: critical data is large, bold, and high-contrast; supporting data recedes.
@@ -21,7 +21,7 @@ When rules are ambiguous, contributors should ask: "Does this help the user make
 
 ## Glossary
 
-- **Design_System**: The complete set of visual tokens, component patterns, spacing rules, and interaction guidelines governing the XAWARS application UI
+- **Design_System**: The complete set of visual tokens, component patterns, spacing rules, and interaction guidelines governing the Master Siege application UI
 - **Foundation_Token**: A raw design value from the base palette (e.g., zinc-900, yellow-500) with no semantic meaning attached
 - **Semantic_Token**: A purpose-driven design value that maps a Foundation_Token to a UI role (e.g., --color-accent maps to yellow-500)
 - **Surface**: A distinct visual layer in the UI hierarchy (e.g., page background, card, elevated modal)

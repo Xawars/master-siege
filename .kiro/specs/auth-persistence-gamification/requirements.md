@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This feature adds user authentication, cloud database persistence, and a gamification layer to the XA Wars RNG app. Currently, all user data (rank progression, operator history, content ideas, kills/deaths) is stored in localStorage and lost when switching devices or clearing browser data. This feature introduces user accounts, migrates all persisted data to a cloud database, and adds achievements, XP, and progression mechanics to increase engagement and reward consistent usage.
+This feature adds user authentication, cloud database persistence, and a gamification layer to the Master Siege app. Currently, all user data (rank progression, operator history, content ideas, kills/deaths) is stored in localStorage and lost when switching devices or clearing browser data. This feature introduces user accounts, migrates all persisted data to a cloud database, and adds achievements, XP, and progression mechanics to increase engagement and reward consistent usage.
 
 ## Glossary
 

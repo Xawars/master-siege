@@ -88,7 +88,7 @@ export function ThumbnailEditorModal({
         canvasHeight: layoutFormat === 'horizontal' ? 1080 : 1920
       });
       const link = document.createElement('a');
-      link.download = `xawars-thumbnail-${Date.now()}.png`;
+      link.download = `master-siege-thumbnail-${Date.now()}.png`;
       link.href = dataUrl;
       link.click();
     } catch (err) {

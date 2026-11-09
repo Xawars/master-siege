@@ -227,7 +227,7 @@ function LoginPageContent() {
         <div className="flex flex-col items-center text-center mb-5">
           <XAWarsLogo size={52} className="mb-2 drop-shadow-[0_0_12px_rgba(234,179,8,0.3)]" />
           <h1 className="text-2xl font-bold uppercase tracking-wider text-yellow-500">
-            XAWARS RNG
+            Master Siege
           </h1>
           <p className="mt-0.5 text-[10px] uppercase tracking-[0.2em] text-zinc-600 font-medium">
             A system built to help you get better at Rainbow Six Siege.

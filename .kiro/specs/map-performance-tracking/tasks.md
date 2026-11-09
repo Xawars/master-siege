@@ -2,7 +2,7 @@
 
 ## Overview
 
-This plan implements per-map performance tracking for XAWARS RNG. The approach starts with data models and pure logic, then builds persistence, UI components, and integration — wiring everything together incrementally. Each step builds on the previous, ensuring no orphaned code.
+This plan implements per-map performance tracking for Master Siege. The approach starts with data models and pure logic, then builds persistence, UI components, and integration — wiring everything together incrementally. Each step builds on the previous, ensuring no orphaned code.
 
 ## Tasks
 

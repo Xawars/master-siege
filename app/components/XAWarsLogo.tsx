@@ -12,7 +12,7 @@ export function XAWarsLogo({ className = '', size = 64 }: XAWarsLogoProps) {
   return (
     <Image
       src="/xawarscol-logo.png"
-      alt="XAWARS Logo"
+      alt="Master Siege logo"
       width={size}
       height={size}
       className={className}

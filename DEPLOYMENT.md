@@ -4,9 +4,9 @@
 
 | Branch | Vercel Environment | Supabase Project |
 |--------|-------------------|-----------------|
-| `main` | Production | XAWARS RNG PROD |
-| `develop` or PRs | Preview | XAWARS RNG DEV |
-| local | Development | XAWARS RNG DEV |
+| `main` | Production | MASTER SIEGE PROD |
+| `develop` or PRs | Preview | MASTER SIEGE DEV |
+| local | Development | MASTER SIEGE DEV |
 
 ---
 

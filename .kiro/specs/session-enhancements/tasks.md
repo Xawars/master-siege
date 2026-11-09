@@ -2,7 +2,7 @@
 
 ## Overview
 
-This plan implements three motivational features for XAWARS RNG: hot streak detection with a visual flame indicator, a session summary modal for end-of-session performance review, and map win/loss tracking with win rate display. The approach starts with pure logic modules (enabling early property testing), then builds UI components, persistence, and integration — wiring everything together incrementally.
+This plan implements three motivational features for Master Siege: hot streak detection with a visual flame indicator, a session summary modal for end-of-session performance review, and map win/loss tracking with win rate display. The approach starts with pure logic modules (enabling early property testing), then builds UI components, persistence, and integration — wiring everything together incrementally.
 
 ## Tasks
 

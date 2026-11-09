@@ -2,7 +2,7 @@
 
 ## Overview
 
-This plan implements user authentication (email/password + OAuth), cloud persistence via Supabase, data migration from localStorage, and a gamification layer (XP, levels, achievements, streaks) for the XA Wars RNG app. Each task builds incrementally, starting with foundational types and Supabase setup, then layering in auth, persistence, gamification, and finally wiring everything together.
+This plan implements user authentication (email/password + OAuth), cloud persistence via Supabase, data migration from localStorage, and a gamification layer (XP, levels, achievements, streaks) for the Master Siege app. Each task builds incrementally, starting with foundational types and Supabase setup, then layering in auth, persistence, gamification, and finally wiring everything together.
 
 ## Tasks
 

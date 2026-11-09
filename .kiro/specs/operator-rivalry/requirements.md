@@ -2,7 +2,7 @@
 
 ## Introduction
 
-The Operator Rivalry feature adds a head-to-head comparison view to XA Wars RNG where users select two operators and see a side-by-side breakdown of their personal tracked stats. The feature answers the question "Am I actually better with Operator A or Operator B?" using real deployment data already collected by the mastery system.
+The Operator Rivalry feature adds a head-to-head comparison view to Master Siege where users select two operators and see a side-by-side breakdown of their personal tracked stats. The feature answers the question "Am I actually better with Operator A or Operator B?" using real deployment data already collected by the mastery system.
 
 The feature builds on top of the existing per-operator stat tracking (deployments, kills, deaths, K/D ratio, average kills, pick rate, mastery tier, XP progress, last played) and introduces a comparison UI that highlights stat differences with clear visual indicators. An optional image export leverages the existing html-to-image infrastructure so users can share rivalry cards on social media.
 
@@ -65,7 +65,7 @@ The feature builds on top of the existing per-operator stat tracking (deployment
 
 1. WHEN both operator slots are populated and the comparison is displayed, THE Rivalry_View SHALL display an export button labeled "Share" or with a share icon.
 2. WHEN a User taps the export button, THE Rivalry_View SHALL render the comparison layout as a PNG image using the existing html-to-image pipeline.
-3. THE Rivalry_Image SHALL include both operator icons, names, all Stat_Cards with values and Advantage_Indicators, the summary verdict, and an XA Wars RNG watermark.
+3. THE Rivalry_Image SHALL include both operator icons, names, all Stat_Cards with values and Advantage_Indicators, the summary verdict, and an Master Siege watermark.
 4. WHEN the image export completes, THE Rivalry_View SHALL trigger the browser's native share dialog or download prompt so the user can save or share the image.
 5. IF the image export fails, THEN THE Rivalry_View SHALL display a non-blocking error toast and SHALL NOT crash or navigate away from the comparison.
 

@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This feature adds a dedicated login/signup page to the XA Wars RNG app. The app currently has a fully implemented authentication context (AuthContext) with email/password sign-up, sign-in, OAuth via Google and Discord, and sign-out capabilities, but lacks a user-facing page to access these functions. This feature creates a visually cohesive authentication page that matches the app's dark gaming aesthetic, provides clear entry points for all supported auth methods, and handles form validation and error states gracefully.
+This feature adds a dedicated login/signup page to the Master Siege app. The app currently has a fully implemented authentication context (AuthContext) with email/password sign-up, sign-in, OAuth via Google and Discord, and sign-out capabilities, but lacks a user-facing page to access these functions. This feature creates a visually cohesive authentication page that matches the app's dark gaming aesthetic, provides clear entry points for all supported auth methods, and handles form validation and error states gracefully.
 
 ## Glossary
 
@@ -91,12 +91,12 @@ This feature adds a dedicated login/signup page to the XA Wars RNG app. The app 
 
 ### Requirement 7: Visual Design and Theming
 
-**User Story:** As a visitor, I want the login page to match the XA Wars dark gaming aesthetic, so that the experience feels cohesive with the rest of the app.
+**User Story:** As a visitor, I want the login page to match the Master Siege dark gaming aesthetic, so that the experience feels cohesive with the rest of the app.
 
 #### Acceptance Criteria
 
 1. THE Login_Page SHALL use a dark background matching the app's existing color scheme (black background with zinc-toned surfaces and yellow accent colors)
-2. THE Login_Page SHALL display the XA Wars logo or brand name centered above the form at a minimum rendered height of 32px
+2. THE Login_Page SHALL display the Master Siege logo or brand name centered above the form at a minimum rendered height of 32px
 3. THE Login_Page SHALL use the app's existing Button component styles for primary actions
 4. THE Login_Page SHALL be responsive and display without horizontal scrolling or content overflow on viewport widths from 320px to 1920px
 5. THE Login_Page SHALL center the authentication form vertically and horizontally on the viewport

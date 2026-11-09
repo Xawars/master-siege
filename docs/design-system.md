@@ -1,6 +1,6 @@
-# XAWARS Design System
+# Master Siege Design System
 
-A comprehensive design system for the XAWARS Rainbow Six Siege operator randomizer and content creation tool. Built on Next.js, Tailwind CSS v4, and a dark-mode-only tactical gaming aesthetic.
+A comprehensive design system for the Master Siege Rainbow Six Siege operator randomizer and content creation tool. Built on Next.js, Tailwind CSS v4, and a dark-mode-only tactical gaming aesthetic.
 
 ---
 

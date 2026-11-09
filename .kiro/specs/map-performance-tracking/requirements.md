@@ -2,7 +2,7 @@
 
 ## Introduction
 
-Map Performance Tracking adds per-map performance insights to XAWARS RNG. Users can tag their kill/death increments with a map, enabling the system to track which maps they perform best on with each operator. A single deployment spans multiple matches across different maps, so map tracking happens at the kill/death recording level — not at deployment creation. This data surfaces in the Mastery Detail Modal as per-operator map breakdowns and enhances the Map Advisor with personalized "best operators on this map" recommendations. The feature accounts for data sparsity by requiring a minimum match threshold before displaying map-level insights, and maintains a seasonally-updatable map pool.
+Map Performance Tracking adds per-map performance insights to Master Siege. Users can tag their kill/death increments with a map, enabling the system to track which maps they perform best on with each operator. A single deployment spans multiple matches across different maps, so map tracking happens at the kill/death recording level — not at deployment creation. This data surfaces in the Mastery Detail Modal as per-operator map breakdowns and enhances the Map Advisor with personalized "best operators on this map" recommendations. The feature accounts for data sparsity by requiring a minimum match threshold before displaying map-level insights, and maintains a seasonally-updatable map pool.
 
 ## Glossary
 
@@ -16,7 +16,7 @@ Map Performance Tracking adds per-map performance insights to XAWARS RNG. Users 
 - **Insight_Threshold**: The minimum number of matches on a given operator-map combination (3) required before map-level statistics are displayed.
 - **Map_Breakdown_Panel**: The section within the Mastery Detail Modal showing per-map performance for a specific operator.
 - **Best_Operators_Section**: The section within the Map Advisor that displays the user's top-performing operators on the currently selected map.
-- **System**: The XAWARS RNG application.
+- **System**: The Master Siege application.
 - **Data_Layer**: The persistence layer comprising Supabase (for authenticated users) and localStorage (for guest users).
 
 ## Requirements

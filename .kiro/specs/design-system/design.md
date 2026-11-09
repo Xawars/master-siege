@@ -1,8 +1,8 @@
-# Design Document: XAWARS Design System
+# Design Document: Master Siege Design System
 
 ## Overview
 
-The XAWARS Design System is a comprehensive set of design tokens, component patterns, and interaction guidelines that govern the visual language of the XAWARS application — a Rainbow Six Siege operator randomizer and content creation tool. The system is built on Next.js 16, Tailwind CSS v4, and uses a dark-mode-only tactical gaming aesthetic.
+The Master Siege Design System is a comprehensive set of design tokens, component patterns, and interaction guidelines that govern the visual language of the Master Siege application — a Rainbow Six Siege operator randomizer and content creation tool. The system is built on Next.js 16, Tailwind CSS v4, and uses a dark-mode-only tactical gaming aesthetic.
 
 The design system is structured in layers:
 1. **Foundation Tokens** — Raw color values as CSS custom properties

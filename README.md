@@ -1,4 +1,4 @@
-# XA Wars RNG
+# Master Siege
 
 A tactical operator roulette for Rainbow Six Siege. Randomize operators, loadouts, match types, and more — track your mastery stats over time and level up your versatility.
 
@@ -45,7 +45,7 @@ A tactical operator roulette for Rainbow Six Siege. Randomize operators, loadout
 1. Clone the repo:
    ```bash
    git clone <repo-url>
-   cd xawars-rng
+   cd master-siege
    ```
 
 2. Install dependencies:

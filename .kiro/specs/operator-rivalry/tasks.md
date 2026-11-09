@@ -120,7 +120,7 @@ Implement a head-to-head operator comparison feature using a pure `ComparisonEng
     - Return focus to trigger element on close
     - Accept `prefilledOperator` prop and pass to useRivalry
     - Add ref to comparison container for html-to-image export
-    - Include XA Wars RNG watermark in exportable area
+    - Include Master Siege watermark in exportable area
     - _Requirements: 1.1, 2.1, 3.1, 3.2, 3.3, 3.4, 4.1, 4.3, 5.3, 6.1, 6.3_
 
   - [x] 6.2 Implement image export handler in RivalryView

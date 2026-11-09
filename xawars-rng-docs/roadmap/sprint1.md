@@ -2,7 +2,7 @@
 
 ## Sprint Goal
 
-Build the first playable version of XAWARS RNG.
+Build the first playable version of Master Siege.
 
 By the end of this sprint, users should be able to:
 

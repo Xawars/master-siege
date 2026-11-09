@@ -25,7 +25,7 @@ It's like being dropped into a cockpit with no briefing.
 
 **Tactical intro animation** — After login, instead of instantly rendering the full UI, show a brief cinematic-style entry:
 
-- Black screen → XAWARS logo fades in with a subtle pulse
+- Black screen → Master Siege logo fades in with a subtle pulse
 - A line like "OPERATOR STANDING BY" or "WELCOME, AGENT" types out
 - The UI elements slide/fade in from the edges (staggered, 100ms apart)
 - Total duration: 2–3 seconds. Fast enough to not annoy, slow enough to feel intentional.
@@ -47,7 +47,7 @@ A focused modal that appears once, covering three things:
 
 **Panel 1 — Identity**
 
-> "Welcome to XAWARS, [display_name or 'Agent']"
+> "Welcome to Master Siege, [display_name or 'Agent']"
 > Brief tagline: "Your R6 Siege operator roulette and stat tracker"
 
 **Panel 2 — What you can do** (3 icons + one-liners)
@@ -120,7 +120,7 @@ Replace blank space with meaningful placeholders:
 
 Add the user's name (or "Agent") to the header area:
 
-> "Xawars RNG" on the left, "Agent [name] ▾" on the right (with a dropdown for settings/logout)
+> "Master Siege" on the left, "Agent [name] ▾" on the right (with a dropdown for settings/logout)
 
 This small touch makes the user feel recognized every time they open the app.
 

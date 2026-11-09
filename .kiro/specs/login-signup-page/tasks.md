@@ -2,7 +2,7 @@
 
 ## Overview
 
-Implement a dedicated login/signup page at `/login` for the XA Wars RNG app. The page provides email/password authentication, OAuth social login (Google, Discord), client-side form validation, mode toggling, loading/redirect states, and dark gaming theme styling. All auth operations use the existing `AuthContext` and Supabase backend.
+Implement a dedicated login/signup page at `/login` for the Master Siege app. The page provides email/password authentication, OAuth social login (Google, Discord), client-side form validation, mode toggling, loading/redirect states, and dark gaming theme styling. All auth operations use the existing `AuthContext` and Supabase backend.
 
 ## Tasks
 
@@ -78,7 +78,7 @@ Implement a dedicated login/signup page at `/login` for the XA Wars RNG app. The
 
   - [x] 4.2 Apply dark gaming theme styling to the login page
     - Use dark background (black/zinc) matching existing app color scheme
-    - Display XA Wars brand name or logo centered above the form at minimum 32px height
+    - Display Master Siege brand name or logo centered above the form at minimum 32px height
     - Center the form vertically and horizontally on the viewport
     - Use existing Button component styles for primary actions
     - Use existing font family for all text

@@ -2,11 +2,11 @@
 
 ## Introduction
 
-Session Enhancements adds three lightweight, motivational features to XAWARS RNG: a hot streak indicator that provides real-time visual feedback when a user is performing well, a session summary that recaps performance when the user finishes playing, and map win/loss tracking that lets users record match outcomes and view win rates per map over time. These features build on the existing kill/death tracking, map performance data, and dual-persistence architecture (localStorage for guests, Supabase for authenticated users).
+Session Enhancements adds three lightweight, motivational features to Master Siege: a hot streak indicator that provides real-time visual feedback when a user is performing well, a session summary that recaps performance when the user finishes playing, and map win/loss tracking that lets users record match outcomes and view win rates per map over time. These features build on the existing kill/death tracking, map performance data, and dual-persistence architecture (localStorage for guests, Supabase for authenticated users).
 
 ## Glossary
 
-- **System**: The XAWARS RNG application.
+- **System**: The Master Siege application.
 - **Hot_Streak**: A state representing 3 or more consecutive Kill_Increments without an intervening Death_Increment within the current browser session.
 - **Hot_Streak_Indicator**: A flame icon displayed in the kill/death counter area when the user is in a Hot_Streak state.
 - **Kill_Streak_Counter**: An in-memory counter that tracks consecutive kills without a death in the current session.
