@@ -1,6 +1,6 @@
 # Feature Ideas & Improvements
 
-A collection of potential features and enhancements for XAwars RNG, grouped by area.
+A collection of potential features and enhancements for Master Siege, grouped by area.
 
 ---
 

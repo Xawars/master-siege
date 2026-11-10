@@ -74,9 +74,9 @@ describe('Feature: design-system, Property 9: Decorative Icon Accessibility', ()
           </Button>
         );
         const button = container.querySelector('button')!;
-        const svg = button.querySelector('svg');
+        const svg = button.querySelector('[aria-hidden="true"]:has(.dmx-dot)');
 
-        // Spinner SVG must exist in loading state
+        // Spinner must exist in loading state
         expect(svg).not.toBeNull();
 
         // Decorative spinner must have aria-hidden="true"
