@@ -3,7 +3,6 @@ import { describe, it, expect, vi } from 'vitest';
 import fc from 'fast-check';
 import { WinLossPrompt } from '../WinLossPrompt';
 import { upsertMapWinLoss } from '../../lib/win-loss-logic';
-import type { MapWinLossRecord } from '../../types/database';
 
 const defaultProps = {
   mapId: 'bank',

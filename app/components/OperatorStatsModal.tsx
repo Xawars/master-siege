@@ -31,7 +31,7 @@ function ObjectiveBar({ kills, target, progress }: { kills: number; target: numb
       </div>
       <div className="h-1.5 bg-zinc-800 rounded-full overflow-hidden">
         <div
-          className="h-full bg-linear-to-r from-yellow-500 to-green-500 transition-all duration-300"
+          className="h-full bg-linear-to-r from-brand-500 to-green-500 transition-all duration-300"
           style={{ width: `${Math.min(progress, 100)}%` }}
         />
       </div>
@@ -43,22 +43,15 @@ function OperatorRow({
   stat,
   history,
   onSelect,
-  operatorKills,
-  operatorDeaths,
 }: {
   stat: OperatorStats;
   history: HistoryItem[];
   onSelect: (item: HistoryItem) => void;
-  operatorKills: Record<string, number>;
-  operatorDeaths: Record<string, number>;
 }) {
   const lastItem = useMemo(
     () => history.find(h => h.operator.id === stat.id && h.id === stat.lastUsed),
     [history, stat.id, stat.lastUsed]
   );
-
-  const kills = operatorKills[stat.id] || 0;
-  const deaths = operatorDeaths[stat.id] || 0;
 
   const handleExport = async (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -78,7 +71,7 @@ function OperatorRow({
   return (
     <div
       onClick={() => lastItem && onSelect(lastItem)}
-      className="flex items-center gap-3 bg-zinc-800/50 border border-zinc-700/50 p-3 rounded-lg hover:border-yellow-500/50 hover:bg-zinc-800 cursor-pointer transition-all duration-150 group"
+      className="flex items-center gap-3 bg-zinc-800/50 border border-zinc-700/50 p-3 rounded-lg hover:border-brand-500/50 hover:bg-zinc-800 cursor-pointer transition-all duration-150 group"
     >
       <div className={`h-10 w-10 shrink-0 rounded-md flex items-center justify-center ${stat.side === 'attacker' ? 'bg-orange-900/30 text-orange-400' : 'bg-blue-900/30 text-blue-400'}`}>
         <OperatorIcon id={stat.id} className="w-full h-full drop-shadow-sm">
@@ -93,7 +86,7 @@ function OperatorRow({
             <KDBadge kd={stat.kd} />
             <button
               onClick={handleExport}
-              className="p-1 rounded hover:bg-zinc-700 text-zinc-400 hover:text-yellow-500 transition-colors"
+              className="p-1 rounded hover:bg-zinc-700 text-zinc-400 hover:text-brand-500 transition-colors"
               title="Export card"
             >
               <Download className="w-4 h-4" />
@@ -135,11 +128,11 @@ function ExportableCard({
   if (!lastItem) return null;
 
   const targetComplete = stat.objectiveTarget > 0 && kills >= stat.objectiveTarget;
-  
+
   return (
     <div
       id={`export-card-${stat.id}`}
-      className="w-[400px] p-4 bg-zinc-950 border-2 border-zinc-800 rounded-xl pointer-events-none"
+      className="w-100 p-4 bg-zinc-950 border-2 border-zinc-800 rounded-xl pointer-events-none"
     >
       <div className="flex items-start gap-4">
         <div className={`h-20 w-20 shrink-0 rounded-lg flex items-center justify-center ${stat.side === 'attacker' ? 'bg-orange-900/40 text-orange-400' : 'bg-blue-900/40 text-blue-400'}`}>
@@ -147,13 +140,13 @@ function ExportableCard({
             {stat.name[0]}
           </OperatorIcon>
         </div>
-        
+
         <div className="flex-1">
           <div className="flex items-center justify-between mb-1">
             <span className="text-xl font-black text-white uppercase tracking-wide">{stat.name}</span>
             <KDBadge kd={stat.kd} />
           </div>
-          
+
           <div className="flex items-center gap-2 mb-3">
             <span className={`text-xs font-bold uppercase tracking-wider ${stat.side === 'attacker' ? 'text-orange-500' : 'text-blue-500'}`}>
               {stat.side}
@@ -173,13 +166,13 @@ function ExportableCard({
               </>
             )}
           </div>
-          
+
           {lastItem.role && (
-            <div className="text-xs text-yellow-500 font-medium mb-2 uppercase tracking-wide">
+            <div className="text-xs text-brand-500 font-medium mb-2 uppercase tracking-wide">
               {lastItem.role}
             </div>
           )}
-          
+
           <div className="flex items-center gap-3 text-sm">
             <span className="text-green-400 font-bold">{kills} K</span>
             <span className="text-zinc-600">/</span>
@@ -187,7 +180,7 @@ function ExportableCard({
           </div>
         </div>
       </div>
-      
+
       <div className="mt-3 pt-3 border-t border-zinc-800">
         <div className="flex items-center justify-between mb-1">
           <div className="flex items-center gap-1.5">
@@ -208,12 +201,12 @@ function ExportableCard({
         </div>
         <div className="h-2 bg-zinc-800 rounded-full overflow-hidden">
           <div
-            className={`h-full ${targetComplete ? 'bg-green-500' : 'bg-linear-to-r from-yellow-500 to-green-500'}`}
+            className={`h-full ${targetComplete ? 'bg-green-500' : 'bg-linear-to-r from-brand-500 to-green-500'}`}
             style={{ width: `${Math.min(stat.objectiveProgress, 100)}%` }}
           />
         </div>
       </div>
-      
+
       <div className="mt-3 pt-3 border-t border-zinc-800">
         <div className="text-[10px] text-zinc-500 font-medium uppercase tracking-wider mb-1">Loadout</div>
         <div className="space-y-0.5">
@@ -247,11 +240,10 @@ function SortButton({
   return (
     <button
       onClick={onClick}
-      className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-wider transition-all ${
-        active
-          ? 'bg-yellow-500 text-black'
-          : 'bg-zinc-800 text-zinc-400 hover:bg-zinc-700 hover:text-zinc-200'
-      }`}
+      className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-wider transition-all ${active
+        ? 'bg-brand-500 text-black'
+        : 'bg-zinc-800 text-zinc-400 hover:bg-zinc-700 hover:text-zinc-200'
+        }`}
     >
       {children}
     </button>
@@ -290,7 +282,7 @@ export function OperatorStatsModal({
       >
         <div className="p-4 border-b border-white/5 flex items-center justify-between shrink-0">
           <div className="flex items-center gap-3">
-            <h2 className="text-lg font-black text-yellow-500 uppercase tracking-wider">Select Operator</h2>
+            <h2 className="text-lg font-black text-brand-500 uppercase tracking-wider">Select Operator</h2>
             <span className="text-xs text-zinc-500 font-medium">{history.length} deployments</span>
           </div>
           <Button variant="ghost" size="sm" onClick={onClose} icon={X}>
@@ -328,15 +320,13 @@ export function OperatorStatsModal({
                 stat={stat}
                 history={history}
                 onSelect={onSelect}
-                operatorKills={operatorKills}
-                operatorDeaths={operatorDeaths}
               />
             ))
           )}
         </div>
 
         {/* Hidden export cards - rendered off-screen for image capture */}
-        <div className="fixed -top-[9999px] -left-[9999px] w-[400px] pointer-events-none space-y-4">
+        <div className="fixed -top-2499.75 -left-2499.75 w-100 pointer-events-none space-y-4">
           {sorted.map(stat => {
             const lastItem = history.find(h => h.operator.id === stat.id && h.id === stat.lastUsed);
             const kills = operatorKills[stat.id] || 0;

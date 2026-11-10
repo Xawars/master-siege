@@ -21,7 +21,12 @@ describe('MapBreakdownPanel', () => {
         mapId: 'bank',
         kills: 2,
         deaths: 1,
+        rounds: 0,
+        roundsWon: 0,
+        roundsLost: 0,
         matches: 2,
+        matchesWon: 0,
+        matchesLost: 0,
       },
     };
 
@@ -42,14 +47,24 @@ describe('MapBreakdownPanel', () => {
         mapId: 'bank',
         kills: 0,
         deaths: 0,
+        rounds: 0,
+        roundsWon: 0,
+        roundsLost: 0,
         matches: 0,
+        matchesWon: 0,
+        matchesLost: 0,
       },
       ash_border: {
         operatorId: 'ash',
         mapId: 'border',
         kills: 5,
         deaths: 2,
+        rounds: 0,
+        roundsWon: 0,
+        roundsLost: 0,
         matches: 4,
+        matchesWon: 0,
+        matchesLost: 0,
       },
     };
 
@@ -71,7 +86,7 @@ describe('MapBreakdownPanel', () => {
 
   /**
    * Validates: Requirements 5.5
-   * Best map is highlighted with distinct style (border-yellow-500)
+   * Best map is highlighted with distinct style (border-brand-500)
    */
   it('highlights the best map with a distinct style', () => {
     const records: Record<string, MapPerformanceRecord> = {
@@ -80,14 +95,24 @@ describe('MapBreakdownPanel', () => {
         mapId: 'bank',
         kills: 15,
         deaths: 3,
+        rounds: 0,
+        roundsWon: 0,
+        roundsLost: 0,
         matches: 5,
+        matchesWon: 0,
+        matchesLost: 0,
       },
       ash_border: {
         operatorId: 'ash',
         mapId: 'border',
         kills: 6,
         deaths: 3,
+        rounds: 0,
+        roundsWon: 0,
+        roundsLost: 0,
         matches: 4,
+        matchesWon: 0,
+        matchesLost: 0,
       },
     };
 
@@ -97,7 +122,7 @@ describe('MapBreakdownPanel', () => {
     const bankEntry = screen.getByText('Bank').closest('[class*="border-"]');
     const borderEntry = screen.getByText('Border').closest('[class*="border-"]');
 
-    expect(bankEntry?.className).toContain('border-yellow-500');
-    expect(borderEntry?.className).not.toContain('border-yellow-500');
+    expect(bankEntry?.className).toContain('border-brand-500');
+    expect(borderEntry?.className).not.toContain('border-brand-500');
   });
 });

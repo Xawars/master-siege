@@ -75,9 +75,9 @@ describe('map-performance', () => {
   describe('getActiveMaps — deactivated maps excluded', () => {
     it('returns all maps sorted alphabetically regardless of active flag', () => {
       const maps: MapData[] = [
-        { id: 'bank', name: 'Bank', active: true, sites: [] },
-        { id: 'border', name: 'Border', active: false, sites: [] },
-        { id: 'clubhouse', name: 'Clubhouse', active: true, sites: [] },
+        { id: 'bank', name: 'Bank', sites: [] },
+        { id: 'border', name: 'Border', sites: [] },
+        { id: 'clubhouse', name: 'Clubhouse', sites: [] },
       ];
 
       const result = getActiveMaps(maps);
@@ -115,8 +115,8 @@ describe('map-performance', () => {
       };
 
       const maps: MapData[] = [
-        { id: 'bank', name: 'Bank', active: true, sites: [] },
-        { id: 'border', name: 'Border', active: false, sites: [] },
+        { id: 'bank', name: 'Bank', sites: [] },
+        { id: 'border', name: 'Border', sites: [] },
       ];
 
       // getActiveMaps returns all maps sorted
@@ -140,9 +140,9 @@ describe('map-performance', () => {
 
     it('returns maps sorted alphabetically', () => {
       const maps: MapData[] = [
-        { id: 'oregon', name: 'Oregon', active: true, sites: [] },
-        { id: 'bank', name: 'Bank', active: true, sites: [] },
-        { id: 'clubhouse', name: 'Clubhouse', active: true, sites: [] },
+        { id: 'oregon', name: 'Oregon', sites: [] },
+        { id: 'bank', name: 'Bank', sites: [] },
+        { id: 'clubhouse', name: 'Clubhouse', sites: [] },
       ];
 
       const result = getActiveMaps(maps);

@@ -1,6 +1,5 @@
 import { describe, it, expect, beforeEach, vi, afterEach } from 'vitest';
 import fc from 'fast-check';
-import type { QueuedOperation } from '../sync-queue';
 
 /**
  * Property 13: Sync Queue Operation Preservation
@@ -28,7 +27,7 @@ vi.mock('../supabase', () => ({
         return Promise.resolve({ error: null });
       }),
       delete: vi.fn(() => ({
-        eq: vi.fn((_field: string, _value: string) => {
+        eq: vi.fn(() => {
           sentOperations.push({ table, operation: 'delete', payload: {} });
           return Promise.resolve({ error: null });
         }),

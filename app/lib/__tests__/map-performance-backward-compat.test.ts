@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest';
 import fc from 'fast-check';
 import { updateOperatorStat, getOperatorStat } from '../operator-stats';
 import { getActiveMaps } from '../map-performance';
-import type { OperatorStatRecord } from '../../types/database';
+import type { MapPerformanceRecord, OperatorStatRecord } from '../../types/database';
 import type { MapData } from '../../data/maps';
 
 // --- Generators ---
@@ -84,7 +84,9 @@ describe('Feature: map-performance-tracking, Property 12: Backward compatibility
         ),
         // Generate random MapPerformanceRecords (which should NOT affect operator stats)
         mapPerformanceRecordsArb,
-        (initialRecords, updates, _mapPerformanceRecords) => {
+        (initialRecords, updates, mapPerformanceRecords) => {
+          // Records are generated so the property covers their presence; stats must ignore them.
+          void mapPerformanceRecords;
           // Build initial stats map
           let statsWithoutMapData: Record<string, OperatorStatRecord> = {};
           let statsWithMapData: Record<string, OperatorStatRecord> = {};
@@ -199,14 +201,14 @@ describe('Backward compatibility: MapData without active field', () => {
       name: 'Active Map',
       active: true,
       sites: [{ id: 'site-b', name: 'Site B' }],
-    } as MapData;
+    } as unknown as MapData;
 
     const mapWithActiveFalse = {
       id: 'inactive-map',
       name: 'Inactive Map',
       active: false,
       sites: [{ id: 'site-c', name: 'Site C' }],
-    } as MapData;
+    } as unknown as MapData;
 
     const result = getActiveMaps([mapWithoutActive, mapWithActiveTrue, mapWithActiveFalse]);
 

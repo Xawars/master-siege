@@ -81,7 +81,7 @@ export function RollAnimation({ isRolling, side }: RollAnimationProps) {
       </p>
 
       {/* Scanning line effect */}
-      <div className="absolute inset-x-0 h-px bg-gradient-to-r from-transparent via-yellow-500/50 to-transparent animate-scan-line" />
+      <div className="absolute inset-x-0 h-px bg-gradient-to-r from-transparent via-brand-500/50 to-transparent animate-scan-line" />
     </div>
   );
 }

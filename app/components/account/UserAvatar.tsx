@@ -74,11 +74,14 @@ export function UserAvatar({ user, size = 'md', className = '' }: UserAvatarProp
   // Has avatar URL (OAuth providers)
   if (user.avatarUrl) {
     return (
-      <img
-        src={user.avatarUrl}
-        alt={user.displayName || user.email || 'User avatar'}
-        className={`${sizeClass} rounded-full object-cover border border-zinc-600 ${className}`}
-      />
+      <>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={user.avatarUrl}
+          alt={user.displayName || user.email || 'User avatar'}
+          className={`${sizeClass} rounded-full object-cover border border-zinc-600 ${className}`}
+        />
+      </>
     );
   }
 

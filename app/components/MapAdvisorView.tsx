@@ -28,7 +28,10 @@ export function MapAdvisorView() {
           {/* Placeholder image area */}
           <div className="h-40 bg-linear-to-br from-zinc-800 to-zinc-900 flex items-center justify-center">
             {selectedMap.image ? (
-              <img src={selectedMap.image} alt={selectedMap.name} className="w-full h-full object-cover" />
+              <>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={selectedMap.image} alt={selectedMap.name} className="w-full h-full object-cover" />
+              </>
             ) : (
               <span className="text-zinc-600 text-sm font-medium">Map image placeholder</span>
             )}
@@ -57,7 +60,7 @@ export function MapAdvisorView() {
               key={site.id}
               className="flex items-center gap-3 p-3 rounded-lg border border-zinc-800 bg-zinc-900/50"
             >
-              <span className="text-[10px] font-bold uppercase tracking-widest text-yellow-500/80 bg-yellow-500/10 px-2 py-0.5 rounded shrink-0">
+              <span className="text-[10px] font-bold uppercase tracking-widest text-brand-500/80 bg-brand-500/10 px-2 py-0.5 rounded shrink-0">
                 {site.floor}
               </span>
               <span className="text-sm font-semibold text-zinc-200">{site.name}</span>
@@ -85,7 +88,10 @@ export function MapAdvisorView() {
               {/* Placeholder image */}
               <div className="h-24 bg-linear-to-br from-zinc-800 to-zinc-900 flex items-center justify-center">
                 {map.image ? (
-                  <img src={map.image} alt={map.name} className="w-full h-full object-cover" />
+                  <>
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={map.image} alt={map.name} className="w-full h-full object-cover" />
+                  </>
                 ) : (
                   <span className="text-zinc-700 text-xs font-medium group-hover:text-zinc-500 transition-colors">
                     {map.name}

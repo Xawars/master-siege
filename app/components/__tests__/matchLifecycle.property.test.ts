@@ -50,7 +50,7 @@ function startMatch(matches: MatchEntry[], mapId: string): MatchEntry[] {
 }
 
 /** Simulate map lock rejection (page.tsx onSelect early return) */
-function attemptMapChange(matches: MatchEntry[], _newMapId: string): { rejected: boolean; matches: MatchEntry[] } {
+function attemptMapChange(matches: MatchEntry[]): { rejected: boolean; matches: MatchEntry[] } {
   const hasOpenMatch = matches.some(m => !m.endedAt);
   if (hasOpenMatch) return { rejected: true, matches };
   return { rejected: false, matches };
@@ -143,11 +143,10 @@ describe('Property 3: Map locked during active match', () => {
       fc.property(
         fc.array(arbitraryClosedMatch, { minLength: 0, maxLength: 3 }),
         arbitraryOpenMatch,
-        arbitraryMapId,
-        (closedMatches, openMatch, attemptedMapId) => {
+        (closedMatches, openMatch) => {
           const matches = [...closedMatches, openMatch];
 
-          const { rejected, matches: result } = attemptMapChange(matches, attemptedMapId);
+          const { rejected, matches: result } = attemptMapChange(matches);
 
           expect(rejected).toBe(true);
           expect(result.length).toBe(matches.length);

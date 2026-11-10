@@ -43,10 +43,10 @@ const tiers = [
   {
     name: 'Elite',
     tag: 'ELT',
-    color: 'text-yellow-500',
-    dotColor: 'bg-yellow-500',
-    borderColor: 'border-yellow-600',
-    bgColor: 'bg-yellow-950/30',
+    color: 'text-brand-500',
+    dotColor: 'bg-brand-500',
+    borderColor: 'border-brand-600',
+    bgColor: 'bg-brand-950/30',
     requirement: '25+ deployments with K/D ≥ 1.0',
     description: 'Peak mastery. You dominate with this operator consistently.',
   },
@@ -73,8 +73,8 @@ export function MasteryTiersModal({ isOpen, onClose }: MasteryTiersModalProps) {
         {/* Header */}
         <div className="shrink-0 p-5 border-b border-white/5 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-lg bg-yellow-500/10 border border-yellow-500/30 flex items-center justify-center">
-              <Trophy className="w-5 h-5 text-yellow-500" />
+            <div className="w-9 h-9 rounded-lg bg-brand-500/10 border border-brand-500/30 flex items-center justify-center">
+              <Trophy className="w-5 h-5 text-brand-500" />
             </div>
             <div>
               <h2 className="text-lg font-black text-white uppercase tracking-wide">Mastery Tiers</h2>

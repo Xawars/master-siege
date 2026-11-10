@@ -24,7 +24,7 @@ export function Input({
   const errorId = `${inputId}-error`;
 
   const baseStyles =
-    'w-full bg-zinc-800/50 border-2 border-zinc-700 rounded-md px-4 py-3 text-sm text-white placeholder-zinc-500 transition duration-200 focus:outline-none focus:border-yellow-500 focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 focus:ring-offset-zinc-900';
+    'w-full bg-zinc-800/50 border-2 border-zinc-700 rounded-md px-4 py-3 text-sm text-white placeholder-zinc-500 transition duration-200 focus:outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 focus:ring-offset-zinc-900';
 
   const errorStyles = error ? 'border-red-500' : '';
   const disabledStyles = disabled || loading ? 'opacity-50 cursor-not-allowed' : '';

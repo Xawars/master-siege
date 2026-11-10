@@ -169,7 +169,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       }
 
       return { success: true };
-    } catch (err) {
+    } catch {
       return { success: false, error: NETWORK_ERROR_MESSAGE };
     }
   }, []);
@@ -190,7 +190,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       }
 
       return { success: true };
-    } catch (err) {
+    } catch {
       return { success: false, error: NETWORK_ERROR_MESSAGE };
     }
   }, []);

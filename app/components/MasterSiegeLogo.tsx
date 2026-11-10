@@ -3,15 +3,15 @@
 import React from 'react';
 import Image from 'next/image';
 
-interface XAWarsLogoProps {
+interface MasterSiegeLogoProps {
   className?: string;
   size?: number;
 }
 
-export function XAWarsLogo({ className = '', size = 64 }: XAWarsLogoProps) {
+export function MasterSiegeLogo({ className = '', size = 64 }: MasterSiegeLogoProps) {
   return (
     <Image
-      src="/xawarscol-logo.png"
+      src="/brand/master-siege-app-icon.svg"
       alt="Master Siege logo"
       width={size}
       height={size}

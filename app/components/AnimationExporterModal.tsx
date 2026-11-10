@@ -13,7 +13,7 @@ interface AnimationExporterModalProps {
 }
 
 const preloadImage = (src: string): Promise<HTMLImageElement> => {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     const img = new Image();
     img.onload = () => resolve(img);
     img.onerror = () => {
@@ -69,7 +69,7 @@ export function AnimationExporterModal({ isOpen, onClose }: AnimationExporterMod
         if (exportMode === 'matchType') {
            drawFrameMatchType(ctx, "MATCH TYPE", "rgba(255, 255, 255, 0.5)", 0, 0);
         } else {
-           drawFrameOperator(ctx, "ANY", "OPERATOR", '#ffffff', '#eab308', 0, 0, null, null, null, 0, undefined, undefined, undefined, undefined, false, 0);
+           drawFrameOperator(ctx, "ANY", "OPERATOR", '#ffffff', '#f05a28', 0, 0, null, null, null, 0, undefined, undefined, undefined, undefined, false, 0);
         }
       }
     }
@@ -233,13 +233,13 @@ export function AnimationExporterModal({ isOpen, onClose }: AnimationExporterMod
         
         // Role badge
         if (role) {
-          ctx.fillStyle = 'rgba(234, 179, 8, 0.2)';
+          ctx.fillStyle = 'rgba(240, 90, 40, 0.2)';
           ctx.font = 'bold 11px ui-sans-serif, system-ui, sans-serif';
           const badgeWidth = ctx.measureText(role.toUpperCase()).width + 12;
           ctx.beginPath();
           ctx.roundRect(badgeX, badgeY, badgeWidth, 20, 4);
           ctx.fill();
-          ctx.fillStyle = 'rgba(234, 179, 8, 0.9)';
+          ctx.fillStyle = 'rgba(240, 90, 40, 0.9)';
           ctx.fillText(role.toUpperCase(), badgeX + 6, badgeY + 14);
           badgeX += badgeWidth + 6;
         }
@@ -282,7 +282,7 @@ export function AnimationExporterModal({ isOpen, onClose }: AnimationExporterMod
           let startY = height - (3 * 68) - 32; // Start from bottom
           items.forEach(item => {
               // Yellow line
-              ctx.fillStyle = 'rgba(234, 179, 8, 0.5)';
+              ctx.fillStyle = 'rgba(240, 90, 40, 0.5)';
               ctx.fillRect(24, startY, 4, 52);
 
               // Background box
@@ -292,7 +292,7 @@ export function AnimationExporterModal({ isOpen, onClose }: AnimationExporterMod
               ctx.fill();
 
               // Label
-              ctx.fillStyle = 'rgba(234, 179, 8, 0.8)';
+              ctx.fillStyle = 'rgba(240, 90, 40, 0.8)';
               ctx.font = 'bold 11px ui-sans-serif, system-ui, sans-serif';
               ctx.fillText(item.label, 40, startY + 20);
 
@@ -304,13 +304,6 @@ export function AnimationExporterModal({ isOpen, onClose }: AnimationExporterMod
               startY += 68;
           });
           ctx.globalAlpha = 1.0;
-      }
-
-      // Scale bounce effect on reveal
-      if (revealProgress > 0.8 && revealProgress < 1.0) {
-        const bounceProgress = (revealProgress - 0.8) / 0.2;
-        const scale = 1 + Math.sin(bounceProgress * Math.PI) * 0.03;
-        // Scale is applied at the end via transform
       }
 
       // Particle spark effect on reveal moment
@@ -327,7 +320,7 @@ export function AnimationExporterModal({ isOpen, onClose }: AnimationExporterMod
           const y = centerY + Math.sin(angle) * distance;
           const alpha = 1 - sparkProgress;
           
-          ctx.fillStyle = `rgba(234, 179, 8, ${alpha})`;
+          ctx.fillStyle = `rgba(240, 90, 40, ${alpha})`;
           ctx.beginPath();
           ctx.arc(x, y, 3 * (1 - sparkProgress), 0, Math.PI * 2);
           ctx.fill();
@@ -339,7 +332,7 @@ export function AnimationExporterModal({ isOpen, onClose }: AnimationExporterMod
       if (isRolling) {
         const pulsePhase = (performance.now() / 100) % 2;
         if (pulsePhase > 1) {
-          ctx.fillStyle = 'rgba(234, 179, 8, 0.1)';
+          ctx.fillStyle = 'rgba(240, 90, 40, 0.1)';
           ctx.fillRect(0, 0, width, height);
         }
       }
@@ -466,7 +459,6 @@ export function AnimationExporterModal({ isOpen, onClose }: AnimationExporterMod
     const ROLL_DURATION = 3500;   // Rolling phase: 3.5s
     const REVEAL_DURATION = 1500;  // Reveal phase: 1.5s
     const startTime = performance.now();
-    let animationFrameId: number;
 
     const animate = (time: number) => {
       const elapsed = time - startTime;
@@ -476,12 +468,12 @@ export function AnimationExporterModal({ isOpen, onClose }: AnimationExporterMod
           if (progress < 0.8) {
             const offsetY = Math.sin(elapsed / 20) * 10;
             const typeIndex = Math.floor(elapsed / 50) % MATCH_TYPES.length;
-            drawFrameMatchType(ctx, MATCH_TYPES[typeIndex], '#eab308', offsetY, 1.5);
+            drawFrameMatchType(ctx, MATCH_TYPES[typeIndex], '#f05a28', offsetY, 1.5);
           } else if (progress < 1) {
             const blur = (1 - progress) * 5;
-            drawFrameMatchType(ctx, finalType, '#eab308', 0, blur);
+            drawFrameMatchType(ctx, finalType, '#f05a28', 0, blur);
           } else {
-            drawFrameMatchType(ctx, finalType, '#eab308', 0, 0);
+            drawFrameMatchType(ctx, finalType, '#f05a28', 0, 0);
           }
       } else {
           // Operator mode
@@ -513,7 +505,7 @@ export function AnimationExporterModal({ isOpen, onClose }: AnimationExporterMod
       }
 
       if (progress < 1) {
-        animationFrameId = requestAnimationFrame(animate);
+        requestAnimationFrame(animate);
       } else {
         setTimeout(() => {
           if (record && exportFormat === 'webm' && mediaRecorder) {
@@ -525,7 +517,7 @@ export function AnimationExporterModal({ isOpen, onClose }: AnimationExporterMod
       }
     };
 
-    animationFrameId = requestAnimationFrame(animate);
+    requestAnimationFrame(animate);
   };
 
   if (!isOpen) return null;
@@ -537,7 +529,7 @@ export function AnimationExporterModal({ isOpen, onClose }: AnimationExporterMod
         {/* Header */}
         <div className="flex items-center justify-between p-4 border-b border-zinc-800 bg-zinc-900/50">
           <div className="flex items-center gap-2">
-            <Video className="w-5 h-5 text-yellow-500" />
+            <Video className="w-5 h-5 text-brand-500" />
             <h2 className="font-bold text-lg text-white">Export Animation</h2>
           </div>
           <button onClick={onClose} className="p-2 hover:bg-zinc-800 rounded-lg text-zinc-400 hover:text-white transition-colors" disabled={isRecording}>
@@ -558,7 +550,7 @@ export function AnimationExporterModal({ isOpen, onClose }: AnimationExporterMod
                        value={exportMode} 
                        onChange={(e) => setExportMode(e.target.value as 'matchType' | 'operator')}
                        disabled={isRecording || isPreviewing}
-                       className="w-full bg-zinc-900 border border-zinc-700 rounded-lg p-2 text-white focus:border-yellow-500 outline-none"
+                       className="w-full bg-zinc-900 border border-zinc-700 rounded-lg p-2 text-white focus:border-brand-500 outline-none"
                    >
                        <option value="operator">Operator Roll (Card)</option>
                        <option value="matchType">Match Type Roll (Text)</option>
@@ -572,7 +564,7 @@ export function AnimationExporterModal({ isOpen, onClose }: AnimationExporterMod
                             value={targetOperatorId} 
                             onChange={(e) => setTargetOperatorId(e.target.value)}
                             disabled={isRecording || isPreviewing}
-                            className="w-full bg-zinc-900 border border-zinc-700 rounded-lg p-2 text-white focus:border-yellow-500 outline-none"
+                            className="w-full bg-zinc-900 border border-zinc-700 rounded-lg p-2 text-white focus:border-brand-500 outline-none"
                         >
                             <option value="random">Random (Any)</option>
                             {operators.map(op => (
@@ -591,7 +583,7 @@ export function AnimationExporterModal({ isOpen, onClose }: AnimationExporterMod
                             value={targetMatchType} 
                             onChange={(e) => setTargetMatchType(e.target.value)}
                             disabled={isRecording || isPreviewing}
-                            className="w-full bg-zinc-900 border border-zinc-700 rounded-lg p-2 text-white focus:border-yellow-500 outline-none"
+                            className="w-full bg-zinc-900 border border-zinc-700 rounded-lg p-2 text-white focus:border-brand-500 outline-none"
                         >
                             <option value="random">Random</option>
                             <option value="none">None</option>
@@ -607,7 +599,7 @@ export function AnimationExporterModal({ isOpen, onClose }: AnimationExporterMod
                             value={targetPlatform} 
                             onChange={(e) => setTargetPlatform(e.target.value)}
                             disabled={isRecording || isPreviewing}
-                            className="w-full bg-zinc-900 border border-zinc-700 rounded-lg p-2 text-white focus:border-yellow-500 outline-none"
+                            className="w-full bg-zinc-900 border border-zinc-700 rounded-lg p-2 text-white focus:border-brand-500 outline-none"
                         >
                             <option value="any">Any Platform (Random)</option>
                             <option value="pc_ranked">PC - Ranked</option>
@@ -629,7 +621,7 @@ export function AnimationExporterModal({ isOpen, onClose }: AnimationExporterMod
                                 checked={includeRole} 
                                 onChange={(e) => setIncludeRole(e.target.checked)}
                                 disabled={isRecording || isPreviewing}
-                                className="w-4 h-4 accent-yellow-500"
+                                className="w-4 h-4 accent-brand-500"
                             />
                             <span className="text-sm text-zinc-300">Include Role</span>
                         </label>
@@ -643,7 +635,7 @@ export function AnimationExporterModal({ isOpen, onClose }: AnimationExporterMod
                                 checked={includeTarget} 
                                 onChange={(e) => setIncludeTarget(e.target.checked)}
                                 disabled={isRecording || isPreviewing}
-                                className="w-4 h-4 accent-yellow-500"
+                                className="w-4 h-4 accent-brand-500"
                             />
                             <span className="text-sm text-zinc-300">Include Target</span>
                         </label>
@@ -663,7 +655,7 @@ export function AnimationExporterModal({ isOpen, onClose }: AnimationExporterMod
                             setCanvasHeight(h);
                         }}
                         disabled={isRecording || isPreviewing}
-                        className="w-full bg-zinc-900 border border-zinc-700 rounded-lg p-2 text-white focus:border-yellow-500 outline-none"
+                        className="w-full bg-zinc-900 border border-zinc-700 rounded-lg p-2 text-white focus:border-brand-500 outline-none"
                     >
                         <option value="400x600">400 x 600 (1x)</option>
                         <option value="800x1200">800 x 1200 (2x)</option>
@@ -677,7 +669,7 @@ export function AnimationExporterModal({ isOpen, onClose }: AnimationExporterMod
                         value={exportDuration}
                         onChange={(e) => setExportDuration(Number(e.target.value))}
                         disabled={isRecording || isPreviewing}
-                        className="w-full bg-zinc-900 border border-zinc-700 rounded-lg p-2 text-white focus:border-yellow-500 outline-none"
+                        className="w-full bg-zinc-900 border border-zinc-700 rounded-lg p-2 text-white focus:border-brand-500 outline-none"
                     >
                         <option value="3500">3.5s (roll only)</option>
                         <option value="5000">5s (fast)</option>
@@ -693,7 +685,7 @@ export function AnimationExporterModal({ isOpen, onClose }: AnimationExporterMod
                         value={exportFps}
                         onChange={(e) => setExportFps(Number(e.target.value))}
                         disabled={isRecording || isPreviewing}
-                        className="w-full bg-zinc-900 border border-zinc-700 rounded-lg p-2 text-white focus:border-yellow-500 outline-none"
+                        className="w-full bg-zinc-900 border border-zinc-700 rounded-lg p-2 text-white focus:border-brand-500 outline-none"
                     >
                         <option value="30">30 FPS</option>
                         <option value="60">60 FPS</option>
@@ -706,7 +698,7 @@ export function AnimationExporterModal({ isOpen, onClose }: AnimationExporterMod
                         value={exportFormat}
                         onChange={(e) => setExportFormat(e.target.value as 'webm')}
                         disabled={isRecording || isPreviewing}
-                        className="w-full bg-zinc-900 border border-zinc-700 rounded-lg p-2 text-white focus:border-yellow-500 outline-none"
+                        className="w-full bg-zinc-900 border border-zinc-700 rounded-lg p-2 text-white focus:border-brand-500 outline-none"
                     >
                         <option value="webm">WebM Video</option>
                     </select>
@@ -732,7 +724,7 @@ export function AnimationExporterModal({ isOpen, onClose }: AnimationExporterMod
              </Button>
              <Button 
                variant="primary" 
-               className="bg-yellow-500 hover:bg-yellow-400 text-black font-bold"
+               className="bg-brand-500 hover:bg-brand-400 text-black font-bold"
                onClick={() => startAnimationAndRecord(true)}
                disabled={isRecording || isPreviewing}
                icon={Download}

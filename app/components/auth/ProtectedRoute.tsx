@@ -83,7 +83,7 @@ export function ProtectedRoute({ children }: ProtectedRouteProps) {
           className="flex flex-col items-center gap-3"
         >
           <svg
-            className="animate-spin h-8 w-8 text-yellow-500"
+            className="animate-spin h-8 w-8 text-brand-500"
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"

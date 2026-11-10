@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "./context/AuthContext";
@@ -18,6 +18,10 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Master Siege",
   description: "Rainbow Six Siege operator randomizer",
+};
+
+export const viewport: Viewport = {
+  themeColor: "#0e0f12",
 };
 
 export default function RootLayout({

@@ -40,11 +40,11 @@ export function FirstActionTooltip({ children }: FirstActionTooltipProps) {
       {/* Tooltip */}
       <div
         role="tooltip"
-        className="absolute -top-12 left-1/2 -translate-x-1/2 whitespace-nowrap bg-zinc-800 border border-yellow-500/30 text-zinc-300 text-xs font-medium px-3 py-1.5 rounded-lg shadow-lg pointer-events-none"
+        className="absolute -top-12 left-1/2 -translate-x-1/2 whitespace-nowrap bg-zinc-800 border border-brand-500/30 text-zinc-300 text-xs font-medium px-3 py-1.5 rounded-lg shadow-lg pointer-events-none"
       >
         Tap here to deploy your first operator
         {/* Arrow */}
-        <div className="absolute top-full left-1/2 -translate-x-1/2 w-2 h-2 bg-zinc-800 border-r border-b border-yellow-500/30 rotate-45 -mt-1" />
+        <div className="absolute top-full left-1/2 -translate-x-1/2 w-2 h-2 bg-zinc-800 border-r border-b border-brand-500/30 rotate-45 -mt-1" />
       </div>
     </div>
   );

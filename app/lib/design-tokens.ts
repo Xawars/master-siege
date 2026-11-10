@@ -19,8 +19,8 @@ export const foundationTokens: Record<string, string> = {
   'zinc-500': '#71717a',
   'zinc-400': '#a1a1aa',
   'white': '#ffffff',
-  'yellow-500': '#eab308',
-  'yellow-400': '#facc15',
+  'brand-500': '#f05a28',
+  'brand-400': '#f47650',
   'orange-500': '#f97316',
   'orange-600': '#ea580c',
   'blue-500': '#3b82f6',
@@ -45,12 +45,12 @@ export const semanticTokens: Record<string, string> = {
   'text-muted': 'zinc-500',
   'text-disabled': 'zinc-600',
   // Accent
-  'accent': 'yellow-500',
-  'accent-hover': 'yellow-400',
+  'accent': 'brand-500',
+  'accent-hover': 'brand-400',
   // Borders
   'border-default': 'zinc-700',
   'border-hover': 'zinc-500',
-  'border-focus': 'yellow-500',
+  'border-focus': 'brand-500',
   // States
   'success': 'green-500',
   'error': 'red-500',
@@ -95,13 +95,13 @@ export function getContextColor(side: 'attack' | 'defense'): string {
 
 /**
  * Returns the Tailwind border class for a given operator importance tier.
- * - 'primary' → 'border-yellow-500/30'
+ * - 'primary' → 'border-brand-500/30'
  * - 'secondary' → 'border-zinc-700'
  * - 'niche' → 'border-zinc-700/50'
  */
 export function getImportanceBorder(tier: 'primary' | 'secondary' | 'niche'): string {
   const borderMap: Record<'primary' | 'secondary' | 'niche', string> = {
-    primary: 'border-yellow-500/30',
+    primary: 'border-brand-500/30',
     secondary: 'border-zinc-700',
     niche: 'border-zinc-700/50',
   };

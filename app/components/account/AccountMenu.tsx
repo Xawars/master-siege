@@ -207,7 +207,7 @@ const MenuItem = React.forwardRef<HTMLButtonElement, MenuItemProps>(
         role="menuitem"
         onClick={onClick}
         disabled={disabled}
-        className={`w-full flex items-center gap-3 px-4 py-2.5 text-left text-sm font-medium transition-colors ${textColor} ${hoverBg} focus:outline-none focus:bg-white/5 focus:ring-inset focus:ring-1 focus:ring-yellow-500/50 disabled:cursor-not-allowed`}
+        className={`w-full flex items-center gap-3 px-4 py-2.5 text-left text-sm font-medium transition-colors ${textColor} ${hoverBg} focus:outline-none focus:bg-white/5 focus:ring-inset focus:ring-1 focus:ring-brand-500/50 disabled:cursor-not-allowed`}
       >
         {icon}
         <span className="uppercase tracking-wider text-xs font-bold">{label}</span>

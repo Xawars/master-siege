@@ -313,7 +313,12 @@ describe('Feature: session-enhancements, Property 6: Session best map selection'
             mapId: entry.mapId,
             kills: entry.snapshotKills,
             deaths: entry.snapshotDeaths,
+            rounds: 0,
+            roundsWon: 0,
+            roundsLost: 0,
             matches: 1,
+            matchesWon: 0,
+            matchesLost: 0,
           };
 
           currentPerf[key] = {
@@ -321,7 +326,12 @@ describe('Feature: session-enhancements, Property 6: Session best map selection'
             mapId: entry.mapId,
             kills: entry.snapshotKills + entry.deltaKills,
             deaths: entry.snapshotDeaths + entry.deltaDeaths,
+            rounds: 0,
+            roundsWon: 0,
+            roundsLost: 0,
             matches: 2,
+            matchesWon: 0,
+            matchesLost: 0,
           };
         }
 

@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { MAPS, MapData, SiteData } from '../data/maps';
-import { STRATS, Strat, getStratsForMap, getStratsForSite } from '../data/strats';
+import { Strat, getStratsForMap, getStratsForSite } from '../data/strats';
 
 type View = 'maps' | 'sites' | 'strats' | 'detail';
 
@@ -66,7 +66,7 @@ export function StratsView() {
               >
                 <span className="text-sm font-bold text-white">{map.name}</span>
                 {stratCountByMap[map.id] > 0 && (
-                  <span className="text-[10px] font-bold bg-yellow-500/20 text-yellow-500 px-1.5 py-0.5 rounded">
+                  <span className="text-[10px] font-bold bg-brand-500/20 text-brand-500 px-1.5 py-0.5 rounded">
                     {stratCountByMap[map.id]}
                   </span>
                 )}
@@ -90,7 +90,7 @@ export function StratsView() {
                   onClick={() => handleSelectSite(site)}
                   className="text-left p-3 rounded-lg border border-zinc-800 bg-zinc-900/50 hover:bg-zinc-800/50 hover:border-zinc-700 transition-all flex items-center gap-3"
                 >
-                  <span className="text-[10px] font-bold uppercase tracking-widest text-yellow-500/80 bg-yellow-500/10 px-2 py-0.5 rounded shrink-0">
+                  <span className="text-[10px] font-bold uppercase tracking-widest text-brand-500/80 bg-brand-500/10 px-2 py-0.5 rounded shrink-0">
                     {site.floor}
                   </span>
                   <span className="text-sm font-semibold text-zinc-200 flex-1">{site.name}</span>
@@ -138,7 +138,7 @@ export function StratsView() {
                       <span className="text-[10px] font-bold uppercase bg-zinc-800 text-zinc-400 px-1.5 py-0.5 rounded">{strat.role}</span>
                       <span className="text-[10px] font-bold uppercase bg-zinc-800 text-zinc-400 px-1.5 py-0.5 rounded">{strat.difficulty}</span>
                       {strat.tags.map(tag => (
-                        <span key={tag} className="text-[10px] font-bold uppercase bg-yellow-500/10 text-yellow-500/80 px-1.5 py-0.5 rounded">{tag}</span>
+                        <span key={tag} className="text-[10px] font-bold uppercase bg-brand-500/10 text-brand-500/80 px-1.5 py-0.5 rounded">{tag}</span>
                       ))}
                     </div>
                   </button>
@@ -168,7 +168,7 @@ function StratDetail({ strat }: { strat: Strat }) {
           <span className="text-[10px] font-bold uppercase bg-zinc-800 text-zinc-400 px-1.5 py-0.5 rounded">{strat.difficulty}</span>
           {strat.season && <span className="text-[10px] font-bold uppercase bg-zinc-800 text-zinc-400 px-1.5 py-0.5 rounded">{strat.season}</span>}
           {strat.tags.map(tag => (
-            <span key={tag} className="text-[10px] font-bold uppercase bg-yellow-500/10 text-yellow-500/80 px-1.5 py-0.5 rounded">{tag}</span>
+            <span key={tag} className="text-[10px] font-bold uppercase bg-brand-500/10 text-brand-500/80 px-1.5 py-0.5 rounded">{tag}</span>
           ))}
         </div>
         {strat.source && (
@@ -192,7 +192,7 @@ function StratDetail({ strat }: { strat: Strat }) {
         <SubSection title="Utility Placement">
           {strat.setup.utility.map((u, i) => (
             <div key={i} className="flex gap-2 text-sm text-zinc-300 mb-1">
-              <span className="text-yellow-500 font-bold shrink-0">{u.gadget}:</span>
+              <span className="text-brand-500 font-bold shrink-0">{u.gadget}:</span>
               <span>{u.location}</span>
             </div>
           ))}
@@ -236,7 +236,7 @@ function StratDetail({ strat }: { strat: Strat }) {
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <div className="border border-zinc-800 rounded-lg p-3">
-      <h3 className="text-xs font-bold uppercase tracking-widest text-yellow-500/80 mb-2">{title}</h3>
+      <h3 className="text-xs font-bold uppercase tracking-widest text-brand-500/80 mb-2">{title}</h3>
       {children}
     </div>
   );

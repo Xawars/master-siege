@@ -3,7 +3,6 @@
 import React, { useState, useRef, useEffect, useMemo, useCallback } from 'react';
 import {
   validateLoginForm,
-  validateSignupForm,
   validateCallsign,
   type ValidationErrors,
 } from '@/app/lib/form-validator';
@@ -28,7 +27,7 @@ function getPasswordStrength(password: string): PasswordStrength {
 
 const strengthConfig: Record<Exclude<PasswordStrength, 'none'>, { label: string; segments: number; color: string }> = {
   weak: { label: 'Weak', segments: 1, color: 'bg-red-500' },
-  fair: { label: 'Fair', segments: 2, color: 'bg-yellow-500' },
+  fair: { label: 'Fair', segments: 2, color: 'bg-brand-500' },
   strong: { label: 'Strong', segments: 3, color: 'bg-emerald-500' },
 };
 
@@ -171,8 +170,8 @@ export function AuthForm({
     stepTransition === 'out'
       ? 'opacity-0 translate-y-1 duration-150'
       : stepTransition === 'in'
-      ? 'opacity-100 translate-y-0 duration-200'
-      : 'opacity-100 translate-y-0 duration-0';
+        ? 'opacity-100 translate-y-0 duration-200'
+        : 'opacity-100 translate-y-0 duration-0';
 
   // Login mode — single step
   if (mode === 'login') {
@@ -217,7 +216,7 @@ export function AuthForm({
       {/* Step indicator */}
       <div className="flex items-center justify-center gap-2 mb-4">
         <StepDot active={signupStep === 1} completed={signupStep === 2} label="1" />
-        <div className={`w-8 h-px transition-colors duration-200 ${signupStep === 2 ? 'bg-yellow-500' : 'bg-zinc-700'}`} />
+        <div className={`w-8 h-px transition-colors duration-200 ${signupStep === 2 ? 'bg-brand-500' : 'bg-zinc-700'}`} />
         <StepDot active={signupStep === 2} completed={false} label="2" />
       </div>
 
@@ -243,7 +242,7 @@ export function AuthForm({
               type="button"
               onClick={handleNextStep}
               disabled={isSubmitting}
-              className="inline-flex w-full items-center justify-center gap-2 rounded bg-yellow-500 px-6 py-2.5 text-sm font-bold uppercase tracking-wider text-black shadow-lg shadow-yellow-500/20 transition-all duration-200 hover:bg-yellow-400 active:translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 focus:ring-offset-zinc-900 disabled:cursor-not-allowed disabled:opacity-50"
+              className="inline-flex w-full items-center justify-center gap-2 rounded bg-brand-500 px-6 py-2.5 text-sm font-bold uppercase tracking-wider text-black shadow-lg shadow-brand-500/20 transition-all duration-200 hover:bg-brand-400 active:translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 focus:ring-offset-zinc-900 disabled:cursor-not-allowed disabled:opacity-50"
             >
               Continue
             </button>
@@ -300,13 +299,12 @@ export function AuthForm({
 function StepDot({ active, completed, label }: { active: boolean; completed: boolean; label: string }) {
   return (
     <div
-      className={`w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold transition-all duration-200 ${
-        active
-          ? 'bg-yellow-500 text-black scale-110'
-          : completed
-          ? 'bg-yellow-500/20 text-yellow-500 border border-yellow-500/50'
+      className={`w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold transition-all duration-200 ${active
+        ? 'bg-brand-500 text-black scale-110'
+        : completed
+          ? 'bg-brand-500/20 text-brand-500 border border-brand-500/50'
           : 'bg-zinc-800 text-zinc-500 border border-zinc-700'
-      }`}
+        }`}
       aria-current={active ? 'step' : undefined}
     >
       {completed ? '✓' : label}
@@ -327,7 +325,7 @@ function SubmitButton({ label, isSubmitting }: { label: string; isSubmitting: bo
     <button
       type="submit"
       disabled={isSubmitting}
-      className="inline-flex w-full items-center justify-center gap-2 rounded bg-yellow-500 px-6 py-2.5 text-sm font-bold uppercase tracking-wider text-black shadow-lg shadow-yellow-500/20 transition-all duration-200 hover:bg-yellow-400 active:translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 focus:ring-offset-zinc-900 disabled:cursor-not-allowed disabled:opacity-50"
+      className="inline-flex w-full items-center justify-center gap-2 rounded bg-brand-500 px-6 py-2.5 text-sm font-bold uppercase tracking-wider text-black shadow-lg shadow-brand-500/20 transition-all duration-200 hover:bg-brand-400 active:translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 focus:ring-offset-zinc-900 disabled:cursor-not-allowed disabled:opacity-50"
     >
       {isSubmitting && (
         <svg className="animate-spin h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" aria-hidden="true">
@@ -352,7 +350,7 @@ const CallsignField = React.forwardRef<HTMLInputElement, {
     <label htmlFor="auth-callsign" className="block text-sm font-medium text-zinc-300">
       Callsign
     </label>
-    <div className="relative flex items-center rounded border-2 border-zinc-700 bg-zinc-800/50 transition-colors duration-200 focus-within:border-yellow-500 focus-within:ring-2 focus-within:ring-yellow-500 focus-within:ring-offset-2 focus-within:ring-offset-zinc-900">
+    <div className="relative flex items-center rounded border-2 border-zinc-700 bg-zinc-800/50 transition-colors duration-200 focus-within:border-brand-500 focus-within:ring-2 focus-within:ring-brand-500 focus-within:ring-offset-2 focus-within:ring-offset-zinc-900">
       <span className="pl-4 text-zinc-500" aria-hidden="true">
         <svg className="h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
@@ -393,7 +391,7 @@ const EmailField = React.forwardRef<HTMLInputElement, {
     <label htmlFor="auth-email" className="block text-sm font-medium text-zinc-300">
       Email
     </label>
-    <div className="relative flex items-center rounded border-2 border-zinc-700 bg-zinc-800/50 transition-colors duration-200 focus-within:border-yellow-500 focus-within:ring-2 focus-within:ring-yellow-500 focus-within:ring-offset-2 focus-within:ring-offset-zinc-900">
+    <div className="relative flex items-center rounded border-2 border-zinc-700 bg-zinc-800/50 transition-colors duration-200 focus-within:border-brand-500 focus-within:ring-2 focus-within:ring-brand-500 focus-within:ring-offset-2 focus-within:ring-offset-zinc-900">
       <span className="pl-4 text-zinc-500" aria-hidden="true">
         <svg className="h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" />
@@ -433,7 +431,7 @@ const PasswordField = React.forwardRef<HTMLInputElement, {
     <label htmlFor="auth-password" className="block text-sm font-medium text-zinc-300">
       Password
     </label>
-    <div className="relative flex items-center rounded border-2 border-zinc-700 bg-zinc-800/50 transition-colors duration-200 focus-within:border-yellow-500 focus-within:ring-2 focus-within:ring-yellow-500 focus-within:ring-offset-2 focus-within:ring-offset-zinc-900">
+    <div className="relative flex items-center rounded border-2 border-zinc-700 bg-zinc-800/50 transition-colors duration-200 focus-within:border-brand-500 focus-within:ring-2 focus-within:ring-brand-500 focus-within:ring-offset-2 focus-within:ring-offset-zinc-900">
       <span className="pl-4 text-zinc-500" aria-hidden="true">
         <svg className="h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
@@ -482,7 +480,7 @@ const ConfirmPasswordField = React.forwardRef<HTMLInputElement, {
     <label htmlFor="auth-confirm-password" className="block text-sm font-medium text-zinc-300">
       Confirm Password
     </label>
-    <div className="relative flex items-center rounded border-2 border-zinc-700 bg-zinc-800/50 transition-colors duration-200 focus-within:border-yellow-500 focus-within:ring-2 focus-within:ring-yellow-500 focus-within:ring-offset-2 focus-within:ring-offset-zinc-900">
+    <div className="relative flex items-center rounded border-2 border-zinc-700 bg-zinc-800/50 transition-colors duration-200 focus-within:border-brand-500 focus-within:ring-2 focus-within:ring-brand-500 focus-within:ring-offset-2 focus-within:ring-offset-zinc-900">
       <span className="pl-4 text-zinc-500" aria-hidden="true">
         <svg className="h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
@@ -519,13 +517,13 @@ ConfirmPasswordField.displayName = 'ConfirmPasswordField';
 function EyeIcon({ open }: { open: boolean }) {
   if (open) {
     return (
-      <svg className="h-[18px] w-[18px]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" aria-hidden="true">
+      <svg className="h-4.5 w-4.5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" aria-hidden="true">
         <path strokeLinecap="round" strokeLinejoin="round" d="M3.98 8.223A10.477 10.477 0 0 0 1.934 12c1.292 4.338 5.31 7.5 10.066 7.5.993 0 1.953-.138 2.863-.395M6.228 6.228A10.451 10.451 0 0 1 12 4.5c4.756 0 8.773 3.162 10.065 7.498a10.522 10.522 0 0 1-4.293 5.774M6.228 6.228 3 3m3.228 3.228 3.65 3.65m7.894 7.894L21 21m-3.228-3.228-3.65-3.65m0 0a3 3 0 1 0-4.243-4.243m4.242 4.242L9.88 9.88" />
       </svg>
     );
   }
   return (
-    <svg className="h-[18px] w-[18px]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" aria-hidden="true">
+    <svg className="h-4.5 w-4.5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" aria-hidden="true">
       <path strokeLinecap="round" strokeLinejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
       <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
     </svg>
@@ -543,15 +541,13 @@ function PasswordStrengthIndicator({ password }: { password: string }) {
         {[1, 2, 3].map((segment) => (
           <div
             key={segment}
-            className={`h-1 flex-1 rounded-full transition-all duration-300 ${
-              segment <= config.segments ? config.color : 'bg-zinc-700/50'
-            }`}
+            className={`h-1 flex-1 rounded-full transition-all duration-300 ${segment <= config.segments ? config.color : 'bg-zinc-700/50'
+              }`}
           />
         ))}
       </div>
-      <span className={`text-[10px] font-medium ${
-        strength === 'weak' ? 'text-red-400' : strength === 'fair' ? 'text-yellow-400' : 'text-emerald-400'
-      }`}>
+      <span className={`text-[10px] font-medium ${strength === 'weak' ? 'text-red-400' : strength === 'fair' ? 'text-brand-400' : 'text-emerald-400'
+        }`}>
         {config.label}
       </span>
     </div>

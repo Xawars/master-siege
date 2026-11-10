@@ -61,7 +61,7 @@ export function OperatorCardModal({ item, operatorKills, operatorDeaths, onClose
       <div className="relative bg-zinc-900 border border-zinc-700/50 rounded-lg shadow-2xl max-w-lg w-full max-h-[90vh] flex flex-col overflow-hidden animate-in zoom-in-95 duration-300">
         <div className="p-4 border-b border-white/5 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <h2 className="text-xl font-bold text-yellow-500 uppercase tracking-wider">
+            <h2 className="text-xl font-bold text-brand-500 uppercase tracking-wider">
               {item.operator.name}
             </h2>
           </div>
@@ -101,7 +101,7 @@ export function OperatorCardModal({ item, operatorKills, operatorDeaths, onClose
             {item.role && (
               <>
                 <span className="text-zinc-600">·</span>
-                <span className="text-yellow-500">{item.role}</span>
+                <span className="text-brand-500">{item.role}</span>
               </>
             )}
             <span className="text-zinc-600 ml-auto">·</span>

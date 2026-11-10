@@ -59,7 +59,7 @@ describe('Feature: design-system, Property 7: Gaming Context Color Resolution', 
     const tierArb = fc.constantFrom<'primary' | 'secondary' | 'niche'>('primary', 'secondary', 'niche');
 
     const expectedMap: Record<'primary' | 'secondary' | 'niche', string> = {
-      primary: 'border-yellow-500/30',
+      primary: 'border-brand-500/30',
       secondary: 'border-zinc-700',
       niche: 'border-zinc-700/50',
     };

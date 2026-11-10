@@ -35,7 +35,7 @@ export function OperatorPickerModal({ isOpen, onClose, onSelect, currentSide }: 
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+    <div className="fixed inset-0 z-100 flex items-center justify-center p-4">
       {/* Backdrop */}
       <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" onClick={onClose} />
 
@@ -63,7 +63,7 @@ export function OperatorPickerModal({ isOpen, onClose, onSelect, currentSide }: 
               placeholder="Search operators..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full pl-9 pr-3 py-2 bg-black/40 border border-zinc-700 rounded-lg text-sm text-white placeholder:text-zinc-500 focus:outline-none focus:border-yellow-500/50 focus:ring-1 focus:ring-yellow-500/20"
+              className="w-full pl-9 pr-3 py-2 bg-black/40 border border-zinc-700 rounded-lg text-sm text-white placeholder:text-zinc-500 focus:outline-none focus:border-brand-500/50 focus:ring-1 focus:ring-brand-500/20"
               autoFocus
             />
           </div>
@@ -72,31 +72,28 @@ export function OperatorPickerModal({ isOpen, onClose, onSelect, currentSide }: 
           <div className="flex gap-1 p-0.5 bg-black/40 rounded-md border border-white/5">
             <button
               onClick={() => setSideFilter(null)}
-              className={`flex-1 py-1.5 px-2 text-[10px] font-bold uppercase tracking-wider rounded transition-all ${
-                !sideFilter
+              className={`flex-1 py-1.5 px-2 text-[10px] font-bold uppercase tracking-wider rounded transition-all ${!sideFilter
                   ? 'bg-zinc-700 text-white shadow-sm'
                   : 'text-zinc-500 hover:text-zinc-300 hover:bg-white/5'
-              }`}
+                }`}
             >
               All ({operators.length})
             </button>
             <button
               onClick={() => setSideFilter('attacker')}
-              className={`flex-1 py-1.5 px-2 text-[10px] font-bold uppercase tracking-wider rounded flex items-center justify-center gap-1 transition-all ${
-                sideFilter === 'attacker'
+              className={`flex-1 py-1.5 px-2 text-[10px] font-bold uppercase tracking-wider rounded flex items-center justify-center gap-1 transition-all ${sideFilter === 'attacker'
                   ? 'bg-orange-500/20 text-orange-400 shadow-sm border border-orange-500/30'
                   : 'text-zinc-500 hover:text-zinc-300 hover:bg-white/5 border border-transparent'
-              }`}
+                }`}
             >
               <Swords className="w-3 h-3" /> ATK ({attackers.length})
             </button>
             <button
               onClick={() => setSideFilter('defender')}
-              className={`flex-1 py-1.5 px-2 text-[10px] font-bold uppercase tracking-wider rounded flex items-center justify-center gap-1 transition-all ${
-                sideFilter === 'defender'
+              className={`flex-1 py-1.5 px-2 text-[10px] font-bold uppercase tracking-wider rounded flex items-center justify-center gap-1 transition-all ${sideFilter === 'defender'
                   ? 'bg-blue-500/20 text-blue-400 shadow-sm border border-blue-500/30'
                   : 'text-zinc-500 hover:text-zinc-300 hover:bg-white/5 border border-transparent'
-              }`}
+                }`}
             >
               <ShieldHalf className="w-3 h-3" /> DEF ({defenders.length})
             </button>
@@ -126,11 +123,10 @@ export function OperatorPickerModal({ isOpen, onClose, onSelect, currentSide }: 
                       onSelect(op);
                       setSearch('');
                     }}
-                    className={`group flex flex-col items-center gap-1 p-2 rounded-lg border transition-all hover:scale-105 active:scale-95 ${
-                      op.side === 'attacker'
+                    className={`group flex flex-col items-center gap-1 p-2 rounded-lg border transition-all hover:scale-105 active:scale-95 ${op.side === 'attacker'
                         ? 'border-orange-500/20 hover:border-orange-500/50 hover:bg-orange-500/10'
                         : 'border-blue-500/20 hover:border-blue-500/50 hover:bg-blue-500/10'
-                    }`}
+                      }`}
                   >
                     {/* Icon */}
                     <div className="w-10 h-10 flex items-center justify-center group-hover:scale-110 transition-transform">
@@ -140,7 +136,10 @@ export function OperatorPickerModal({ isOpen, onClose, onSelect, currentSide }: 
                           dangerouslySetInnerHTML={{ __html: iconSvg }}
                         />
                       ) : op.id === 'snake' ? (
-                        <img src="/ops/snake_logo.png" alt={op.name} className="w-full h-full object-contain" />
+                        <>
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img src="/ops/snake_logo.png" alt={op.name} className="w-full h-full object-contain" />
+                        </>
                       ) : (
                         <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold text-white/70 ${op.side === 'attacker' ? 'bg-orange-500/30' : 'bg-blue-500/30'}`}>
                           {op.name[0]}

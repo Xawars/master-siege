@@ -34,8 +34,8 @@ const tierStyles: Record<MasteryTier, { ring: string; glow: string; bg: string }
     bg: 'bg-zinc-800',
   },
   elite: {
-    ring: 'border-yellow-500',
-    glow: 'shadow-[0_0_10px_rgba(234,179,8,0.4)]',
+    ring: 'border-brand-500',
+    glow: 'shadow-[0_0_10px_rgba(240, 90, 40,0.4)]',
     bg: 'bg-zinc-800',
   },
 };
@@ -70,7 +70,7 @@ export function MasteryTile({ operator, tier, deployments, onClick }: MasteryTil
           tier === 'recruit' ? 'bg-zinc-400' :
           tier === 'operative' ? 'bg-amber-600' :
           tier === 'veteran' ? 'bg-slate-300' :
-          'bg-yellow-500'
+          'bg-brand-500'
         }`} />
       )}
     </button>

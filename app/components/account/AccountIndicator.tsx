@@ -25,7 +25,7 @@ export function AccountIndicator({ onOpenStats, className = '' }: AccountIndicat
     return (
       <a
         href="/login"
-        className={`inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold uppercase tracking-wider text-yellow-500 border border-yellow-500/30 rounded-lg hover:bg-yellow-500/10 hover:border-yellow-500/50 transition-colors focus:outline-none focus:ring-2 focus:ring-yellow-500 ${className}`}
+        className={`inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold uppercase tracking-wider text-brand-500 border border-brand-500/30 rounded-lg hover:bg-brand-500/10 hover:border-brand-500/50 transition-colors focus:outline-none focus:ring-2 focus:ring-brand-500 ${className}`}
       >
         <LogIn className="w-3.5 h-3.5" />
         Sign In
@@ -45,9 +45,9 @@ export function AccountIndicator({ onOpenStats, className = '' }: AccountIndicat
         aria-haspopup="menu"
         aria-expanded={isMenuOpen}
         aria-label={`Account menu for ${displayName}`}
-        className={`inline-flex items-center gap-2 px-2 py-1.5 rounded-lg transition-all focus:outline-none focus:ring-2 focus:ring-yellow-500 ${
+        className={`inline-flex items-center gap-2 px-2 py-1.5 rounded-lg transition-all focus:outline-none focus:ring-2 focus:ring-brand-500 ${
           isMenuOpen
-            ? 'bg-white/10 ring-1 ring-yellow-500/30'
+            ? 'bg-white/10 ring-1 ring-brand-500/30'
             : 'hover:bg-white/5'
         }`}
       >

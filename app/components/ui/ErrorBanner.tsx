@@ -24,7 +24,7 @@ export function ErrorBanner({
         <button
           type="button"
           onClick={onRetry}
-          className="text-red-400 hover:text-red-300 text-xs font-bold uppercase tracking-wider transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 focus:ring-offset-zinc-900 rounded"
+          className="text-red-400 hover:text-red-300 text-xs font-bold uppercase tracking-wider transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 focus:ring-offset-zinc-900 rounded"
         >
           RETRY
         </button>
@@ -34,7 +34,7 @@ export function ErrorBanner({
           type="button"
           onClick={onDismiss}
           aria-label="Dismiss error"
-          className="text-red-400 hover:text-red-300 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 focus:ring-offset-zinc-900 rounded"
+          className="text-red-400 hover:text-red-300 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 focus:ring-offset-zinc-900 rounded"
         >
           <X className="w-4 h-4" aria-hidden="true" />
         </button>

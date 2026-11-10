@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Shuffle } from 'lucide-react';
 import { MatchType } from '../data/types';
 import { MATCH_TYPES, getRandomMatchType } from '../data/operators';
@@ -13,13 +13,6 @@ interface MatchTypeSelectorProps {
 
 export function MatchTypeSelector({ currentType, onSelect, isRollingParent }: MatchTypeSelectorProps) {
   const [isRolling, setIsRolling] = useState(false);
-  const [displayType, setDisplayType] = useState<string>(currentType || 'ANY');
-
-  useEffect(() => {
-    if (!isRolling) {
-      setDisplayType(currentType || 'ANY');
-    }
-  }, [currentType, isRolling]);
 
   const handleRoll = () => {
     if (isRolling || isRollingParent) return;
@@ -27,13 +20,10 @@ export function MatchTypeSelector({ currentType, onSelect, isRollingParent }: Ma
     let rolls = 0;
     const maxRolls = 15;
     const interval = setInterval(() => {
-      setDisplayType(MATCH_TYPES[Math.floor(Math.random() * MATCH_TYPES.length)]);
       rolls++;
       if (rolls >= maxRolls) {
         clearInterval(interval);
-        const finalType = getRandomMatchType();
-        setDisplayType(finalType);
-        onSelect(finalType);
+        onSelect(getRandomMatchType());
         setIsRolling(false);
       }
     }, 50);
@@ -61,7 +51,7 @@ export function MatchTypeSelector({ currentType, onSelect, isRollingParent }: Ma
             onClick={() => onSelect(mt)}
             className={`flex-1 py-1.5 px-1 text-[10px] font-bold uppercase tracking-wider rounded transition-all ${
               currentType === mt
-                ? 'bg-yellow-500/20 text-yellow-500 shadow-sm border border-yellow-500/30'
+                ? 'bg-brand-500/20 text-brand-500 shadow-sm border border-brand-500/30'
                 : 'text-zinc-500 hover:text-zinc-300 hover:bg-white/5 border border-transparent'
             }`}
           >
@@ -75,12 +65,12 @@ export function MatchTypeSelector({ currentType, onSelect, isRollingParent }: Ma
         disabled={isRolling || isRollingParent}
         className={`p-1.5 rounded-md border transition-all shrink-0 ${
           isRolling
-            ? 'bg-yellow-500/20 border-yellow-500/30'
+            ? 'bg-brand-500/20 border-brand-500/30'
             : 'bg-zinc-800/80 border-zinc-700/50 hover:bg-zinc-700'
         }`}
         title="Randomize"
       >
-        <Shuffle className={`w-3.5 h-3.5 ${isRolling ? 'text-yellow-500 animate-spin' : 'text-zinc-400'}`} />
+        <Shuffle className={`w-3.5 h-3.5 ${isRolling ? 'text-brand-500 animate-spin' : 'text-zinc-400'}`} />
       </button>
     </div>
   );

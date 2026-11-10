@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useOnboardingContext } from './OnboardingProvider';
+import { MasterSiegeLogo } from '../MasterSiegeLogo';
 
 interface TacticalEntryProps {
   children: React.ReactNode;
@@ -49,7 +50,7 @@ export function TacticalEntry({ children, onComplete }: TacticalEntryProps) {
 
   // Already played — just render children
   if (phase === 'done') {
-    return <div className="animate-entry-reveal h-dvh h-screen overflow-hidden">{children}</div>;
+    return <div className="animate-entry-reveal h-dvh overflow-hidden">{children}</div>;
   }
 
   return (
@@ -59,33 +60,31 @@ export function TacticalEntry({ children, onComplete }: TacticalEntryProps) {
         style={{ opacity: phase === 'reveal' ? 0 : 1, pointerEvents: phase === 'reveal' ? 'none' : 'auto' }}
       >
         {/* Logo */}
+        <MasterSiegeLogo size={72} className="mb-4 rounded-2xl" />
         <h1
-          className={`text-4xl font-black uppercase italic tracking-tighter transition-all duration-500 ${
-            phase === 'logo' || phase === 'text' || phase === 'reveal'
+          className={`text-4xl font-black uppercase italic tracking-tighter transition-all duration-500 ${phase === 'logo' || phase === 'text' || phase === 'reveal'
               ? 'opacity-100 scale-100'
               : 'opacity-0 scale-95'
-          }`}
+            }`}
         >
-          <span className="text-yellow-500">Master</span>{' '}
+          <span className="text-brand-500">Master</span>{' '}
           <span className="text-white">Siege</span>
         </h1>
 
         {/* Typed text */}
         <p
-          className={`mt-4 font-mono text-sm uppercase tracking-[0.3em] text-zinc-400 transition-all duration-500 ${
-            phase === 'text' || phase === 'reveal'
+          className={`mt-4 font-mono text-sm uppercase tracking-[0.3em] text-zinc-400 transition-all duration-500 ${phase === 'text' || phase === 'reveal'
               ? 'opacity-100 translate-y-0'
               : 'opacity-0 translate-y-2'
-          }`}
+            }`}
         >
           Operator Standing By
         </p>
 
         {/* Subtle pulse ring */}
         <div
-          className={`absolute w-32 h-32 rounded-full border border-yellow-500/20 transition-all duration-1000 ${
-            phase === 'text' ? 'scale-100 opacity-100' : 'scale-150 opacity-0'
-          }`}
+          className={`absolute w-32 h-32 rounded-full border border-brand-500/20 transition-all duration-1000 ${phase === 'text' ? 'scale-100 opacity-100' : 'scale-150 opacity-0'
+            }`}
         />
       </div>
 

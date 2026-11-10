@@ -22,9 +22,9 @@ describe('design-tokens', () => {
       expect(foundationTokens['white']).toBe('#ffffff');
     });
 
-    it('contains brand yellow tokens', () => {
-      expect(foundationTokens['yellow-500']).toBe('#eab308');
-      expect(foundationTokens['yellow-400']).toBe('#facc15');
+    it('contains brand orange tokens', () => {
+      expect(foundationTokens['brand-500']).toBe('#f05a28');
+      expect(foundationTokens['brand-400']).toBe('#f47650');
     });
 
     it('contains attack orange tokens', () => {
@@ -51,7 +51,7 @@ describe('design-tokens', () => {
 
   describe('isValidToken', () => {
     it('returns true for valid foundation token names', () => {
-      expect(isValidToken('yellow-500')).toBe(true);
+      expect(isValidToken('brand-500')).toBe(true);
       expect(isValidToken('zinc-900')).toBe(true);
       expect(isValidToken('black')).toBe(true);
     });
@@ -65,7 +65,7 @@ describe('design-tokens', () => {
 
   describe('resolveToken', () => {
     it('resolves semantic tokens to hex values', () => {
-      expect(resolveToken('accent')).toBe('#eab308');
+      expect(resolveToken('accent')).toBe('#f05a28');
       expect(resolveToken('bg-primary')).toBe('#000000');
       expect(resolveToken('text-primary')).toBe('#ffffff');
       expect(resolveToken('error')).toBe('#ef4444');
@@ -88,8 +88,8 @@ describe('design-tokens', () => {
   });
 
   describe('getImportanceBorder', () => {
-    it('returns border-yellow-500/30 for primary tier', () => {
-      expect(getImportanceBorder('primary')).toBe('border-yellow-500/30');
+    it('returns border-brand-500/30 for primary tier', () => {
+      expect(getImportanceBorder('primary')).toBe('border-brand-500/30');
     });
 
     it('returns border-zinc-700 for secondary tier', () => {
@@ -108,10 +108,10 @@ describe('design-tokens', () => {
     });
 
     it('exposes utility functions', () => {
-      expect(designTokens.isValidToken('yellow-500')).toBe(true);
-      expect(designTokens.resolveToken('accent')).toBe('#eab308');
+      expect(designTokens.isValidToken('brand-500')).toBe(true);
+      expect(designTokens.resolveToken('accent')).toBe('#f05a28');
       expect(designTokens.getContextColor('attack')).toBe('orange-500');
-      expect(designTokens.getImportanceBorder('primary')).toBe('border-yellow-500/30');
+      expect(designTokens.getImportanceBorder('primary')).toBe('border-brand-500/30');
     });
   });
 });

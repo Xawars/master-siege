@@ -102,7 +102,7 @@ export function OAuthButtonGroup({
         onClick={() => onOAuthClick('google')}
         disabled={isDisabled}
         aria-label="Continue with Google"
-        className="inline-flex w-full items-center justify-center gap-3 rounded border border-zinc-700 bg-zinc-800/50 px-4 py-2.5 text-sm font-medium text-zinc-300 transition-all duration-200 hover:border-zinc-500 hover:bg-zinc-800 hover:text-white focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 focus:ring-offset-zinc-900 disabled:cursor-not-allowed disabled:opacity-50"
+        className="inline-flex w-full items-center justify-center gap-3 rounded border border-zinc-700 bg-zinc-800/50 px-4 py-2.5 text-sm font-medium text-zinc-300 transition-all duration-200 hover:border-zinc-500 hover:bg-zinc-800 hover:text-white focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 focus:ring-offset-zinc-900 disabled:cursor-not-allowed disabled:opacity-50"
       >
         {loadingProvider === 'google' ? <LoadingSpinner /> : <GoogleIcon />}
         <span>Continue with Google</span>

@@ -41,7 +41,7 @@ export function SessionSummaryModal({ isOpen, onClose, sessionData }: SessionSum
       <div className="relative bg-zinc-900 border border-zinc-700/50 rounded-xl shadow-2xl w-full max-w-sm overflow-hidden animate-in zoom-in-95 duration-300 slide-in-from-bottom-4">
         {/* Header */}
         <div className="flex items-center justify-between px-4 py-3 border-b border-white/5">
-          <h2 className="text-sm font-bold text-yellow-500 uppercase tracking-wider">
+          <h2 className="text-sm font-bold text-brand-500 uppercase tracking-wider">
             Session Summary
           </h2>
           <button
@@ -78,7 +78,7 @@ export function SessionSummaryModal({ isOpen, onClose, sessionData }: SessionSum
                   <p className="text-[10px] text-zinc-500 uppercase tracking-wider mb-0.5">Best Map</p>
                   <div className="flex items-center justify-between">
                     <span className="text-sm font-medium text-white">{bestMap.mapName}</span>
-                    <span className="text-sm font-bold text-yellow-400">{bestMap.kd.toFixed(2)} K/D</span>
+                    <span className="text-sm font-bold text-brand-400">{bestMap.kd.toFixed(2)} K/D</span>
                   </div>
                 </div>
               )}
@@ -138,7 +138,7 @@ function StatBlock({ label, value, highlight }: { label: string; value: string; 
   return (
     <div className="text-center">
       <p className="text-[10px] text-zinc-500 uppercase tracking-wider mb-0.5">{label}</p>
-      <p className={`text-lg font-bold tabular-nums ${highlight ? 'text-yellow-400' : 'text-white'}`}>
+      <p className={`text-lg font-bold tabular-nums ${highlight ? 'text-brand-400' : 'text-white'}`}>
         {value}
       </p>
     </div>

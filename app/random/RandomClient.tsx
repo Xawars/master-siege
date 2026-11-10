@@ -13,7 +13,7 @@ export function RandomClient({ operators }: { operators: RandomOperator[] }) {
   const [result, setResult] = useState<RandomOperator | null>(null);
   const [isRolling, setIsRolling] = useState(false);
   const [revealed, setRevealed] = useState(false);
-  const [history, setHistory] = useState<RandomOperator[]>([]);
+  const [, setHistory] = useState<RandomOperator[]>([]);
   const intervalRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [cycleOp, setCycleOp] = useState<RandomOperator | null>(null);
   const cardRef = useRef<HTMLDivElement>(null);
@@ -153,7 +153,7 @@ export function RandomClient({ operators }: { operators: RandomOperator[] }) {
     }
 
     intervalRef.current = setTimeout(cycle, delays[0]);
-  }, [isRolling, pool, kills, deaths, roundsWon, roundsLost, result, activeDeployIdx, deployments.length]);
+  }, [isRolling, pool, kills, deaths, roundsWon, roundsLost, result, activeDeployIdx, deployments.length, setActiveDeployIdx, setDeployments, setOperatorStats]);
 
   // Keyboard shortcut: Space to roll
   useEffect(() => {
@@ -228,7 +228,7 @@ export function RandomClient({ operators }: { operators: RandomOperator[] }) {
           >
             <ArrowLeft className="w-5 h-5" />
           </Link>
-          <Dices className="w-5 h-5 text-yellow-500" />
+          <Dices className="w-5 h-5 text-brand-500" />
           <h1 className="text-lg font-black uppercase tracking-tight">Random Operator</h1>
           {deployments.length > 0 && (
             <button
@@ -303,18 +303,18 @@ export function RandomClient({ operators }: { operators: RandomOperator[] }) {
 
             {/* Kills objective */}
             <div className={`relative rounded-xl border p-4 transition-all duration-500 ${
-              objectives ? 'border-yellow-500/30 bg-yellow-500/5' : 'border-zinc-800 bg-zinc-900'
+              objectives ? 'border-brand-500/30 bg-brand-500/5' : 'border-zinc-800 bg-zinc-900'
             }`}>
               <div className="flex items-center gap-3">
                 <div className={`w-10 h-10 rounded-lg flex items-center justify-center shrink-0 ${
-                  objectives ? 'bg-yellow-500/20' : 'bg-zinc-800'
+                  objectives ? 'bg-brand-500/20' : 'bg-zinc-800'
                 }`}>
-                  <Crosshair className={`w-5 h-5 ${objectives ? 'text-yellow-400' : 'text-zinc-600'}`} />
+                  <Crosshair className={`w-5 h-5 ${objectives ? 'text-brand-400' : 'text-zinc-600'}`} />
                 </div>
                 <div>
                   <p className="text-[10px] font-bold uppercase tracking-wider text-zinc-400">Kill Target</p>
                   {objectives ? (
-                    <p className="text-2xl font-black text-yellow-400">{objectives.kills}<span className="text-sm text-zinc-400 ml-1">kills</span></p>
+                    <p className="text-2xl font-black text-brand-400">{objectives.kills}<span className="text-sm text-zinc-400 ml-1">kills</span></p>
                   ) : (
                     <p className="text-sm text-zinc-600 font-mono">— —</p>
                   )}
@@ -324,7 +324,7 @@ export function RandomClient({ operators }: { operators: RandomOperator[] }) {
               {/* Kill/Death counters */}
               {objectives && (
                 <div className="mt-3 pt-3 border-t border-zinc-800 grid grid-cols-2 gap-2">
-                  <Counter label="Kills" value={kills} target={objectives.kills} color="text-yellow-400" onIncrement={() => setKills(k => k + 1)} onDecrement={() => setKills(k => Math.max(0, k - 1))} />
+                  <Counter label="Kills" value={kills} target={objectives.kills} color="text-brand-400" onIncrement={() => setKills(k => k + 1)} onDecrement={() => setKills(k => Math.max(0, k - 1))} />
                   <Counter label="Deaths" value={deaths} color="text-red-400" onIncrement={() => setDeaths(d => d + 1)} onDecrement={() => setDeaths(d => Math.max(0, d - 1))} />
                 </div>
               )}
@@ -390,7 +390,7 @@ export function RandomClient({ operators }: { operators: RandomOperator[] }) {
               !isRolling && result
                 ? `${revealed ? 'scale-100' : 'scale-[0.97]'} ${isAttacker ? 'border-orange-500/40' : 'border-blue-500/40'}`
                 : isRolling
-                  ? 'border-yellow-500/50 animate-pulse scale-100'
+                  ? 'border-brand-500/50 animate-pulse scale-100'
                   : 'border-zinc-800 scale-100'
             }`}
             style={{
@@ -447,14 +447,14 @@ export function RandomClient({ operators }: { operators: RandomOperator[] }) {
                 </p>
 
                 {/* Scan lines */}
-                <div className="absolute inset-x-0 h-px bg-linear-to-r from-transparent via-yellow-500/60 to-transparent animate-scan-line" />
+                <div className="absolute inset-x-0 h-px bg-linear-to-r from-transparent via-brand-500/60 to-transparent animate-scan-line" />
                 <div className="absolute inset-x-0 h-px bg-linear-to-r from-transparent via-white/20 to-transparent animate-scan-line" style={{ animationDelay: '300ms' }} />
 
                 {/* Corner accents */}
-                <div className="absolute top-3 left-3 w-4 h-4 border-t border-l border-yellow-500/40" />
-                <div className="absolute top-3 right-3 w-4 h-4 border-t border-r border-yellow-500/40" />
-                <div className="absolute bottom-3 left-3 w-4 h-4 border-b border-l border-yellow-500/40" />
-                <div className="absolute bottom-3 right-3 w-4 h-4 border-b border-r border-yellow-500/40" />
+                <div className="absolute top-3 left-3 w-4 h-4 border-t border-l border-brand-500/40" />
+                <div className="absolute top-3 right-3 w-4 h-4 border-t border-r border-brand-500/40" />
+                <div className="absolute bottom-3 left-3 w-4 h-4 border-b border-l border-brand-500/40" />
+                <div className="absolute bottom-3 right-3 w-4 h-4 border-b border-r border-brand-500/40" />
               </div>
             )}
 
@@ -484,7 +484,7 @@ export function RandomClient({ operators }: { operators: RandomOperator[] }) {
 
                 <div className="flex items-center gap-5">
                   <StatDots value={result.health} color="bg-red-400" icon={<Heart className="w-3.5 h-3.5 text-red-400" />} />
-                  <StatDots value={result.speed} color="bg-yellow-400" icon={<Zap className="w-3.5 h-3.5 text-yellow-400" />} />
+                  <StatDots value={result.speed} color="bg-brand-400" icon={<Zap className="w-3.5 h-3.5 text-brand-400" />} />
                   <StatDots value={result.difficulty} color="bg-purple-400" icon={<Brain className="w-3.5 h-3.5 text-purple-400" />} />
                 </div>
               </div>
@@ -542,7 +542,7 @@ export function RandomClient({ operators }: { operators: RandomOperator[] }) {
           <button
             onClick={roll}
             disabled={isRolling || pool.length === 0}
-            className="flex items-center gap-2 px-8 py-3.5 bg-yellow-500 hover:bg-yellow-400 disabled:opacity-50 disabled:cursor-not-allowed text-black font-black uppercase tracking-wider rounded-xl transition-colors active:scale-95"
+            className="flex items-center gap-2 px-8 py-3.5 bg-brand-500 hover:bg-brand-400 disabled:opacity-50 disabled:cursor-not-allowed text-black font-black uppercase tracking-wider rounded-xl transition-colors active:scale-95"
           >
             {result ? <RotateCcw className="w-5 h-5" /> : <Dices className="w-5 h-5" />}
             {isRolling ? 'Rolling...' : result ? 'Reroll' : 'Roll'}
@@ -608,12 +608,12 @@ export function RandomClient({ operators }: { operators: RandomOperator[] }) {
                 return (
                   <>
                     <p className={`text-3xl font-black tabular-nums ${
-                      kd === null ? 'text-zinc-600' : kd >= 1 ? 'text-yellow-400' : 'text-red-400'
+                      kd === null ? 'text-zinc-600' : kd >= 1 ? 'text-brand-400' : 'text-red-400'
                     }`}>
                       {kd === null ? '—' : kd.toFixed(2)}
                     </p>
                     <div className="flex gap-3 mt-2 text-[10px] text-zinc-500">
-                      <span><span className="text-yellow-400 font-bold">{totalKills}</span> kills</span>
+                      <span><span className="text-brand-400 font-bold">{totalKills}</span> kills</span>
                       <span><span className="text-red-400 font-bold">{totalDeaths}</span> deaths</span>
                     </div>
                   </>
@@ -632,7 +632,7 @@ export function RandomClient({ operators }: { operators: RandomOperator[] }) {
                 </div>
                 <div className="h-2 rounded-full bg-zinc-800 overflow-hidden">
                   <div
-                    className={`h-full rounded-full transition-all duration-300 ${kills >= objectives.kills ? 'bg-emerald-500' : 'bg-yellow-500'}`}
+                    className={`h-full rounded-full transition-all duration-300 ${kills >= objectives.kills ? 'bg-emerald-500' : 'bg-brand-500'}`}
                     style={{ width: `${Math.min((kills / objectives.kills) * 100, 100)}%` }}
                   />
                 </div>

@@ -42,7 +42,7 @@ const tierColors: Record<MasteryTier, string> = {
   recruit: 'text-zinc-300',
   operative: 'text-amber-500',
   veteran: 'text-slate-200',
-  elite: 'text-yellow-500',
+  elite: 'text-brand-500',
 };
 
 const tierBorderColors: Record<MasteryTier, string> = {
@@ -50,7 +50,7 @@ const tierBorderColors: Record<MasteryTier, string> = {
   recruit: 'border-zinc-500',
   operative: 'border-amber-700',
   veteran: 'border-slate-300',
-  elite: 'border-yellow-500',
+  elite: 'border-brand-500',
 };
 
 const tierProgressColors: Record<MasteryTier, string> = {
@@ -58,7 +58,7 @@ const tierProgressColors: Record<MasteryTier, string> = {
   recruit: 'from-zinc-500 to-zinc-300',
   operative: 'from-amber-700 to-amber-500',
   veteran: 'from-slate-400 to-slate-200',
-  elite: 'from-yellow-600 to-yellow-400',
+  elite: 'from-brand-600 to-brand-400',
 };
 
 export function MasteryDetailModal({ data, onClose }: MasteryDetailModalProps) {

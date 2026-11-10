@@ -39,7 +39,6 @@ describe('resolveConflict', () => {
 describe('conflict resolution in executeOperation', () => {
   let createSyncQueue: typeof import('../sync-queue').createSyncQueue;
   let mockStorage: Record<string, string>;
-  let mockFrom: ReturnType<typeof vi.fn>;
 
   beforeEach(async () => {
     vi.resetModules();
@@ -100,7 +99,7 @@ describe('conflict resolution in executeOperation', () => {
 
     vi.mock('../supabase', () => ({
       supabase: {
-        from: vi.fn((table: string) => ({
+        from: vi.fn(() => ({
           upsert: upsertMock,
           insert: insertMock,
           select: selectMock,
@@ -177,7 +176,7 @@ describe('conflict resolution in executeOperation', () => {
       configurable: true,
     });
 
-    const queue = createSyncQueue();
+    createSyncQueue();
 
     // Enqueue with a past timestamp by manipulating the operation directly
     const op: QueuedOperation = {

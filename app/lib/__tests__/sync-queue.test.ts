@@ -140,9 +140,6 @@ describe('SyncQueue', () => {
         configurable: true,
       });
 
-      const mod = await import('../supabase');
-      const queue = createSyncQueue();
-
       // Manually add to queue without triggering drain
       const ops: QueuedOperation[] = [
         { id: '1', table: 'test', operation: 'insert', payload: { x: 1 }, timestamp: Date.now(), retryCount: 0 },

@@ -2,7 +2,6 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { Operator, Loadout, Platform } from '../data/types';
-import { getRoleColor, Role } from '../data/roles';
 import * as r6operators from 'r6operators';
 
 interface OperatorDisplayProps {
@@ -42,7 +41,7 @@ const ROLE_BORDER_COLORS: Record<string, string> = {
   'Flex': 'rgba(255,255,255,0.3)',
   'Anchor': 'rgba(34,197,94,0.5)',
   'Roamer': 'rgba(239,68,68,0.5)',
-  'Lurker': 'rgba(234,179,8,0.5)',
+  'Lurker': 'rgba(240, 90, 40,0.5)',
   'Intel Denier': 'rgba(96,165,250,0.5)',
   'Anti-Breach': 'rgba(217,119,6,0.5)',
   'Trap Operator': 'rgba(168,85,247,0.5)',
@@ -61,7 +60,7 @@ function getMatchTypeTint(matchType?: string | null): string {
   }
 }
 
-export function OperatorDisplay({ operator, loadout, matchType, platform, isRolling, hideBg, hideLoadout, targetKills, operatorKills = 0, role, onLoadoutChange }: OperatorDisplayProps) {
+export function OperatorDisplay({ operator, loadout, matchType, isRolling, hideBg, hideLoadout, targetKills, operatorKills = 0, role, onLoadoutChange }: OperatorDisplayProps) {
   const [bgError, setBgError] = useState(false);
   const [imgLoaded, setImgLoaded] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
@@ -89,7 +88,7 @@ export function OperatorDisplay({ operator, loadout, matchType, platform, isRoll
 
   if (!operator || !loadout) {
     return (
-      <div className="relative flex flex-col items-center justify-center p-8 border border-zinc-800 rounded-xl h-full min-h-[200px] overflow-hidden">
+      <div className="relative flex flex-col items-center justify-center p-8 border border-zinc-800 rounded-xl h-full min-h-50 overflow-hidden">
         {/* Subtle animated background */}
         <div className="absolute inset-0 bg-linear-to-br from-zinc-900 via-zinc-900/90 to-zinc-800/50" />
         <div className="absolute inset-0 opacity-[0.03]" style={{
@@ -97,7 +96,7 @@ export function OperatorDisplay({ operator, loadout, matchType, platform, isRoll
           backgroundSize: '24px 24px',
         }} />
         {/* Radar pulse glow */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-40 h-40 rounded-full bg-yellow-500/5 blur-3xl animate-radar-pulse" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-40 h-40 rounded-full bg-brand-500/5 blur-3xl animate-radar-pulse" />
         {/* Silhouette outline */}
         <div className="absolute inset-0 flex items-center justify-center opacity-[0.04]">
           <svg viewBox="0 0 100 160" className="w-24 h-36" fill="currentColor">
@@ -120,7 +119,7 @@ export function OperatorDisplay({ operator, loadout, matchType, platform, isRoll
   // Paths — guest operators use .png, standard ops use .jpg
   const imgExt = operator.id === 'snake' ? 'png' : 'jpg';
   const bgPath = `/ops/${operator.id}.${imgExt}`;
-  
+
   // Get icon from r6operators library
   const opIconData = (r6operators as any)[operator.id];
   const iconSvg = opIconData?.toSVG({
@@ -154,7 +153,7 @@ export function OperatorDisplay({ operator, loadout, matchType, platform, isRoll
         ...(roleBorderColor ? { borderColor: roleBorderColor } : {}),
       } as React.CSSProperties}
     >
-      
+
       {/* Background Image Layer */}
       {!hideBg && (
         <div className="absolute inset-0 z-0">
@@ -165,20 +164,23 @@ export function OperatorDisplay({ operator, loadout, matchType, platform, isRoll
             </div>
           )}
           {!bgError ? (
-            <img 
-              src={bgPath} 
-              alt="" 
-              className={`w-full h-full object-cover transition-all duration-700 ${imgLoaded ? 'opacity-50' : 'opacity-0'} ${isHovered ? 'scale-110' : 'scale-100'}`}
-              style={{
-                objectPosition: OPERATOR_BG_POSITION[operator.id] || 'top',
-                transform: isHovered 
-                  ? `scale(1.1) translate(${tilt.x * -2}px, ${tilt.y * 2}px)` 
-                  : 'scale(1)',
-                transition: 'transform 0.3s ease-out, opacity 0.5s ease',
-              }}
-              onLoad={() => setImgLoaded(true)}
-              onError={() => setBgError(true)}
-            />
+            <>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={bgPath}
+                alt=""
+                className={`w-full h-full object-cover transition-all duration-700 ${imgLoaded ? 'opacity-50' : 'opacity-0'} ${isHovered ? 'scale-110' : 'scale-100'}`}
+                style={{
+                  objectPosition: OPERATOR_BG_POSITION[operator.id] || 'top',
+                  transform: isHovered
+                    ? `scale(1.1) translate(${tilt.x * -2}px, ${tilt.y * 2}px)`
+                    : 'scale(1)',
+                  transition: 'transform 0.3s ease-out, opacity 0.5s ease',
+                }}
+                onLoad={() => setImgLoaded(true)}
+                onError={() => setBgError(true)}
+              />
+            </>
           ) : (
             // Fallback Gradient if image fails
             <div className={`w-full h-full ${isAttacker ? 'bg-linear-to-br from-orange-900/40 to-black' : 'bg-linear-to-br from-blue-900/40 to-black'}`} />
@@ -215,21 +217,24 @@ export function OperatorDisplay({ operator, loadout, matchType, platform, isRoll
               </span>
             )}
           </div>
-          
+
           {/* Icon */}
           <div className="h-12 w-12 flex items-center justify-center">
             {iconSvg ? (
-               <div 
-                 className="w-full h-full flex items-center justify-center"
-                 dangerouslySetInnerHTML={{ __html: iconSvg }}
-               />
+              <div
+                className="w-full h-full flex items-center justify-center"
+                dangerouslySetInnerHTML={{ __html: iconSvg }}
+              />
             ) : operator.id === 'snake' ? (
+              <>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src="/ops/snake_logo.png" alt={operator.name} className="w-full h-full object-contain drop-shadow-lg" />
+              </>
             ) : (
-                // Fallback Icon
-                <div className="h-12 w-12 bg-white/10 rounded-full flex items-center justify-center font-bold text-xl text-white/50">
-                    {operator.name[0]}
-                </div>
+              // Fallback Icon
+              <div className="h-12 w-12 bg-white/10 rounded-full flex items-center justify-center font-bold text-xl text-white/50">
+                {operator.name[0]}
+              </div>
             )}
           </div>
         </div>
@@ -294,13 +299,13 @@ function LoadoutItem({ label, value, options, onCycle }: { label: string; value:
   return (
     <div
       onClick={handleClick}
-      className={`flex flex-col border-l-3 border-yellow-500/50 pl-3 bg-black/40 py-1.5 rounded-r-lg backdrop-blur-md ${canCycle ? 'cursor-pointer hover:bg-white/5 active:bg-white/10 transition-colors' : ''}`}
+      className={`flex flex-col border-l-3 border-brand-500/50 pl-3 bg-black/40 py-1.5 rounded-r-lg backdrop-blur-md ${canCycle ? 'cursor-pointer hover:bg-white/5 active:bg-white/10 transition-colors' : ''}`}
       role={canCycle ? 'button' : undefined}
       tabIndex={canCycle ? 0 : undefined}
       onKeyDown={canCycle ? (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleClick(); } } : undefined}
       aria-label={canCycle ? `${label}: ${value}. Tap to change.` : undefined}
     >
-      <span className="text-yellow-500/80 text-[9px] font-bold uppercase tracking-widest">
+      <span className="text-brand-500/80 text-[9px] font-bold uppercase tracking-widest">
         {label}
         {canCycle && <span className="text-zinc-500 ml-1">⟳</span>}
       </span>

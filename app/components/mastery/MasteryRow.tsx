@@ -26,7 +26,7 @@ const tierBadgeStyles: Record<MasteryTier, string> = {
   recruit: 'bg-zinc-800 text-zinc-300 border-zinc-600/50',
   operative: 'bg-amber-950/50 text-amber-500 border-amber-700/50',
   veteran: 'bg-slate-900/50 text-slate-200 border-slate-400/50',
-  elite: 'bg-yellow-950/50 text-yellow-500 border-yellow-600/50',
+  elite: 'bg-brand-950/50 text-brand-500 border-brand-600/50',
 };
 
 const tierIconRing: Record<MasteryTier, string> = {
@@ -34,7 +34,7 @@ const tierIconRing: Record<MasteryTier, string> = {
   recruit: 'border-zinc-500',
   operative: 'border-amber-700',
   veteran: 'border-slate-300',
-  elite: 'border-yellow-500',
+  elite: 'border-brand-500',
 };
 
 export function MasteryRow({ operator, tier, deployments, kd, onClick }: MasteryRowProps) {
