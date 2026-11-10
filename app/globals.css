@@ -612,3 +612,21 @@ html, body {
   100% { top: 100%; }
 }
 
+/* Dot-matrix loader */
+.dmx-dot {
+  opacity: 0.15;
+  animation: dmx-scan 1.1s ease-in-out infinite;
+}
+
+@keyframes dmx-scan {
+  0%, 60%, 100% { opacity: 0.15; transform: scale(0.8); }
+  25% { opacity: 1; transform: scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dmx-dot {
+    animation: none;
+    opacity: 0.6;
+  }
+}
+

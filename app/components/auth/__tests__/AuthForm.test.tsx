@@ -72,7 +72,7 @@ describe('AuthForm', () => {
           onFieldChange={vi.fn()}
         />
       );
-      const spinner = container.querySelector('svg.animate-spin');
+      const spinner = container.querySelector('.dmx-dot');
       expect(spinner).toBeInTheDocument();
     });
 
@@ -91,7 +91,7 @@ describe('AuthForm', () => {
           onFieldChange={vi.fn()}
         />
       );
-      const spinner = container.querySelector('svg.animate-spin');
+      const spinner = container.querySelector('.dmx-dot');
       expect(spinner).not.toBeInTheDocument();
     });
   });

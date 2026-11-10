@@ -68,19 +68,19 @@ describe("OAuthButtonGroup", () => {
         <OAuthButtonGroup {...defaultProps} loadingProvider="google" />
       );
       const googleButton = screen.getByRole("button", { name: "Continue with Google" });
-      expect(googleButton.querySelector(".animate-spin")).toBeInTheDocument();
+      expect(googleButton.querySelector(".dmx-dot")).toBeInTheDocument();
       // Discord button should NOT have a spinner
       const discordButton = screen.getByRole("button", { name: "Continue with Discord" });
-      expect(discordButton.querySelector(".animate-spin")).not.toBeInTheDocument();
+      expect(discordButton.querySelector(".dmx-dot")).not.toBeInTheDocument();
     });
 
     it("shows a spinner on the Discord button when loadingProvider is 'discord'", () => {
       render(<OAuthButtonGroup {...defaultProps} loadingProvider="discord" />);
       const discordButton = screen.getByRole("button", { name: "Continue with Discord" });
-      expect(discordButton.querySelector(".animate-spin")).toBeInTheDocument();
+      expect(discordButton.querySelector(".dmx-dot")).toBeInTheDocument();
       // Google button should NOT have a spinner
       const googleButton = screen.getByRole("button", { name: "Continue with Google" });
-      expect(googleButton.querySelector(".animate-spin")).not.toBeInTheDocument();
+      expect(googleButton.querySelector(".dmx-dot")).not.toBeInTheDocument();
     });
 
     it("disables both buttons when disabled prop is true", () => {
