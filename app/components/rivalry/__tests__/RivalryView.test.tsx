@@ -13,7 +13,7 @@ vi.mock('../../../hooks/useRivalry', () => ({
 
 // Mock child components with complex dependencies
 vi.mock('../../OperatorPickerModal', () => ({
-  OperatorPickerModal: ({ isOpen, onClose, onSelect }: { isOpen: boolean; onClose: () => void; onSelect: (op: Operator) => void }) =>
+  OperatorPickerModal: ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) =>
     isOpen ? <div data-testid="operator-picker-modal"><button onClick={onClose}>Close Picker</button></div> : null,
 }));
 

@@ -7,7 +7,7 @@ import { AuthForm } from '@/app/components/auth/AuthForm';
 import { OAuthButtonGroup } from '@/app/components/auth/OAuthButtonGroup';
 import { ModeToggle, type AuthMode } from '@/app/components/auth/ModeToggle';
 import { enableGuestMode } from '@/app/components/auth/ProtectedRoute';
-import { XAWarsLogo } from '@/app/components/XAWarsLogo';
+import { MasterSiegeLogo } from '@/app/components/MasterSiegeLogo';
 
 /**
  * Validates that a returnUrl is a safe relative path.
@@ -28,7 +28,7 @@ export default function LoginPage() {
         <div className="flex h-screen items-center justify-center bg-black font-sans">
           <div role="status" aria-label="Loading" className="flex flex-col items-center gap-3">
             <svg
-              className="animate-spin h-8 w-8 text-yellow-500"
+              className="animate-spin h-8 w-8 text-brand-500"
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
@@ -149,7 +149,7 @@ function LoginPageContent() {
       <div className="flex h-screen items-center justify-center bg-black font-sans overflow-hidden">
         <div role="status" aria-label="Loading authentication" className="flex flex-col items-center gap-3">
           <svg
-            className="animate-spin h-8 w-8 text-yellow-500"
+            className="animate-spin h-8 w-8 text-brand-500"
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
@@ -172,9 +172,9 @@ function LoginPageContent() {
     return (
       <div className="auth-shell">
         <AuthBackground />
-        <div className="relative w-full max-w-sm min-w-[280px] space-y-5 text-center">
+        <div className="relative w-full max-w-sm min-w-70 space-y-5 text-center">
           <div className="flex flex-col items-center">
-            <XAWarsLogo size={56} className="mb-2 drop-shadow-[0_0_12px_rgba(234,179,8,0.3)]" />
+            <MasterSiegeLogo size={56} className="mb-2 drop-shadow-[0_0_12px_rgba(240, 90, 40,0.3)]" />
             <div className="mt-3 flex h-14 w-14 items-center justify-center rounded-full border-2 border-emerald-500/30 bg-emerald-500/10">
               <svg
                 className="h-7 w-7 text-emerald-400"
@@ -204,7 +204,7 @@ function LoginPageContent() {
                 setSignupSuccess(false);
                 setMode('login');
               }}
-              className="inline-flex w-full items-center justify-center rounded bg-yellow-500 px-6 py-2.5 text-sm font-bold uppercase tracking-wider text-black shadow-lg shadow-yellow-500/20 transition-all duration-200 hover:bg-yellow-400 active:translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 focus:ring-offset-zinc-900"
+              className="inline-flex w-full items-center justify-center rounded bg-brand-500 px-6 py-2.5 text-sm font-bold uppercase tracking-wider text-black shadow-lg shadow-brand-500/20 transition-all duration-200 hover:bg-brand-400 active:translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 focus:ring-offset-zinc-900"
             >
               Back to Login
             </button>
@@ -222,11 +222,11 @@ function LoginPageContent() {
     <div className="auth-shell">
       <AuthBackground />
 
-      <div className="relative w-full max-w-[360px] min-w-[280px] max-[480px]:max-w-[calc(100vw-32px)] flex flex-col">
+      <div className="relative w-full max-w-90 min-w-70 max-[480px]:max-w-[calc(100vw-32px)] flex flex-col">
         {/* Brand — compact */}
         <div className="flex flex-col items-center text-center mb-5">
-          <XAWarsLogo size={52} className="mb-2 drop-shadow-[0_0_12px_rgba(234,179,8,0.3)]" />
-          <h1 className="text-2xl font-bold uppercase tracking-wider text-yellow-500">
+          <MasterSiegeLogo size={52} className="mb-2 drop-shadow-[0_0_12px_rgba(240, 90, 40,0.3)]" />
+          <h1 className="text-2xl font-bold uppercase tracking-wider text-brand-500">
             Master Siege
           </h1>
           <p className="mt-0.5 text-[10px] uppercase tracking-[0.2em] text-zinc-600 font-medium">
@@ -238,13 +238,12 @@ function LoginPageContent() {
         <div className="auth-card">
           {/* Mode-dependent content with transition */}
           <div
-            className={`space-y-4 transition-all ease-out ${
-              transitionPhase === 'out'
-                ? 'duration-150 opacity-0 translate-y-1 scale-[0.99]'
-                : transitionPhase === 'in'
+            className={`space-y-4 transition-all ease-out ${transitionPhase === 'out'
+              ? 'duration-150 opacity-0 translate-y-1 scale-[0.99]'
+              : transitionPhase === 'in'
                 ? 'duration-200 opacity-100 translate-y-0 scale-100'
                 : 'duration-0 opacity-100 translate-y-0 scale-100'
-            }`}
+              }`}
           >
             <p className="text-center text-xs font-medium uppercase tracking-wider text-zinc-500">
               {displayedMode === 'login' ? 'Welcome back, Agent' : 'Create your account'}
@@ -280,7 +279,7 @@ function LoginPageContent() {
               router.push(returnUrl);
             }}
             disabled={isSubmitting || oauthLoading !== null}
-            className="text-xs font-medium text-zinc-500 hover:text-zinc-300 underline underline-offset-2 transition-colors focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 focus:ring-offset-black rounded disabled:cursor-not-allowed disabled:opacity-50"
+            className="text-xs font-medium text-zinc-500 hover:text-zinc-300 underline underline-offset-2 transition-colors focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 focus:ring-offset-black rounded disabled:cursor-not-allowed disabled:opacity-50"
           >
             Continue as Guest
           </button>

@@ -110,7 +110,7 @@ export function EditCallsignModal({ isOpen, onClose }: EditCallsignModalProps) {
         {/* Close button */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 text-zinc-500 hover:text-white transition-colors p-1 rounded focus:outline-none focus:ring-2 focus:ring-yellow-500"
+          className="absolute top-4 right-4 text-zinc-500 hover:text-white transition-colors p-1 rounded focus:outline-none focus:ring-2 focus:ring-brand-500"
           aria-label="Close"
         >
           <X className="w-4 h-4" />
@@ -118,8 +118,8 @@ export function EditCallsignModal({ isOpen, onClose }: EditCallsignModalProps) {
 
         {/* Header */}
         <div className="flex flex-col items-center text-center mb-6">
-          <div className="w-14 h-14 rounded-full bg-yellow-500/10 border border-yellow-500/30 flex items-center justify-center mb-4">
-            <Pencil className="w-6 h-6 text-yellow-500" />
+          <div className="w-14 h-14 rounded-full bg-brand-500/10 border border-brand-500/30 flex items-center justify-center mb-4">
+            <Pencil className="w-6 h-6 text-brand-500" />
           </div>
           <h2 className="text-lg font-bold text-white uppercase tracking-wider">
             Edit Callsign
@@ -132,7 +132,7 @@ export function EditCallsignModal({ isOpen, onClose }: EditCallsignModalProps) {
         {/* Form */}
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-1.5">
-            <div className="relative flex items-center rounded border-2 border-zinc-700 bg-zinc-800/50 transition-colors duration-200 focus-within:border-yellow-500 focus-within:ring-2 focus-within:ring-yellow-500 focus-within:ring-offset-2 focus-within:ring-offset-zinc-900">
+            <div className="relative flex items-center rounded border-2 border-zinc-700 bg-zinc-800/50 transition-colors duration-200 focus-within:border-brand-500 focus-within:ring-2 focus-within:ring-brand-500 focus-within:ring-offset-2 focus-within:ring-offset-zinc-900">
               <span className="pl-4 text-zinc-500" aria-hidden="true">
                 <svg className="h-[16px] w-[16px]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
@@ -169,7 +169,7 @@ export function EditCallsignModal({ isOpen, onClose }: EditCallsignModalProps) {
           <button
             type="submit"
             disabled={isSubmitting || success}
-            className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-yellow-500 px-6 py-3 text-sm font-bold uppercase tracking-wider text-black shadow-lg shadow-yellow-500/20 transition-all duration-200 hover:bg-yellow-400 active:translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 focus:ring-offset-zinc-900 disabled:cursor-not-allowed disabled:opacity-50"
+            className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-brand-500 px-6 py-3 text-sm font-bold uppercase tracking-wider text-black shadow-lg shadow-brand-500/20 transition-all duration-200 hover:bg-brand-400 active:translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 focus:ring-offset-zinc-900 disabled:cursor-not-allowed disabled:opacity-50"
           >
             {success ? '✓ Saved' : isSubmitting ? 'Saving...' : 'Save Callsign'}
           </button>

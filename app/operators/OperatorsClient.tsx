@@ -126,7 +126,10 @@ function OperatorDetailModal({ operatorId, codename, onClose }: { operatorId: st
                 {/* Operator info below header once loaded */}
                 <div className="flex items-center gap-3 -mt-2">
                   {op.icon_url && (
+                    <>
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img src={op.icon_url} alt="" className="w-12 h-12 rounded-lg object-contain border border-zinc-700 bg-black/40 p-1" />
+                    </>
                   )}
                   <div>
                     <p className="text-sm text-zinc-400">{op.name} &middot; {op.country}</p>
@@ -148,10 +151,10 @@ function OperatorDetailModal({ operatorId, codename, onClose }: { operatorId: st
                   </div>
                   <div className="bg-black/40 rounded-lg p-3 border border-zinc-800">
                     <div className="flex items-center gap-1.5 mb-1.5">
-                      <Zap className="w-3.5 h-3.5 text-yellow-400" />
+                      <Zap className="w-3.5 h-3.5 text-brand-400" />
                       <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-400">Speed</span>
                     </div>
-                    <StatDots value={op.speed} color="bg-yellow-400" />
+                    <StatDots value={op.speed} color="bg-brand-400" />
                   </div>
                   <div className="bg-black/40 rounded-lg p-3 border border-zinc-800">
                     <div className="flex items-center gap-1.5 mb-1.5">
@@ -166,7 +169,7 @@ function OperatorDetailModal({ operatorId, codename, onClose }: { operatorId: st
                 <div>
                   <h3 className="text-xs font-bold uppercase tracking-wider text-zinc-400 mb-2">Ability</h3>
                   <Card variant="elevated" padding="sm">
-                    <p className="text-sm font-semibold text-yellow-400 mb-1">{op.ability_name}</p>
+                    <p className="text-sm font-semibold text-brand-400 mb-1">{op.ability_name}</p>
                     <p className="text-sm text-zinc-300 leading-relaxed">{op.ability_description}</p>
                   </Card>
                 </div>
@@ -219,6 +222,7 @@ function OperatorDetailModal({ operatorId, codename, onClose }: { operatorId: st
         {/* Portrait */}
         {op?.portrait_url && (
           <div className="hidden sm:block absolute -right-4 lg:-right-8 bottom-0 top-0 w-72 lg:w-80 pointer-events-none" style={{ perspective: '1200px' }}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={op.portrait_url}
               alt={op.name}
@@ -299,7 +303,7 @@ export function OperatorsClient({ operators }: { operators: OperatorGridItem[] }
               placeholder="Search name, country, ability..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full pl-9 pr-3 py-2.5 bg-zinc-900 border border-zinc-700 rounded-lg text-sm text-white placeholder:text-zinc-500 focus:outline-none focus:border-yellow-500/50 focus:ring-1 focus:ring-yellow-500/20"
+              className="w-full pl-9 pr-3 py-2.5 bg-zinc-900 border border-zinc-700 rounded-lg text-sm text-white placeholder:text-zinc-500 focus:outline-none focus:border-brand-500/50 focus:ring-1 focus:ring-brand-500/20"
             />
           </div>
 
@@ -337,7 +341,7 @@ export function OperatorsClient({ operators }: { operators: OperatorGridItem[] }
           <select
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value as SortKey)}
-            className="bg-zinc-900 border border-zinc-700 rounded-lg px-3 py-2.5 text-xs text-zinc-300 font-bold uppercase tracking-wider focus:outline-none focus:border-yellow-500/50 shrink-0"
+            className="bg-zinc-900 border border-zinc-700 rounded-lg px-3 py-2.5 text-xs text-zinc-300 font-bold uppercase tracking-wider focus:outline-none focus:border-brand-500/50 shrink-0"
             aria-label="Sort operators by"
           >
             <option value="name">Name</option>
@@ -364,7 +368,7 @@ export function OperatorsClient({ operators }: { operators: OperatorGridItem[] }
                 <button
                   key={op.codename}
                   onClick={() => setSelectedOp({ id: op.id, codename: op.codename })}
-                  className={`group relative text-left rounded-xl border bg-zinc-900 will-change-transform transition-[transform,border-color] duration-200 hover:z-20 hover:scale-[1.02] active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-yellow-500/50 ${
+                  className={`group relative text-left rounded-xl border bg-zinc-900 will-change-transform transition-[transform,border-color] duration-200 hover:z-20 hover:scale-[1.02] active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-brand-500/50 ${
                     isAttacker
                       ? 'border-orange-500/20 hover:border-orange-500/50'
                       : 'border-blue-500/20 hover:border-blue-500/50'
@@ -397,7 +401,7 @@ export function OperatorsClient({ operators }: { operators: OperatorGridItem[] }
                           </div>
                         )}
                         <div className="min-w-0">
-                          <p className="text-sm font-black uppercase tracking-tight text-white truncate group-hover:text-yellow-400 transition-colors duration-150">
+                          <p className="text-sm font-black uppercase tracking-tight text-white truncate group-hover:text-brand-400 transition-colors duration-150">
                             {op.codename}
                           </p>
                           <p className="text-[10px] text-zinc-500 truncate">{op.country} &middot; {op.organization}</p>
@@ -412,8 +416,8 @@ export function OperatorsClient({ operators }: { operators: OperatorGridItem[] }
                           <StatDots value={op.health} color="bg-red-400" />
                         </div>
                         <div className="flex items-center gap-1">
-                          <Zap className="w-3 h-3 text-yellow-400" />
-                          <StatDots value={op.speed} color="bg-yellow-400" />
+                          <Zap className="w-3 h-3 text-brand-400" />
+                          <StatDots value={op.speed} color="bg-brand-400" />
                         </div>
                         <div className="flex items-center gap-1">
                           <Brain className="w-3 h-3 text-purple-400" />

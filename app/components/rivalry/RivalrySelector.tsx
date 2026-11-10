@@ -107,7 +107,7 @@ function OperatorSlot({ operator, label, onClick, onKeyDown }: OperatorSlotProps
       aria-label={operator ? `${operator.name} selected, tap to change` : label}
       onClick={onClick}
       onKeyDown={onKeyDown}
-      className="flex flex-col items-center justify-center gap-2 w-32 h-32 rounded-xl border border-zinc-700 bg-zinc-800/50 hover:border-zinc-500 hover:bg-zinc-800 transition-all cursor-pointer focus:outline-none focus:ring-2 focus:ring-yellow-500/50"
+      className="flex flex-col items-center justify-center gap-2 w-32 h-32 rounded-xl border border-zinc-700 bg-zinc-800/50 hover:border-zinc-500 hover:bg-zinc-800 transition-all cursor-pointer focus:outline-none focus:ring-2 focus:ring-brand-500/50"
     >
       {operator ? (
         <>

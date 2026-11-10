@@ -61,8 +61,8 @@ describe('EndSessionButton', () => {
     const button = screen.getByRole('button', { name: 'End session and view summary' });
     expect(button.className).toContain('text-xs');
     expect(button.className).toContain('text-zinc-500');
-    // Should NOT use primary action button colors like bg-yellow-500 or bg-red-500
-    expect(button.className).not.toContain('bg-yellow');
+    // Should NOT use primary action button colors like bg-brand-500 or bg-red-500
+    expect(button.className).not.toContain('bg-brand');
     expect(button.className).not.toContain('bg-red');
   });
 

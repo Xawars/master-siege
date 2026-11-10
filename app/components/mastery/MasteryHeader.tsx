@@ -169,7 +169,7 @@ export function MasteryHeader({ history, operatorKills, operatorDeaths }: Master
       <div className="flex flex-col h-full w-full">
         {/* Top: Title + Counter + info button */}
         <div className="shrink-0 mb-3">
-          <h2 className="text-sm font-black uppercase tracking-wider text-yellow-500 mb-1">
+          <h2 className="text-sm font-black uppercase tracking-wider text-brand-500 mb-1">
             Operator Mastery
           </h2>
           <div className="flex items-center gap-2">
@@ -181,7 +181,7 @@ export function MasteryHeader({ history, operatorKills, operatorDeaths }: Master
             </span>
             <button
               onClick={() => setIsTiersModalOpen(true)}
-              className="p-1 rounded-md hover:bg-zinc-800 text-zinc-500 hover:text-yellow-500 transition-colors"
+              className="p-1 rounded-md hover:bg-zinc-800 text-zinc-500 hover:text-brand-500 transition-colors"
               title="How mastery tiers work"
             >
               <Info className="w-3.5 h-3.5" />
@@ -197,7 +197,7 @@ export function MasteryHeader({ history, operatorKills, operatorDeaths }: Master
             placeholder="Search..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full pl-7 pr-2 py-1.5 text-xs bg-zinc-800/80 border border-zinc-700/50 rounded-md text-zinc-200 placeholder:text-zinc-600 focus:outline-none focus:border-yellow-500/50 transition-colors"
+            className="w-full pl-7 pr-2 py-1.5 text-xs bg-zinc-800/80 border border-zinc-700/50 rounded-md text-zinc-200 placeholder:text-zinc-600 focus:outline-none focus:border-brand-500/50 transition-colors"
           />
         </div>
 
@@ -207,7 +207,7 @@ export function MasteryHeader({ history, operatorKills, operatorDeaths }: Master
             onClick={() => setSideFilter('all')}
             className={`flex-1 flex items-center justify-center gap-1 px-2 py-1 text-[10px] font-bold uppercase tracking-wider rounded-md border transition-all ${
               sideFilter === 'all'
-                ? 'bg-yellow-500/10 text-yellow-500 border-yellow-500/50'
+                ? 'bg-brand-500/10 text-brand-500 border-brand-500/50'
                 : 'bg-zinc-800/50 text-zinc-500 border-zinc-700/50 hover:text-zinc-300 hover:border-zinc-600'
             }`}
           >

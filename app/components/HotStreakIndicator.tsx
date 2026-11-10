@@ -82,14 +82,14 @@ export function HotStreakIndicator({ streakCount, isActive }: HotStreakIndicator
     warm: 'from-orange-500/10 to-transparent border-orange-500/30 text-orange-400',
     hot: 'from-orange-500/15 to-red-500/5 border-orange-500/40 text-orange-300',
     epic: 'from-red-500/15 to-orange-500/10 border-red-500/40 text-red-400',
-    legendary: 'from-red-500/20 to-yellow-500/10 border-yellow-500/50 text-yellow-400',
+    legendary: 'from-red-500/20 to-brand-500/10 border-brand-500/50 text-brand-400',
   };
 
   const tierGlow = {
     warm: '',
     hot: 'shadow-[0_0_12px_rgba(249,115,22,0.15)]',
     epic: 'shadow-[0_0_16px_rgba(239,68,68,0.2)]',
-    legendary: 'shadow-[0_0_20px_rgba(234,179,8,0.25)]',
+    legendary: 'shadow-[0_0_20px_rgba(240, 90, 40,0.25)]',
   };
 
   return (
@@ -106,7 +106,7 @@ export function HotStreakIndicator({ streakCount, isActive }: HotStreakIndicator
     >
       <div className={`flex items-center justify-center gap-2 px-3 py-1.5 rounded-lg border bg-linear-to-r ${tierStyles[tier]} ${tierGlow[tier]}`}>
         <span className="text-base leading-none" aria-hidden="true">🔥</span>
-        <span className={`text-xs font-bold uppercase tracking-wider ${tier === 'legendary' ? 'text-yellow-400' : tier === 'epic' ? 'text-red-400' : 'text-orange-400'}`}>
+        <span className={`text-xs font-bold uppercase tracking-wider ${tier === 'legendary' ? 'text-brand-400' : tier === 'epic' ? 'text-red-400' : 'text-orange-400'}`}>
           {streakCount} Kill Streak
         </span>
         {tier === 'legendary' && <span className="text-base leading-none" aria-hidden="true">🔥</span>}

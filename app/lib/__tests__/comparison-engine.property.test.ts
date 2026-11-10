@@ -38,11 +38,6 @@ const arbitraryRivalryOperatorData: fc.Arbitrary<RivalryOperatorData> = fc
     }))
   );
 
-/** Generates two distinct RivalryOperatorData records (different operatorIds) */
-const arbitraryDistinctPair: fc.Arbitrary<[RivalryOperatorData, RivalryOperatorData]> = fc
-  .tuple(arbitraryRivalryOperatorData, arbitraryRivalryOperatorData)
-  .filter(([a, b]) => a.operatorId !== b.operatorId);
-
 /** Generates two records where both have at least 1 deployment */
 const arbitraryDistinctPairWithDeployments: fc.Arbitrary<[RivalryOperatorData, RivalryOperatorData]> = fc
   .tuple(arbitraryRivalryOperatorData, arbitraryRivalryOperatorData)

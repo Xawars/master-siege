@@ -89,9 +89,9 @@ const STATUS_CONFIG = {
   },
   'in-progress': {
     label: 'Active',
-    bg: 'bg-yellow-500/15',
-    border: 'border-yellow-500/40',
-    text: 'text-yellow-400',
+    bg: 'bg-brand-500/15',
+    border: 'border-brand-500/40',
+    text: 'text-brand-400',
   },
   'surrendered': {
     label: 'Surrendered',
@@ -120,7 +120,7 @@ export function HistoryList({ history, operatorKills = {}, currentOperatorId = n
             <div
               key={item.id}
               onClick={() => !isConfirming && onItemClick?.(item)}
-              className="flex items-center gap-3 bg-zinc-900/80 border border-zinc-800 p-2.5 rounded-lg backdrop-blur-sm cursor-pointer hover:border-yellow-500/50 hover:bg-zinc-800/80 transition-colors group"
+              className="flex items-center gap-3 bg-zinc-900/80 border border-zinc-800 p-2.5 rounded-lg backdrop-blur-sm cursor-pointer hover:border-brand-500/50 hover:bg-zinc-800/80 transition-colors group"
             >
               {/* Mini Icon */}
               <div className={`h-9 w-9 shrink-0 rounded-md flex items-center justify-center font-bold text-lg ${item.operator.side === 'attacker' ? 'bg-orange-900/20 text-orange-500' : 'bg-blue-900/20 text-blue-500'}`}>
@@ -175,7 +175,7 @@ export function HistoryList({ history, operatorKills = {}, currentOperatorId = n
                       e.stopPropagation();
                       onSelectItem(item);
                     }}
-                    className="p-1.5 rounded-md bg-zinc-800 border border-zinc-700/50 text-zinc-400 hover:text-yellow-500 hover:border-yellow-500/50 hover:bg-yellow-500/10 transition-colors"
+                    className="p-1.5 rounded-md bg-zinc-800 border border-zinc-700/50 text-zinc-400 hover:text-brand-500 hover:border-brand-500/50 hover:bg-brand-500/10 transition-colors"
                     aria-label={`Switch to ${item.operator.name}`}
                     title="Switch to this deployment"
                   >

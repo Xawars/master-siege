@@ -39,11 +39,11 @@ export const ROLE_COLORS: Record<Role, string> = {
   // Defense
   'Anchor': 'bg-green-500',
   'Roamer': 'bg-red-500',
-  'Lurker': 'bg-yellow-500',
+  'Lurker': 'bg-brand-500',
   'Intel Denier': 'bg-blue-400',
   'Anti-Breach': 'bg-amber-600',
   'Trap Operator': 'bg-purple-500',
-  'Area Denial': 'bg-yellow-600',
+  'Area Denial': 'bg-brand-600',
   'Intel / Camera': 'bg-purple-400',
 };
 

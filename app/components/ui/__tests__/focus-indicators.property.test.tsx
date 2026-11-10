@@ -11,13 +11,13 @@ import { Select } from '../Select';
  *
  * For any interactive component (Button, Input, Select, or any element with
  * onClick/onChange handlers), the rendered output should include visible focus
- * indicator classes (focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2
+ * indicator classes (focus:ring-2 focus:ring-brand-500 focus:ring-offset-2
  * focus:ring-offset-zinc-900 or equivalent) meeting WCAG AA requirements.
  */
 describe('Feature: design-system, Property 4: Interactive Component Focus Indicators', () => {
   const FOCUS_RING_CLASSES = [
     'focus:ring-2',
-    'focus:ring-yellow-500',
+    'focus:ring-brand-500',
     'focus:ring-offset-2',
     'focus:ring-offset-zinc-900',
   ];

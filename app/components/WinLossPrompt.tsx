@@ -15,7 +15,7 @@ interface WinLossPromptProps {
  * increment is confirmed with a map selected. Allows the user to record
  * the match outcome for the given map.
  */
-export function WinLossPrompt({ mapId, mapName, onWin, onLoss, onDismiss }: WinLossPromptProps) {
+export function WinLossPrompt({ mapName, onWin, onLoss, onDismiss }: WinLossPromptProps) {
   return (
     <div
       className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-in fade-in duration-150"

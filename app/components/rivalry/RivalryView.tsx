@@ -125,7 +125,7 @@ export function RivalryView({ isOpen, onClose, prefilledOperator }: RivalryViewP
           </h2>
           <button
             onClick={onClose}
-            className="text-white/60 hover:text-white hover:bg-white/5 rounded p-1.5 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 focus:ring-offset-zinc-900"
+            className="text-white/60 hover:text-white hover:bg-white/5 rounded p-1.5 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 focus:ring-offset-zinc-900"
             aria-label="Close rivalry view"
           >
             <X className="w-5 h-5" aria-hidden="true" />

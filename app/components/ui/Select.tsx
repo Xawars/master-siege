@@ -40,7 +40,7 @@ export function Select({
         disabled={isDisabled}
         aria-invalid={error ? 'true' : undefined}
         aria-describedby={error ? errorId : undefined}
-        className={`w-full bg-zinc-800 border border-zinc-700 rounded-lg px-4 py-3 text-sm text-white transition duration-200 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 focus:ring-offset-zinc-900 focus:border-yellow-500 disabled:opacity-50 disabled:cursor-not-allowed ${error ? 'border-red-500' : ''} ${className}`}
+        className={`w-full bg-zinc-800 border border-zinc-700 rounded-lg px-4 py-3 text-sm text-white transition duration-200 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 focus:ring-offset-zinc-900 focus:border-brand-500 disabled:opacity-50 disabled:cursor-not-allowed ${error ? 'border-red-500' : ''} ${className}`}
         {...props}
       >
         {options.map((option) => (

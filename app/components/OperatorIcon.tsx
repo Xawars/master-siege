@@ -31,6 +31,7 @@ export function OperatorIcon({ id, className, children }: OperatorIconProps) {
 
   // Fall back to custom icon for guest operators
   if (customIcons[id]) {
+    // eslint-disable-next-line @next/next/no-img-element
     return <img src={customIcons[id]} alt={id} className={className} />;
   }
 

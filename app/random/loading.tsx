@@ -9,7 +9,7 @@ export default function RandomLoading() {
           <Link href="/" className="p-2 rounded-lg text-zinc-400" aria-label="Back to home">
             <ArrowLeft className="w-5 h-5" />
           </Link>
-          <Dices className="w-5 h-5 text-yellow-500" />
+          <Dices className="w-5 h-5 text-brand-500" />
           <h1 className="text-lg font-black uppercase tracking-tight">Random Operator</h1>
         </div>
       </header>

@@ -11,9 +11,18 @@
   --color-zinc-400: #a1a1aa;
   --color-white: #ffffff;
 
-  /* Foundation Tokens — Brand Yellow */
-  --color-yellow-500: #eab308;
-  --color-yellow-400: #facc15;
+  /* Foundation Tokens — Brand Orange */
+  --color-brand-50: #fef2ee;
+  --color-brand-100: #fde2d8;
+  --color-brand-200: #fac1ad;
+  --color-brand-300: #f7987a;
+  --color-brand-400: #f47650;
+  --color-brand-500: #f05a28;
+  --color-brand-600: #d94816;
+  --color-brand-700: #b33912;
+  --color-brand-800: #8c2e12;
+  --color-brand-900: #6e2711;
+  --color-brand-950: #3b1207;
 
   /* Foundation Tokens — Attack Orange */
   --color-orange-500: #f97316;
@@ -45,13 +54,13 @@
   --color-text-disabled: var(--color-zinc-600);
 
   /* Semantic Tokens — Accent */
-  --color-accent: var(--color-yellow-500);
-  --color-accent-hover: var(--color-yellow-400);
+  --color-accent: var(--color-brand-500);
+  --color-accent-hover: var(--color-brand-400);
 
   /* Semantic Tokens — Borders */
   --color-border-default: var(--color-zinc-700);
   --color-border-hover: var(--color-zinc-500);
-  --color-border-focus: var(--color-yellow-500);
+  --color-border-focus: var(--color-brand-500);
 
   /* Semantic Tokens — States */
   --color-success: var(--color-green-500);
@@ -69,8 +78,8 @@
   --color-defense-active: var(--color-blue-600);
 
   /* Layout Tokens */
-  --background: var(--color-bg-primary);
-  --foreground: var(--color-text-primary);
+  --background: #0e0f12;
+  --foreground: #f5f6f8;
 }
 
 @theme inline {
@@ -88,9 +97,18 @@
   --color-zinc-400: var(--color-zinc-400);
   --color-white: var(--color-white);
 
-  /* Foundation Tokens — Brand Yellow */
-  --color-yellow-500: var(--color-yellow-500);
-  --color-yellow-400: var(--color-yellow-400);
+  /* Foundation Tokens — Brand Orange */
+  --color-brand-50: var(--color-brand-50);
+  --color-brand-100: var(--color-brand-100);
+  --color-brand-200: var(--color-brand-200);
+  --color-brand-300: var(--color-brand-300);
+  --color-brand-400: var(--color-brand-400);
+  --color-brand-500: var(--color-brand-500);
+  --color-brand-600: var(--color-brand-600);
+  --color-brand-700: var(--color-brand-700);
+  --color-brand-800: var(--color-brand-800);
+  --color-brand-900: var(--color-brand-900);
+  --color-brand-950: var(--color-brand-950);
 
   /* Foundation Tokens — Attack Orange */
   --color-orange-500: var(--color-orange-500);
@@ -194,7 +212,7 @@ body {
 }
 
 ::-webkit-scrollbar-thumb:active {
-  background: var(--color-yellow-500);
+  background: var(--color-brand-500);
   border: 2px solid transparent;
   background-clip: content-box;
 }
@@ -584,8 +602,8 @@ html, body {
   left: 0;
   width: 100%;
   height: 2px;
-  background: linear-gradient(90deg, transparent, rgba(234, 179, 8, 0.12), transparent);
-  box-shadow: 0 0 8px 2px rgba(234, 179, 8, 0.06);
+  background: linear-gradient(90deg, transparent, rgba(240, 90, 40, 0.12), transparent);
+  box-shadow: 0 0 8px 2px rgba(240, 90, 40, 0.06);
   animation: auth-scan 4s linear infinite;
 }
 

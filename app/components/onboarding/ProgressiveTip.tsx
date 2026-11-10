@@ -73,11 +73,11 @@ export function ProgressiveTip({
         isFading ? 'opacity-0' : 'opacity-100'
       } ${className}`}
     >
-      <div className="flex items-center gap-2 bg-zinc-800 border border-yellow-500/20 rounded-lg px-3 py-2 shadow-lg whitespace-nowrap">
+      <div className="flex items-center gap-2 bg-zinc-800 border border-brand-500/20 rounded-lg px-3 py-2 shadow-lg whitespace-nowrap">
         <span className="text-xs text-zinc-300">{message}</span>
         <button
           onClick={handleDismiss}
-          className="text-zinc-500 hover:text-white transition-colors shrink-0 p-0.5 rounded focus:outline-none focus:ring-1 focus:ring-yellow-500"
+          className="text-zinc-500 hover:text-white transition-colors shrink-0 p-0.5 rounded focus:outline-none focus:ring-1 focus:ring-brand-500"
           aria-label="Dismiss tip"
         >
           <X className="w-3 h-3" />

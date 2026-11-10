@@ -70,12 +70,12 @@ export function MapBreakdownPanel({ operatorId, records }: MapBreakdownPanelProp
               key={entry.mapId}
               className={`flex items-center justify-between p-2.5 rounded-lg border ${
                 entry.isBest
-                  ? 'border-yellow-500 bg-yellow-500/10'
+                  ? 'border-brand-500 bg-brand-500/10'
                   : 'border-zinc-700/30 bg-zinc-800/50'
               }`}
             >
               <div className="min-w-0">
-                <p className={`text-xs font-bold truncate ${entry.isBest ? 'text-yellow-200' : 'text-zinc-200'}`}>
+                <p className={`text-xs font-bold truncate ${entry.isBest ? 'text-brand-200' : 'text-zinc-200'}`}>
                   {entry.mapName}
                 </p>
                 {entry.meetsThreshold ? (

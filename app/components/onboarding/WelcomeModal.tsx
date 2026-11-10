@@ -96,19 +96,19 @@ export function WelcomeModal({ onDeploy }: WelcomeModalProps) {
         role="dialog"
         aria-modal="true"
         aria-label="Welcome to Master Siege"
-        className="fixed z-80 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-zinc-900 border border-zinc-700 rounded-2xl shadow-2xl w-full max-w-[420px] overflow-hidden"
+        className="fixed z-80 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-zinc-900 border border-zinc-700 rounded-2xl shadow-2xl w-full max-w-105 overflow-hidden"
       >
         {/* Skip button */}
         <button
           onClick={handleClose}
-          className="absolute top-4 right-4 z-10 text-zinc-500 hover:text-white transition-colors p-1 rounded focus:outline-none focus:ring-2 focus:ring-yellow-500"
+          className="absolute top-4 right-4 z-10 text-zinc-500 hover:text-white transition-colors p-1 rounded focus:outline-none focus:ring-2 focus:ring-brand-500"
           aria-label="Skip onboarding"
         >
           <X className="w-4 h-4" />
         </button>
 
         {/* Panel content */}
-        <div className="p-8 pt-10 min-h-[320px] flex flex-col items-center justify-center text-center">
+        <div className="p-8 pt-10 min-h-80 flex flex-col items-center justify-center text-center">
           {currentPanel === 0 && (
             <PanelIdentity displayName={displayName} />
           )}
@@ -126,7 +126,7 @@ export function WelcomeModal({ onDeploy }: WelcomeModalProps) {
           <button
             onClick={handlePrev}
             disabled={currentPanel === 0}
-            className="text-zinc-500 hover:text-white disabled:opacity-0 disabled:pointer-events-none transition-all p-1 rounded focus:outline-none focus:ring-2 focus:ring-yellow-500"
+            className="text-zinc-500 hover:text-white disabled:opacity-0 disabled:pointer-events-none transition-all p-1 rounded focus:outline-none focus:ring-2 focus:ring-brand-500"
             aria-label="Previous panel"
           >
             <ChevronLeft className="w-5 h-5" />
@@ -141,11 +141,10 @@ export function WelcomeModal({ onDeploy }: WelcomeModalProps) {
                 role="tab"
                 aria-selected={i === currentPanel}
                 aria-label={`Panel ${i + 1}`}
-                className={`w-2 h-2 rounded-full transition-all focus:outline-none focus:ring-2 focus:ring-yellow-500 ${
-                  i === currentPanel
-                    ? 'bg-yellow-500 w-6'
+                className={`w-2 h-2 rounded-full transition-all focus:outline-none focus:ring-2 focus:ring-brand-500 ${i === currentPanel
+                    ? 'bg-brand-500 w-6'
                     : 'bg-zinc-600 hover:bg-zinc-500'
-                }`}
+                  }`}
               />
             ))}
           </div>
@@ -153,7 +152,7 @@ export function WelcomeModal({ onDeploy }: WelcomeModalProps) {
           {/* Next button */}
           <button
             onClick={currentPanel === PANELS.length - 1 ? handleDeploy : handleNext}
-            className="text-zinc-500 hover:text-white transition-all p-1 rounded focus:outline-none focus:ring-2 focus:ring-yellow-500"
+            className="text-zinc-500 hover:text-white transition-all p-1 rounded focus:outline-none focus:ring-2 focus:ring-brand-500"
             aria-label={currentPanel === PANELS.length - 1 ? 'Deploy' : 'Next panel'}
           >
             <ChevronRight className="w-5 h-5" />
@@ -167,15 +166,15 @@ export function WelcomeModal({ onDeploy }: WelcomeModalProps) {
 function PanelIdentity({ displayName }: { displayName: string }) {
   return (
     <div className="flex flex-col items-center gap-4">
-      <div className="w-16 h-16 rounded-full bg-yellow-500/10 border border-yellow-500/30 flex items-center justify-center">
-        <span className="text-2xl font-black text-yellow-500">
+      <div className="w-16 h-16 rounded-full bg-brand-500/10 border border-brand-500/30 flex items-center justify-center">
+        <span className="text-2xl font-black text-brand-500">
           {displayName[0]?.toUpperCase() || 'A'}
         </span>
       </div>
       <h2 className="text-2xl font-black text-white uppercase tracking-tight">
-        Welcome, <span className="text-yellow-500">{displayName}</span>
+        Welcome, <span className="text-brand-500">{displayName}</span>
       </h2>
-      <p className="text-sm text-zinc-400 max-w-[280px]">
+      <p className="text-sm text-zinc-400 max-w-70">
         Your R6 Siege operator roulette and tactical command center
       </p>
     </div>
@@ -198,7 +197,7 @@ function PanelFeatures() {
         {features.map(({ icon: Icon, label }) => (
           <div key={label} className="flex items-center gap-4 text-left">
             <div className="w-10 h-10 rounded-lg bg-zinc-800 border border-zinc-700 flex items-center justify-center shrink-0">
-              <Icon className="w-5 h-5 text-yellow-500" />
+              <Icon className="w-5 h-5 text-brand-500" />
             </div>
             <span className="text-sm text-zinc-300">{label}</span>
           </div>
@@ -211,8 +210,8 @@ function PanelFeatures() {
 function PanelAction({ onDeploy }: { onDeploy: () => void }) {
   return (
     <div className="flex flex-col items-center gap-6">
-      <div className="w-20 h-20 rounded-full bg-yellow-500/10 border-2 border-yellow-500/30 flex items-center justify-center animate-pulse">
-        <Dices className="w-10 h-10 text-yellow-500" />
+      <div className="w-20 h-20 rounded-full bg-brand-500/10 border-2 border-brand-500/30 flex items-center justify-center animate-pulse">
+        <Dices className="w-10 h-10 text-brand-500" />
       </div>
       <h2 className="text-lg font-bold text-white uppercase tracking-wider">
         Ready for Deployment?
@@ -222,7 +221,7 @@ function PanelAction({ onDeploy }: { onDeploy: () => void }) {
       </p>
       <button
         onClick={onDeploy}
-        className="mt-2 px-8 py-3 bg-yellow-500 hover:bg-yellow-400 text-black font-bold uppercase tracking-wider rounded-lg transition-all active:translate-y-0.5 shadow-lg shadow-yellow-500/20 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 focus:ring-offset-zinc-900"
+        className="mt-2 px-8 py-3 bg-brand-500 hover:bg-brand-400 text-black font-bold uppercase tracking-wider rounded-lg transition-all active:translate-y-0.5 shadow-lg shadow-brand-500/20 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 focus:ring-offset-zinc-900"
       >
         Deploy Now
       </button>

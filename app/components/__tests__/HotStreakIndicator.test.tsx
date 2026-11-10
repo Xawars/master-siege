@@ -187,7 +187,7 @@ describe('HotStreakIndicator', () => {
     it('shows legendary tier styling for streak 10+', () => {
       const { container } = render(<HotStreakIndicator streakCount={10} isActive={true} />);
       const inner = container.querySelector('.border');
-      expect(inner?.className).toContain('border-yellow-500/50');
+      expect(inner?.className).toContain('border-brand-500/50');
     });
 
     it('shows double flame for legendary streaks', () => {

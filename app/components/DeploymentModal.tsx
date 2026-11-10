@@ -41,7 +41,7 @@ export function DeploymentModal({ isOpen, operator, loadout, matchType, platform
             >
                 {/* Header */}
                 <div className="p-4 border-b border-white/5 flex items-center justify-between">
-                    <h2 className="text-xl font-bold text-yellow-500 uppercase tracking-wider">
+                    <h2 className="text-xl font-bold text-brand-500 uppercase tracking-wider">
                         Confirm Deployment
                     </h2>
                     <Button variant="ghost" size="sm" onClick={onReject} icon={X}>
@@ -116,7 +116,7 @@ export function DeploymentModal({ isOpen, operator, loadout, matchType, platform
 const BADGE_COLORS = {
     orange: 'bg-orange-500/15 border-orange-500/40 text-orange-400',
     blue: 'bg-blue-500/15 border-blue-500/40 text-blue-400',
-    yellow: 'bg-yellow-500/15 border-yellow-500/40 text-yellow-400',
+    yellow: 'bg-brand-500/15 border-brand-500/40 text-brand-400',
     purple: 'bg-purple-500/15 border-purple-500/40 text-purple-400',
     green: 'bg-green-500/15 border-green-500/40 text-green-400',
     cyan: 'bg-cyan-500/15 border-cyan-500/40 text-cyan-400',

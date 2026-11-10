@@ -20,7 +20,12 @@ const mapPerformanceRecordArb = (operatorId?: string, mapId?: string) =>
     mapId: mapId ? fc.constant(mapId) : idArb,
     kills: fc.nat({ max: 5000 }),
     deaths: fc.nat({ max: 5000 }),
+    rounds: fc.nat({ max: 500 }),
+    roundsWon: fc.nat({ max: 250 }),
+    roundsLost: fc.nat({ max: 250 }),
     matches: fc.nat({ max: 500 }),
+    matchesWon: fc.nat({ max: 250 }),
+    matchesLost: fc.nat({ max: 250 }),
   });
 
 /** Generates a record set keyed by composite key `{operatorId}_{mapId}` */

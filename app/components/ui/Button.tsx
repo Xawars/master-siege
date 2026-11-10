@@ -23,12 +23,12 @@ export function Button({
 }: ButtonProps) {
   const isDisabled = disabled || loading;
 
-  const baseStyles = "inline-flex items-center justify-center font-bold uppercase tracking-wider rounded transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 focus:ring-offset-zinc-900";
+  const baseStyles = "inline-flex items-center justify-center font-bold uppercase tracking-wider rounded transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 focus:ring-offset-zinc-900";
   
   const disabledStyles = "disabled:opacity-50 disabled:cursor-not-allowed";
 
   const variants = {
-    primary: "bg-yellow-500 hover:bg-yellow-400 text-black shadow-lg shadow-yellow-500/20 active:translate-y-0.5",
+    primary: "bg-brand-500 hover:bg-brand-400 text-black shadow-lg shadow-brand-500/20 active:translate-y-0.5",
     danger: "bg-red-600 hover:bg-red-500 text-white shadow-lg shadow-red-600/20 active:translate-y-0.5",
     outline: "border-2 border-white/20 hover:border-white/50 text-white hover:bg-white/5 active:bg-white/10",
     ghost: "text-white/60 hover:text-white hover:bg-white/5"

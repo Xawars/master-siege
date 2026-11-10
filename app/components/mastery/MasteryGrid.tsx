@@ -174,7 +174,7 @@ export function MasteryGrid({ history, operatorKills, operatorDeaths }: MasteryG
       <div className="flex flex-col h-full">
         {/* Header */}
         <div className="shrink-0 mb-4">
-          <h2 className="text-base font-black uppercase tracking-wider text-yellow-500">
+          <h2 className="text-base font-black uppercase tracking-wider text-brand-500">
             Operator Mastery
           </h2>
           <p className="text-xs text-zinc-500 mt-0.5">
@@ -190,7 +190,7 @@ export function MasteryGrid({ history, operatorKills, operatorDeaths }: MasteryG
             placeholder="Search operators..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full pl-9 pr-3 py-2 text-sm bg-zinc-800/80 border border-zinc-700/50 rounded-lg text-zinc-200 placeholder:text-zinc-600 focus:outline-none focus:border-yellow-500/50 transition-colors"
+            className="w-full pl-9 pr-3 py-2 text-sm bg-zinc-800/80 border border-zinc-700/50 rounded-lg text-zinc-200 placeholder:text-zinc-600 focus:outline-none focus:border-brand-500/50 transition-colors"
           />
         </div>
 
@@ -246,7 +246,7 @@ export function MasteryGrid({ history, operatorKills, operatorDeaths }: MasteryG
             <LegendItem color="bg-zinc-400" label="Recruit" />
             <LegendItem color="bg-amber-600" label="Operative" />
             <LegendItem color="bg-slate-300" label="Veteran" />
-            <LegendItem color="bg-yellow-500" label="Elite" />
+            <LegendItem color="bg-brand-500" label="Elite" />
           </div>
         </div>
       </div>
@@ -263,7 +263,7 @@ function FilterButton({ active, onClick, children }: { active: boolean; onClick:
       onClick={onClick}
       className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-bold uppercase tracking-wider transition-colors ${
         active
-          ? 'bg-yellow-500/20 text-yellow-500 border border-yellow-500/30'
+          ? 'bg-brand-500/20 text-brand-500 border border-brand-500/30'
           : 'bg-zinc-800/60 text-zinc-500 border border-zinc-700/30 hover:text-zinc-300 hover:bg-zinc-800'
       }`}
     >

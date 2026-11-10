@@ -18,7 +18,7 @@ export function Spinner({
   };
 
   const colors = {
-    primary: 'text-yellow-500',
+    primary: 'text-brand-500',
     white: 'text-white',
     contextual: 'text-current',
   };

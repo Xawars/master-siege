@@ -17,7 +17,7 @@ import { Button } from '../Button';
 describe('Feature: design-system, Property 2: Button Variant and Size Rendering', () => {
   // Variant style expectations
   const variantClasses: Record<string, string[]> = {
-    primary: ['bg-yellow-500', 'text-black', 'shadow-yellow-500/20'],
+    primary: ['bg-brand-500', 'text-black', 'shadow-brand-500/20'],
     danger: ['bg-red-600', 'text-white', 'shadow-red-600/20'],
     outline: ['border-white/20', 'text-white'],
     ghost: ['text-white/60'],
@@ -107,9 +107,9 @@ describe('Feature: design-system, Property 2: Button Variant and Size Rendering'
      * gap-2 for md, gap-3 for lg).
      */
     // Mock LucideIcon component
-    const MockIcon: React.FC<{ className?: string; 'aria-hidden'?: string }> = (
-      props
-    ) => <svg data-testid="mock-icon" {...props} />;
+    const MockIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
+      <svg data-testid="mock-icon" {...props} />
+    );
     // Cast to satisfy LucideIcon type
     const IconComponent = MockIcon as unknown as import('lucide-react').LucideIcon;
 

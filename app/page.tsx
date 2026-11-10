@@ -25,7 +25,6 @@ import { OperatorStatsModal } from './components/OperatorStatsModal';
 import { OperatorPickerModal } from './components/OperatorPickerModal';
 import { MapAdvisorView } from './components/MapAdvisorView';
 import { StratsView } from './components/StratsView';
-import { MAPS } from './data/maps';
 import { STRATS } from './data/strats';
 import { ProtectedRoute, isGuestMode, clearGuestMode } from './components/auth/ProtectedRoute';
 import { TacticalEntry, WelcomeModal, FirstActionTooltip } from './components/onboarding';
@@ -35,11 +34,11 @@ import { useData } from './context/DataContext';
 import { getRandomOperator, generateLoadout, getRandomMatchType, getRandomTargetKills, getRandomRole, getRandomPlatform } from './data/operators';
 import { Operator, Loadout, MatchType, Platform, Side } from './data/types';
 import { MasteryHeader } from './components/mastery';
+import { MasterSiegeLogo } from './components/MasterSiegeLogo';
 import { RivalryView } from './components/rivalry/RivalryView';
-import { initialStreakState, applyStreakAction, captureSnapshot, computeSessionDeltas } from './lib/session-logic';
+import { initialStreakState, applyStreakAction, captureSnapshot } from './lib/session-logic';
 import { HotStreakIndicator } from './components/HotStreakIndicator';
 import { SessionSummaryModal } from './components/SessionSummaryModal';
-import { operators } from './data/operators';
 import type { SessionSnapshot, SessionDeltaData } from './types/database';
 
 // ponytail: migrate old flat rounds[] into match-based schema on load
@@ -60,12 +59,18 @@ export function migrateHistoryItem(item: HistoryItem): HistoryItem {
         _legacyMapId: (r as any).mapId,
       })) as any,
     };
-    const { rounds, mapId, siteId, ...rest } = item as any;
+    const rest = { ...(item as any) };
+    delete rest.rounds;
+    delete rest.mapId;
+    delete rest.siteId;
     return { ...rest, matches: [legacyMatch], schemaVersion: 2 };
   }
 
   // ponytail: no rounds and no matches — fresh deployment
-  const { rounds, mapId, siteId, ...rest } = item as any;
+  const rest = { ...(item as any) };
+  delete rest.rounds;
+  delete rest.mapId;
+  delete rest.siteId;
   return { ...rest, matches: [], schemaVersion: 2 };
 }
 
@@ -78,8 +83,8 @@ function deriveMatchOutcome(
 ): 'win' | 'loss' {
   const threshold =
     matchType === 'Quick Match' ? 3 :
-    matchType === 'Ranked' || matchType === 'Unranked' ? 4 :
-    null; // Deathmatch or unknown — fallback to majority
+      matchType === 'Ranked' || matchType === 'Unranked' ? 4 :
+        null; // Deathmatch or unknown — fallback to majority
 
   if (threshold) {
     if (roundsWon >= threshold) return 'win';
@@ -98,7 +103,6 @@ export default function Home() {
 }
 
 function HomeContent() {
-  const router = useRouter();
   const { user, session, isGuest } = useAuth();
   const { markFirstRoll } = useOnboardingContext();
   const { addDeployment, deleteDeployment, clearDeployments, updateMapPerformance, updateMapWinLoss, updateSitePerformance } = useData();
@@ -139,15 +143,6 @@ function HomeContent() {
   // Session summary modal state
   const [sessionSummaryOpen, setSessionSummaryOpen] = useState(false);
   const [sessionDeltaData, setSessionDeltaData] = useState<SessionDeltaData | null>(null);
-
-  // Build operator name lookup from full operators list
-  const operatorNamesMap = useMemo(() => {
-    const map: Record<string, string> = {};
-    for (const op of operators) {
-      map[op.id] = op.name;
-    }
-    return map;
-  }, []);
 
   // ponytail: aggregate deployment-keyed kills/deaths back to per-operator for stats views
   const operatorKillsAggregate = useMemo(() => {
@@ -234,22 +229,6 @@ function HomeContent() {
     snapshotCapturedRef.current = true;
   }, [kills, deaths, operatorKillsAggregate, operatorDeathsAggregate]);
 
-  // End Session handler — compute deltas and show session summary modal
-  const handleEndSession = useCallback(() => {
-    if (!sessionSnapshotRef.current) return;
-    const deltas = computeSessionDeltas(
-      sessionSnapshotRef.current,
-      kills,
-      deaths,
-      operatorKillsAggregate,
-      operatorDeathsAggregate,
-      {},
-      operatorNamesMap
-    );
-    setSessionDeltaData(deltas);
-    setSessionSummaryOpen(true);
-  }, [kills, deaths, operatorKillsAggregate, operatorDeathsAggregate, operatorNamesMap]);
-
   // Session modal close handler — reset snapshot to start new session
   const handleSessionModalClose = useCallback(() => {
     setSessionSummaryOpen(false);
@@ -257,7 +236,7 @@ function HomeContent() {
     recaptureSessionSnapshot();
   }, [recaptureSessionSnapshot]);
 
-  
+
 
   // Reset wallpaper error when operator changes
   useEffect(() => {
@@ -272,13 +251,13 @@ function HomeContent() {
     setTimeout(() => {
       const op = getRandomOperator(currentSide || undefined);
       const loadout = generateLoadout(op);
-      
+
       // Use selected match type or random
       const matchType = currentMatchType || getRandomMatchType();
-      
+
       // Use selected platform or random
       const platform: Platform = currentPlatform || getRandomPlatform();
-      
+
       const targetKills = userTargetKills ?? getRandomTargetKills();
       const role = showRoles ? getRandomRole(op) : '';
 
@@ -409,7 +388,7 @@ function HomeContent() {
     if (!currentOperator) return;
 
     // Mark the current deployment as surrendered in history
-    setHistory(prev => prev.map(item => 
+    setHistory(prev => prev.map(item =>
       item.deploymentId === currentDeploymentId && !item.surrendered
         ? { ...item, surrendered: true }
         : item
@@ -456,22 +435,6 @@ function HomeContent() {
     clearDeployments();
     setResetModalOpen(false);
   };
-
-  const handleFullReset = () => {
-    setKills(0);
-    setDeaths(0);
-    setCurrentOperator(null);
-    setCurrentLoadout(null);
-    setCurrentMatchType(null);
-    setCurrentTargetKills(0);
-    setCurrentRole('');
-    setCurrentDeploymentId(null);
-    setOperatorKills({});
-    setOperatorDeaths({});
-    setHistory([]);
-    setTargetComplete(false);
-    setKillStreak(initialStreakState());
-  }
 
   const restoreFromHistory = (item: HistoryItem) => {
     const deployId = item.deploymentId || item.operator.id;
@@ -695,556 +658,559 @@ function HomeContent() {
 
   return (
     <TacticalEntry>
-    <main className={`h-dvh text-zinc-100 font-sans selection:bg-yellow-500/30 relative overflow-hidden bg-black`}>
+      <main className={`h-dvh text-zinc-100 font-sans selection:bg-brand-500/30 relative overflow-hidden bg-black`}>
 
-      {/* Onboarding Welcome Modal */}
-      <WelcomeModal onDeploy={handleRoll} />
+        {/* Onboarding Welcome Modal */}
+        <WelcomeModal onDeploy={handleRoll} />
 
-      {/* Callsign prompt for existing users without a display name */}
-      {showCallsignPrompt && (
-        <SetCallsignModal onComplete={() => setShowCallsignPrompt(false)} />
-      )}
-
-      {/* Guest Mode Banner */}
-      {isGuestMode() && !session && (
-        <GuestModeBanner />
-      )}
-
-      {/* Global Wallpaper Layer */}
-      <div className="fixed inset-0 z-0">
-        {currentOperator && wallpaperPath && !wallpaperError ? (
-          <img
-            key={currentOperator.id}
-            src={wallpaperPath}
-            alt="Global Wallpaper"
-            className="w-full h-full object-cover opacity-20 blur-sm scale-110 animate-ken-burns"
-            onError={() => setWallpaperError(true)}
-          />
-        ) : (
-          // Fallback Gradient
-          <div className="w-full h-full bg-[radial-gradient(circle_at_center,var(--tw-gradient-stops))] from-zinc-900 via-black to-black" />
+        {/* Callsign prompt for existing users without a display name */}
+        {showCallsignPrompt && (
+          <SetCallsignModal onComplete={() => setShowCallsignPrompt(false)} />
         )}
-      </div>
 
-      {/* Modal Overlay */}
-      <DeploymentModal
-        isOpen={isModalOpen}
-        operator={pendingOperator}
-        loadout={pendingLoadout}
-        matchType={pendingMatchType}
-        platform={pendingPlatform}
-        targetKills={pendingTargetKills}
-        role={pendingRole || undefined}
-        onAccept={handleAccept}
-        onReject={handleReject}
-      />
+        {/* Guest Mode Banner */}
+        {isGuestMode() && !session && (
+          <GuestModeBanner />
+        )}
 
-      {/* Manual Operator Picker */}
-      <OperatorPickerModal
-        isOpen={isPickerOpen}
-        onClose={() => setIsPickerOpen(false)}
-        onSelect={handleManualPick}
-        currentSide={currentSide}
-      />
+        {/* Global Wallpaper Layer */}
+        <div className="fixed inset-0 z-0">
+          {currentOperator && wallpaperPath && !wallpaperError ? (
+            <>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                key={currentOperator.id}
+                src={wallpaperPath}
+                alt="Global Wallpaper"
+                className="w-full h-full object-cover opacity-20 blur-sm scale-110 animate-ken-burns"
+                onError={() => setWallpaperError(true)}
+              />
+            </>
+          ) : (
+            // Fallback Gradient
+            <div className="w-full h-full bg-[radial-gradient(circle_at_center,var(--tw-gradient-stops))] from-zinc-900 via-black to-black" />
+          )}
+        </div>
 
-      
+        {/* Modal Overlay */}
+        <DeploymentModal
+          isOpen={isModalOpen}
+          operator={pendingOperator}
+          loadout={pendingLoadout}
+          matchType={pendingMatchType}
+          platform={pendingPlatform}
+          targetKills={pendingTargetKills}
+          role={pendingRole || undefined}
+          onAccept={handleAccept}
+          onReject={handleReject}
+        />
 
-      {/* Grid layout container */}
-      <div className={`relative z-10 flex flex-col h-full max-w-[1400px] mx-auto px-4 ${isGuestMode() && !session ? 'pt-10' : ''}`}>
+        {/* Manual Operator Picker */}
+        <OperatorPickerModal
+          isOpen={isPickerOpen}
+          onClose={() => setIsPickerOpen(false)}
+          onSelect={handleManualPick}
+          currentSide={currentSide}
+        />
 
-        {/* Sticky Header */}
-        <header className="shrink-0 flex items-center justify-between py-3 border-b border-white/10">
-          <div className="flex items-center gap-4">
-            <h1 className="text-xl font-black uppercase italic tracking-tighter text-yellow-500">
-              Master <span className="text-white">Siege</span>
-            </h1>
-            <div className="flex bg-zinc-800 rounded-lg p-0.5">
-              {(['mastery', 'map-advisor', 'strats'] as const).map((tab) => (
-                <button
-                  key={tab}
-                  onClick={() => setViewMode(tab)}
-                  className={`px-3 py-1 rounded-md text-xs font-bold uppercase tracking-wider transition-colors ${
-                    viewMode === tab
-                      ? 'bg-yellow-500 text-black'
+
+
+        {/* Grid layout container */}
+        <div className={`relative z-10 flex flex-col h-full max-w-350 mx-auto px-4 ${isGuestMode() && !session ? 'pt-10' : ''}`}>
+
+          {/* Sticky Header */}
+          <header className="shrink-0 flex items-center justify-between py-3 border-b border-white/10">
+            <div className="flex items-center gap-4">
+              <h1 aria-label="Master Siege" className="flex shrink-0 items-center gap-2 text-xl font-black uppercase italic tracking-tighter text-brand-500">
+                <MasterSiegeLogo size={28} className="rounded-md" />
+                <span className="hidden lg:inline whitespace-nowrap">Master <span className="text-white">Siege</span></span>
+              </h1>
+              <div className="flex bg-zinc-800 rounded-lg p-0.5">
+                {(['mastery', 'map-advisor', 'strats'] as const).map((tab) => (
+                  <button
+                    key={tab}
+                    onClick={() => setViewMode(tab)}
+                    className={`px-3 py-1 rounded-md text-xs font-bold uppercase tracking-wider transition-colors ${viewMode === tab
+                      ? 'bg-brand-500 text-black'
                       : 'text-zinc-400 hover:text-white'
-                  }`}
-                >
-                  {tab === 'mastery' ? 'Operator Mastery' : tab === 'map-advisor' ? 'Map Advisor' : 'Strats'}
-                </button>
-              ))}
-            </div>
-          </div>
-          <div className="flex items-center gap-2">
-            <Link href="/operators" className="inline-flex items-center justify-center px-3 py-1.5 text-xs gap-1.5 font-bold uppercase tracking-wider rounded text-white/60 hover:text-white hover:bg-white/5 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 focus:ring-offset-zinc-900">
-              <Users className="w-3 h-3" aria-hidden="true" />
-              <span className="hidden sm:inline">Operators</span>
-            </Link>
-            <Link href="/random" className="inline-flex items-center justify-center px-3 py-1.5 text-xs gap-1.5 font-bold uppercase tracking-wider rounded text-white/60 hover:text-white hover:bg-white/5 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 focus:ring-offset-zinc-900">
-              <Dices className="w-3 h-3" aria-hidden="true" />
-              <span className="hidden sm:inline">Random</span>
-            </Link>
-            <Button variant="ghost" size="sm" onClick={handleReset} icon={RotateCcw}>
-              Reset Run
-            </Button>
-            <Button variant="ghost" size="sm" onClick={() => setIsRivalryOpen(true)} icon={Swords}>
-              <span className="sr-only">Rivalry</span>
-            </Button>
-            <AccountIndicator onOpenStats={() => setIsStatsModalOpen(true)} />
-          </div>
-        </header>
-
-        {/* Content area — fills remaining height */}
-        {viewMode === 'mastery' ? (
-        <div className="flex-1 min-h-0 grid grid-cols-1 lg:grid-cols-[1fr_minmax(0,560px)_1fr] gap-4 lg:gap-6 pt-4">
-
-          {/* Left Column - Mastery Header */}
-            <div className="hidden lg:flex flex-col overflow-y-auto scrollbar-auto-hide pr-2 pt-1">
-              <MasteryHeader
-                history={history}
-                operatorKills={operatorKillsAggregate}
-                operatorDeaths={operatorDeathsAggregate}
-              />
-            </div>
-
-        {/* Center Column - Main Content */}
-        <div className="max-w-[560px] w-full mx-auto lg:mx-0 flex flex-col h-full overflow-y-auto overflow-x-hidden scrollbar-auto-hide">
-
-          {/* Stats Row */}
-          <div className="grid grid-cols-2 gap-2 shrink-0">
-            <StatCounter
-              label="Kills"
-              value={kills}
-              onIncrement={() => performKillIncrement(1)}
-              onDecrement={handleKillDecrement}
-            />
-            <StatCounter
-              label="Deaths"
-              value={deaths}
-              onIncrement={() => performDeathIncrement(1)}
-              onDecrement={handleDeathDecrement}
-              variant="danger"
-            />
-          </div>
-
-          {/* Hot Streak Banner — appears below stats when on a streak */}
-          <div className="shrink-0 mt-1">
-            <HotStreakIndicator streakCount={killStreak.count} isActive={killStreak.isHotStreak} />
-          </div>
-
-          {/* Selectors — compact stacked */}
-          <div className="flex flex-col gap-2 shrink-0 mt-3">
-            <MatchTypeSelector
-              currentType={currentMatchType}
-              onSelect={(type) => setCurrentMatchType(type)}
-              isRollingParent={isRolling}
-            />
-            <div className="grid grid-cols-2 gap-2">
-              <PlatformSelector
-                currentPlatform={currentPlatform}
-                onSelect={(platform) => setCurrentPlatform(platform)}
-              />
-              <SideSelector
-                currentSide={currentSide}
-                onSelect={(side) => setCurrentSide(side)}
-              />
-            </div>
-          </div>
-
-          {/* Options Row */}
-          <div className="shrink-0 mt-2">
-            <KillTargetSelector
-              value={userTargetKills}
-              onSelect={(v) => setUserTargetKills(v)}
-            />
-          </div>
-          <div className="shrink-0 mt-2">
-            <OptionsRow
-              showRoles={showRoles}
-              onToggleRoles={(enabled) => setShowRoles(enabled)}
-            />
-          </div>
-
-          {/* Map Selector — for strat linking */}
-          <div className="shrink-0 mt-2">
-            <MapDeploySelector
-              currentMapId={currentMapId}
-              isLocked={!!activeMatch}
-              onCorrect={(mapId) => {
-                // ponytail: map correction — updates in-place, no new match created (Req 5.1, 5.2)
-                setCurrentMapId(mapId);
-                if (currentDeploymentId) {
-                  setHistory(prev => prev.map(h => {
-                    if (h.deploymentId !== currentDeploymentId) return h;
-                    const matches = (h.matches || []).map(m => !m.endedAt ? { ...m, mapId } : m);
-                    return { ...h, matches };
-                  }));
-                }
-              }}
-              onSelect={(id) => {
-                if (activeMatch) return; /* ponytail: map locked during active match (Req 2.2) */
-                if (!id) { setCurrentMapId(null); setCurrentSiteId(null); return; }
-                /* ponytail: map selection creates a match when deployed with no open match (Req 2.1) */
-                if (currentDeploymentId && !activeMatch) {
-                  const newMatch: MatchEntry = { id: crypto.randomUUID(), mapId: id, startedAt: new Date().toISOString(), rounds: [] };
-                  setHistory(prev => prev.map(h => h.deploymentId === currentDeploymentId ? { ...h, matches: [...(h.matches || []), newMatch] } : h));
-                }
-                setCurrentMapId(id);
-                setCurrentSiteId(null);
-                roundStartKillsRef.current = kills;
-                roundStartDeathsRef.current = deaths;
-              }}
-            />
-          </div>
-
-          {/* Site Selector — shows bomb sites when a map is selected */}
-          {currentMapId && (
-            <div className="shrink-0 mt-2">
-              <SiteSelector mapId={currentMapId} currentSiteId={currentSiteId} onSelect={(siteId) => { setCurrentSiteId(siteId); }} />
-            </div>
-          )}
-
-          {/* Round End + End Match — only when a match is active */}
-          {currentOperator && !!activeMatch && (
-            <div className="shrink-0 mt-2 flex flex-col gap-2">
-              {matchEndOpen ? (
-                <div className="flex items-center gap-2 p-2 bg-zinc-900 border border-zinc-800 rounded-lg">
-                  <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 shrink-0">Result?</span>
-                  <button
-                    type="button"
-                    onClick={() => handleRoundEnd('win')}
-                    className="flex-1 py-1.5 text-[11px] font-bold uppercase tracking-wider rounded-md bg-green-500/15 border border-green-500/30 text-green-400 hover:bg-green-500/25 transition-colors"
+                      }`}
                   >
-                    Win
+                    {tab === 'mastery' ? 'Operator Mastery' : tab === 'map-advisor' ? 'Map Advisor' : 'Strats'}
                   </button>
-                  <button
-                    type="button"
-                    onClick={() => handleRoundEnd('loss')}
-                    className="flex-1 py-1.5 text-[11px] font-bold uppercase tracking-wider rounded-md bg-red-500/15 border border-red-500/30 text-red-400 hover:bg-red-500/25 transition-colors"
-                  >
-                    Loss
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => { pendingEndMatchRef.current = false; setMatchEndOpen(false); }}
-                    className="px-2 py-1.5 text-[10px] font-bold text-zinc-500 hover:text-zinc-300 transition-colors"
-                  >
-                    Cancel
-                  </button>
-                </div>
-              ) : (
-                <button
-                  type="button"
-                  onClick={() => setMatchEndOpen(true)}
-                  className="w-full py-2 text-[11px] font-bold uppercase tracking-wider rounded-lg border border-yellow-500/20 bg-yellow-500/5 text-yellow-500 hover:bg-yellow-500/10 transition-colors"
-                >
-                  End Round
-                </button>
-              )}
-              <button
-                type="button"
-                onClick={() => handleEndMatch()}
-                className="w-full py-1.5 text-[10px] font-bold uppercase tracking-wider rounded-lg border border-zinc-700 bg-zinc-800/50 text-zinc-400 hover:bg-zinc-800 hover:text-zinc-300 transition-colors"
-              >
-                End Match
-              </button>
-            </div>
-          )}
-
-
-
-          {/* Operator Card area */}
-          <div id="operator-card-container" className="shrink-0 mt-3 relative px-2">
-            <RollAnimation isRolling={isRolling} side={currentSide} />
-            <OperatorDisplay
-              operator={currentOperator}
-              loadout={currentLoadout}
-              matchType={currentMatchType}
-              platform={currentMatchType === 'Ranked' ? currentPlatform : undefined}
-              isRolling={isRolling}
-              targetKills={currentTargetKills}
-              operatorKills={currentDeploymentId ? (operatorKills[currentDeploymentId] || 0) : 0}
-              role={showRoles ? currentRole : undefined}
-              onLoadoutChange={(newLoadout) => setCurrentLoadout(newLoadout)}
-            />
-          </div>
-
-          {/* Linked Strats — shows matching strats for current operator + map */}
-          {currentOperator && currentMapId && (() => {
-            const linked = STRATS.filter(s => s.operator === currentOperator.id && s.mapId === currentMapId);
-            if (linked.length === 0) return null;
-            return (
-              <div className="shrink-0 mt-2">
-                {linked.map(strat => (
-                  <div key={strat.id} className="border border-yellow-500/20 rounded-lg bg-yellow-500/5 p-3 mb-2 last:mb-0">
-                    <div className="flex items-center gap-2 mb-1.5">
-                      <span className="text-[10px] font-bold uppercase tracking-widest text-yellow-500">Strat Available</span>
-                      <span className="text-[10px] font-bold uppercase bg-zinc-800 text-zinc-400 px-1.5 py-0.5 rounded">{strat.role}</span>
-                      <span className="text-[10px] font-bold uppercase bg-zinc-800 text-zinc-400 px-1.5 py-0.5 rounded">{strat.difficulty}</span>
-                    </div>
-                    <p className="text-sm font-bold text-white mb-1">{strat.title}</p>
-                    <p className="text-xs text-zinc-400 mb-2">{strat.winCondition}</p>
-                    <details className="group">
-                      <summary className="text-[10px] font-bold uppercase tracking-wider text-yellow-500/70 cursor-pointer hover:text-yellow-500 transition-colors">
-                        Show setup & details
-                      </summary>
-                      <div className="mt-2 space-y-2 text-xs text-zinc-400">
-                        {strat.setup.utility.length > 0 && (
-                          <div>
-                            <span className="font-bold text-zinc-300 block mb-0.5">Utility:</span>
-                            {strat.setup.utility.map((u, i) => (
-                              <p key={i}><span className="text-yellow-500">{u.gadget}:</span> {u.location}</p>
-                            ))}
-                          </div>
-                        )}
-                        {strat.setup.reinforcements.length > 0 && (
-                          <div>
-                            <span className="font-bold text-zinc-300 block mb-0.5">Reinforcements:</span>
-                            {strat.setup.reinforcements.map((r, i) => <p key={i}>• {r}</p>)}
-                          </div>
-                        )}
-                        {strat.roles.length > 0 && (
-                          <div>
-                            <span className="font-bold text-zinc-300 block mb-0.5">Team roles:</span>
-                            {strat.roles.map((r, i) => (
-                              <p key={i}><span className="text-white capitalize">{r.operator}</span> ({r.role}): {r.description}</p>
-                            ))}
-                          </div>
-                        )}
-                      </div>
-                    </details>
-                  </div>
                 ))}
               </div>
-            );
-          })()}
+            </div>
+            <div className="flex items-center gap-2">
+              <Link href="/operators" className="inline-flex items-center justify-center px-3 py-1.5 text-xs gap-1.5 font-bold uppercase tracking-wider rounded text-white/60 hover:text-white hover:bg-white/5 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 focus:ring-offset-zinc-900">
+                <Users className="w-3 h-3" aria-hidden="true" />
+                <span className="hidden sm:inline">Operators</span>
+              </Link>
+              <Link href="/random" className="inline-flex items-center justify-center px-3 py-1.5 text-xs gap-1.5 font-bold uppercase tracking-wider rounded text-white/60 hover:text-white hover:bg-white/5 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 focus:ring-offset-zinc-900">
+                <Dices className="w-3 h-3" aria-hidden="true" />
+                <span className="hidden sm:inline">Random</span>
+              </Link>
+              <Button variant="ghost" size="sm" onClick={handleReset} icon={RotateCcw}>
+                Reset Run
+              </Button>
+              <Button variant="ghost" size="sm" onClick={() => setIsRivalryOpen(true)} icon={Swords}>
+                <span className="sr-only">Rivalry</span>
+              </Button>
+              <AccountIndicator onOpenStats={() => setIsStatsModalOpen(true)} />
+            </div>
+          </header>
 
-          {/* Target Complete Overlay — shows on top of operator card */}
-          {targetComplete && currentOperator && (
-            <div className="shrink-0 mt-2 relative overflow-hidden rounded-xl border border-green-500/30 bg-linear-to-b from-green-900/30 via-zinc-900/90 to-zinc-900 p-4">
-              {/* Background glow */}
-              <div className="absolute inset-0 bg-linear-to-t from-transparent to-green-500/5 pointer-events-none" />
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-40 h-40 rounded-full bg-green-500/10 blur-3xl pointer-events-none" />
-              
-              <div className="relative z-10 flex flex-col items-center gap-2">
-                {/* Success icon */}
-                <div className="w-12 h-12 rounded-full bg-green-500/20 border border-green-500/40 flex items-center justify-center">
-                  <svg className="w-6 h-6 text-green-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
-                  </svg>
+          {/* Content area — fills remaining height */}
+          {viewMode === 'mastery' ? (
+            <div className="flex-1 min-h-0 grid grid-cols-1 lg:grid-cols-[1fr_minmax(0,560px)_1fr] gap-4 lg:gap-6 pt-4">
+
+              {/* Left Column - Mastery Header */}
+              <div className="hidden lg:flex flex-col overflow-y-auto scrollbar-auto-hide pr-2 pt-1">
+                <MasteryHeader
+                  history={history}
+                  operatorKills={operatorKillsAggregate}
+                  operatorDeaths={operatorDeathsAggregate}
+                />
+              </div>
+
+              {/* Center Column - Main Content */}
+              <div className="max-w-140 w-full mx-auto lg:mx-0 flex flex-col h-full overflow-y-auto overflow-x-hidden scrollbar-auto-hide">
+
+                {/* Stats Row */}
+                <div className="grid grid-cols-2 gap-2 shrink-0">
+                  <StatCounter
+                    label="Kills"
+                    value={kills}
+                    onIncrement={() => performKillIncrement(1)}
+                    onDecrement={handleKillDecrement}
+                  />
+                  <StatCounter
+                    label="Deaths"
+                    value={deaths}
+                    onIncrement={() => performDeathIncrement(1)}
+                    onDecrement={handleDeathDecrement}
+                    variant="danger"
+                  />
                 </div>
 
-                {/* Title */}
-                <p className="text-xs font-bold uppercase tracking-[0.2em] text-green-400/80">Mission Complete</p>
-                
-                {/* Operator + kills */}
-                <p className="text-lg font-black uppercase tracking-tight text-white">
-                  {currentOperator.name} <span className="text-green-400">× {currentTargetKills}</span>
-                </p>
+                {/* Hot Streak Banner — appears below stats when on a streak */}
+                <div className="shrink-0 mt-1">
+                  <HotStreakIndicator streakCount={killStreak.count} isActive={killStreak.isHotStreak} />
+                </div>
 
-                {/* Subtitle */}
-                <p className="text-[10px] text-zinc-400">Target eliminated — deploy again or keep playing</p>
+                {/* Selectors — compact stacked */}
+                <div className="flex flex-col gap-2 shrink-0 mt-3">
+                  <MatchTypeSelector
+                    currentType={currentMatchType}
+                    onSelect={(type) => setCurrentMatchType(type)}
+                    isRollingParent={isRolling}
+                  />
+                  <div className="grid grid-cols-2 gap-2">
+                    <PlatformSelector
+                      currentPlatform={currentPlatform}
+                      onSelect={(platform) => setCurrentPlatform(platform)}
+                    />
+                    <SideSelector
+                      currentSide={currentSide}
+                      onSelect={(side) => setCurrentSide(side)}
+                    />
+                  </div>
+                </div>
 
-                {/* Quick action */}
-                <button
-                  onClick={handleRoll}
-                  className="mt-1 px-4 py-1.5 text-[10px] font-bold uppercase tracking-wider bg-green-500/15 border border-green-500/30 text-green-400 rounded-lg hover:bg-green-500/25 transition-colors"
+                {/* Options Row */}
+                <div className="shrink-0 mt-2">
+                  <KillTargetSelector
+                    value={userTargetKills}
+                    onSelect={(v) => setUserTargetKills(v)}
+                  />
+                </div>
+                <div className="shrink-0 mt-2">
+                  <OptionsRow
+                    showRoles={showRoles}
+                    onToggleRoles={(enabled) => setShowRoles(enabled)}
+                  />
+                </div>
+
+                {/* Map Selector — for strat linking */}
+                <div className="shrink-0 mt-2">
+                  <MapDeploySelector
+                    currentMapId={currentMapId}
+                    isLocked={!!activeMatch}
+                    onCorrect={(mapId) => {
+                      // ponytail: map correction — updates in-place, no new match created (Req 5.1, 5.2)
+                      setCurrentMapId(mapId);
+                      if (currentDeploymentId) {
+                        setHistory(prev => prev.map(h => {
+                          if (h.deploymentId !== currentDeploymentId) return h;
+                          const matches = (h.matches || []).map(m => !m.endedAt ? { ...m, mapId } : m);
+                          return { ...h, matches };
+                        }));
+                      }
+                    }}
+                    onSelect={(id) => {
+                      if (activeMatch) return; /* ponytail: map locked during active match (Req 2.2) */
+                      if (!id) { setCurrentMapId(null); setCurrentSiteId(null); return; }
+                      /* ponytail: map selection creates a match when deployed with no open match (Req 2.1) */
+                      if (currentDeploymentId && !activeMatch) {
+                        const newMatch: MatchEntry = { id: crypto.randomUUID(), mapId: id, startedAt: new Date().toISOString(), rounds: [] };
+                        setHistory(prev => prev.map(h => h.deploymentId === currentDeploymentId ? { ...h, matches: [...(h.matches || []), newMatch] } : h));
+                      }
+                      setCurrentMapId(id);
+                      setCurrentSiteId(null);
+                      roundStartKillsRef.current = kills;
+                      roundStartDeathsRef.current = deaths;
+                    }}
+                  />
+                </div>
+
+                {/* Site Selector — shows bomb sites when a map is selected */}
+                {currentMapId && (
+                  <div className="shrink-0 mt-2">
+                    <SiteSelector mapId={currentMapId} currentSiteId={currentSiteId} onSelect={(siteId) => { setCurrentSiteId(siteId); }} />
+                  </div>
+                )}
+
+                {/* Round End + End Match — only when a match is active */}
+                {currentOperator && !!activeMatch && (
+                  <div className="shrink-0 mt-2 flex flex-col gap-2">
+                    {matchEndOpen ? (
+                      <div className="flex items-center gap-2 p-2 bg-zinc-900 border border-zinc-800 rounded-lg">
+                        <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 shrink-0">Result?</span>
+                        <button
+                          type="button"
+                          onClick={() => handleRoundEnd('win')}
+                          className="flex-1 py-1.5 text-[11px] font-bold uppercase tracking-wider rounded-md bg-green-500/15 border border-green-500/30 text-green-400 hover:bg-green-500/25 transition-colors"
+                        >
+                          Win
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => handleRoundEnd('loss')}
+                          className="flex-1 py-1.5 text-[11px] font-bold uppercase tracking-wider rounded-md bg-red-500/15 border border-red-500/30 text-red-400 hover:bg-red-500/25 transition-colors"
+                        >
+                          Loss
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => { pendingEndMatchRef.current = false; setMatchEndOpen(false); }}
+                          className="px-2 py-1.5 text-[10px] font-bold text-zinc-500 hover:text-zinc-300 transition-colors"
+                        >
+                          Cancel
+                        </button>
+                      </div>
+                    ) : (
+                      <button
+                        type="button"
+                        onClick={() => setMatchEndOpen(true)}
+                        className="w-full py-2 text-[11px] font-bold uppercase tracking-wider rounded-lg border border-brand-500/20 bg-brand-500/5 text-brand-500 hover:bg-brand-500/10 transition-colors"
+                      >
+                        End Round
+                      </button>
+                    )}
+                    <button
+                      type="button"
+                      onClick={() => handleEndMatch()}
+                      className="w-full py-1.5 text-[10px] font-bold uppercase tracking-wider rounded-lg border border-zinc-700 bg-zinc-800/50 text-zinc-400 hover:bg-zinc-800 hover:text-zinc-300 transition-colors"
+                    >
+                      End Match
+                    </button>
+                  </div>
+                )}
+
+
+
+                {/* Operator Card area */}
+                <div id="operator-card-container" className="shrink-0 mt-3 relative px-2">
+                  <RollAnimation isRolling={isRolling} side={currentSide} />
+                  <OperatorDisplay
+                    operator={currentOperator}
+                    loadout={currentLoadout}
+                    matchType={currentMatchType}
+                    platform={currentMatchType === 'Ranked' ? currentPlatform : undefined}
+                    isRolling={isRolling}
+                    targetKills={currentTargetKills}
+                    operatorKills={currentDeploymentId ? (operatorKills[currentDeploymentId] || 0) : 0}
+                    role={showRoles ? currentRole : undefined}
+                    onLoadoutChange={(newLoadout) => setCurrentLoadout(newLoadout)}
+                  />
+                </div>
+
+                {/* Linked Strats — shows matching strats for current operator + map */}
+                {currentOperator && currentMapId && (() => {
+                  const linked = STRATS.filter(s => s.operator === currentOperator.id && s.mapId === currentMapId);
+                  if (linked.length === 0) return null;
+                  return (
+                    <div className="shrink-0 mt-2">
+                      {linked.map(strat => (
+                        <div key={strat.id} className="border border-brand-500/20 rounded-lg bg-brand-500/5 p-3 mb-2 last:mb-0">
+                          <div className="flex items-center gap-2 mb-1.5">
+                            <span className="text-[10px] font-bold uppercase tracking-widest text-brand-500">Strat Available</span>
+                            <span className="text-[10px] font-bold uppercase bg-zinc-800 text-zinc-400 px-1.5 py-0.5 rounded">{strat.role}</span>
+                            <span className="text-[10px] font-bold uppercase bg-zinc-800 text-zinc-400 px-1.5 py-0.5 rounded">{strat.difficulty}</span>
+                          </div>
+                          <p className="text-sm font-bold text-white mb-1">{strat.title}</p>
+                          <p className="text-xs text-zinc-400 mb-2">{strat.winCondition}</p>
+                          <details className="group">
+                            <summary className="text-[10px] font-bold uppercase tracking-wider text-brand-500/70 cursor-pointer hover:text-brand-500 transition-colors">
+                              Show setup & details
+                            </summary>
+                            <div className="mt-2 space-y-2 text-xs text-zinc-400">
+                              {strat.setup.utility.length > 0 && (
+                                <div>
+                                  <span className="font-bold text-zinc-300 block mb-0.5">Utility:</span>
+                                  {strat.setup.utility.map((u, i) => (
+                                    <p key={i}><span className="text-brand-500">{u.gadget}:</span> {u.location}</p>
+                                  ))}
+                                </div>
+                              )}
+                              {strat.setup.reinforcements.length > 0 && (
+                                <div>
+                                  <span className="font-bold text-zinc-300 block mb-0.5">Reinforcements:</span>
+                                  {strat.setup.reinforcements.map((r, i) => <p key={i}>• {r}</p>)}
+                                </div>
+                              )}
+                              {strat.roles.length > 0 && (
+                                <div>
+                                  <span className="font-bold text-zinc-300 block mb-0.5">Team roles:</span>
+                                  {strat.roles.map((r, i) => (
+                                    <p key={i}><span className="text-white capitalize">{r.operator}</span> ({r.role}): {r.description}</p>
+                                  ))}
+                                </div>
+                              )}
+                            </div>
+                          </details>
+                        </div>
+                      ))}
+                    </div>
+                  );
+                })()}
+
+                {/* Target Complete Overlay — shows on top of operator card */}
+                {targetComplete && currentOperator && (
+                  <div className="shrink-0 mt-2 relative overflow-hidden rounded-xl border border-green-500/30 bg-linear-to-b from-green-900/30 via-zinc-900/90 to-zinc-900 p-4">
+                    {/* Background glow */}
+                    <div className="absolute inset-0 bg-linear-to-t from-transparent to-green-500/5 pointer-events-none" />
+                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-40 h-40 rounded-full bg-green-500/10 blur-3xl pointer-events-none" />
+
+                    <div className="relative z-10 flex flex-col items-center gap-2">
+                      {/* Success icon */}
+                      <div className="w-12 h-12 rounded-full bg-green-500/20 border border-green-500/40 flex items-center justify-center">
+                        <svg className="w-6 h-6 text-green-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                        </svg>
+                      </div>
+
+                      {/* Title */}
+                      <p className="text-xs font-bold uppercase tracking-[0.2em] text-green-400/80">Mission Complete</p>
+
+                      {/* Operator + kills */}
+                      <p className="text-lg font-black uppercase tracking-tight text-white">
+                        {currentOperator.name} <span className="text-green-400">× {currentTargetKills}</span>
+                      </p>
+
+                      {/* Subtitle */}
+                      <p className="text-[10px] text-zinc-400">Target eliminated — deploy again or keep playing</p>
+
+                      {/* Quick action */}
+                      <button
+                        onClick={handleRoll}
+                        className="mt-1 px-4 py-1.5 text-[10px] font-bold uppercase tracking-wider bg-green-500/15 border border-green-500/30 text-green-400 rounded-lg hover:bg-green-500/25 transition-colors"
+                      >
+                        Next Deployment →
+                      </button>
+                    </div>
+                  </div>
+                )}
+
+                {/* Action Buttons — always at bottom */}
+                <div className="shrink-0 mt-3 pb-4 flex flex-col gap-2">
+                  {/* Primary actions row */}
+                  <div className="flex gap-2">
+                    <FirstActionTooltip>
+                      <Button
+                        onClick={handleRoll}
+                        disabled={isRolling}
+                        size="md"
+                        className={`flex-1 transition-all active:scale-95 ${isRolling ? 'animate-button-press' : ''}`}
+                        icon={Dices}
+                      >
+                        {currentOperator ? 'Reroll Operator' : 'Deploy Operator'}
+                      </Button>
+                    </FirstActionTooltip>
+                    <Button
+                      onClick={() => setIsPickerOpen(true)}
+                      disabled={isRolling}
+                      variant="outline"
+                      size="md"
+                      className="transition-all active:scale-95"
+                      icon={UserRoundSearch}
+                    >
+                      Pick
+                    </Button>
+                  </div>
+
+                  {/* Surrender row — only when deployed and target not complete */}
+                  {currentOperator && !targetComplete && (
+                    showSurrenderConfirm ? (
+                      <div className="flex gap-2 items-center justify-center p-2 rounded-lg border border-red-500/20 bg-red-500/5">
+                        <span className="text-xs text-red-400 font-medium">Abandon this deployment?</span>
+                        <Button
+                          onClick={handleSurrender}
+                          variant="outline"
+                          size="sm"
+                          className="transition-all active:scale-95 border-red-500/50 text-red-400 hover:bg-red-500/10"
+                        >
+                          Confirm
+                        </Button>
+                        <Button
+                          onClick={() => setShowSurrenderConfirm(false)}
+                          variant="ghost"
+                          size="sm"
+                          className="transition-all active:scale-95 text-zinc-400"
+                        >
+                          Cancel
+                        </Button>
+                      </div>
+                    ) : (
+                      <Button
+                        onClick={() => setShowSurrenderConfirm(true)}
+                        disabled={isRolling}
+                        variant="ghost"
+                        size="sm"
+                        className="w-full transition-all active:scale-95 text-red-400/60 hover:text-red-400 hover:bg-red-500/5"
+                        icon={Flag}
+                        title="Surrender current deployment"
+                      >
+                        Surrender Deployment
+                      </Button>
+                    )
+                  )}
+                </div>
+
+              </div>
+
+              {/* Right Column - History */}
+              <div className="hidden lg:block overflow-y-auto scrollbar-auto-hide pb-6 pl-4 border-gradient-fade">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setIsStatsModalOpen(true)}
+                  className="mb-4 w-full"
+                  icon={Dices}
                 >
-                  Next Deployment →
-                </button>
+                  Select from History
+                </Button>
+                <HistoryList
+                  history={history}
+                  operatorKills={operatorKills}
+                  currentOperatorId={currentOperator?.id || null}
+                  onItemClick={setSelectedHistoryItem}
+                  onSelectItem={restoreFromHistory}
+                  onDeleteItem={(item) => {
+                    setHistory(prev => prev.filter(h => h.id !== item.id));
+                    if (item.deploymentId) {
+                      deleteDeployment(item.deploymentId);
+                    }
+                    // If the deleted item is the currently displayed operator, clear the center display
+                    if (currentOperator?.id === item.operator.id) {
+                      setCurrentOperator(null);
+                      setCurrentLoadout(null);
+                      setCurrentMatchType(null);
+                      setCurrentPlatform(null);
+                      setCurrentTargetKills(0);
+                      setCurrentRole('');
+                      setKills(0);
+                      setDeaths(0);
+                      setTargetComplete(false);
+                    }
+                  }}
+                />
+              </div>
+
+            </div>
+          ) : viewMode === 'map-advisor' ? (
+            <div className="flex-1 min-h-0 flex pt-4">
+              <MapAdvisorView />
+            </div>
+          ) : (
+            <div className="flex-1 min-h-0 flex pt-4">
+              <StratsView />
+            </div>
+          )}
+
+          {/* History Item Modal */}
+          <OperatorCardModal
+            item={selectedHistoryItem}
+            operatorKills={operatorKills}
+            operatorDeaths={operatorDeaths}
+            onClose={() => setSelectedHistoryItem(null)}
+          />
+
+          {/* Operator Stats / Selection Modal */}
+          {isStatsModalOpen && (
+            <OperatorStatsModal
+              history={history}
+              operatorKills={operatorKillsAggregate}
+              operatorDeaths={operatorDeathsAggregate}
+              onSelect={restoreFromHistory}
+              onClose={() => setIsStatsModalOpen(false)}
+            />
+          )}
+
+          {/* Rivalry Comparison Modal */}
+          <RivalryView
+            isOpen={isRivalryOpen}
+            onClose={() => setIsRivalryOpen(false)}
+          />
+
+          {/* Session Summary Modal — shown when user ends session */}
+          {sessionDeltaData && (
+            <SessionSummaryModal
+              isOpen={sessionSummaryOpen}
+              onClose={handleSessionModalClose}
+              sessionData={sessionDeltaData}
+            />
+          )}
+
+          {/* Reset Run Confirmation Modal */}
+          {resetModalOpen && (
+            <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm" onClick={() => setResetModalOpen(false)}>
+              <div className="bg-zinc-900 border border-zinc-700 rounded-xl p-6 max-w-sm mx-4 shadow-2xl" onClick={e => e.stopPropagation()}>
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="w-10 h-10 rounded-full bg-red-500/20 border border-red-500/40 flex items-center justify-center shrink-0">
+                    <RotateCcw className="w-5 h-5 text-red-400" />
+                  </div>
+                  <h3 className="text-lg font-black uppercase tracking-tight text-white">Reset Run</h3>
+                </div>
+                <div className="space-y-2 mb-5">
+                  <p className="text-sm text-zinc-300">This will permanently delete:</p>
+                  <ul className="text-sm text-zinc-400 space-y-1 pl-4">
+                    <li className="flex gap-2"><span className="text-red-400">•</span>All deployment history</li>
+                    <li className="flex gap-2"><span className="text-red-400">•</span>All kill & death stats</li>
+                    <li className="flex gap-2"><span className="text-red-400">•</span>Operator mastery progress</li>
+                    <li className="flex gap-2"><span className="text-red-400">•</span>Cloud data (if signed in)</li>
+                  </ul>
+                  <p className="text-xs text-red-400/80 font-medium mt-2">This action cannot be undone.</p>
+                </div>
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => setResetModalOpen(false)}
+                    className="flex-1 py-2 px-3 text-sm font-bold rounded-lg border border-zinc-700 text-zinc-300 hover:bg-zinc-800 transition-colors"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    onClick={confirmReset}
+                    className="flex-1 py-2 px-3 text-sm font-bold rounded-lg bg-red-500/20 border border-red-500/40 text-red-400 hover:bg-red-500/30 transition-colors"
+                  >
+                    Reset Everything
+                  </button>
+                </div>
               </div>
             </div>
           )}
 
-          {/* Action Buttons — always at bottom */}
-          <div className="shrink-0 mt-3 pb-4 flex flex-col gap-2">
-            {/* Primary actions row */}
-            <div className="flex gap-2">
-              <FirstActionTooltip>
-              <Button
-                onClick={handleRoll}
-                disabled={isRolling}
-                size="md"
-                className={`flex-1 transition-all active:scale-95 ${isRolling ? 'animate-button-press' : ''}`}
-                icon={Dices}
-              >
-                {currentOperator ? 'Reroll Operator' : 'Deploy Operator'}
-              </Button>
-              </FirstActionTooltip>
-              <Button
-                onClick={() => setIsPickerOpen(true)}
-                disabled={isRolling}
-                variant="outline"
-                size="md"
-                className="transition-all active:scale-95"
-                icon={UserRoundSearch}
-              >
-                Pick
-              </Button>
-            </div>
-
-            {/* Surrender row — only when deployed and target not complete */}
-            {currentOperator && !targetComplete && (
-              showSurrenderConfirm ? (
-                <div className="flex gap-2 items-center justify-center p-2 rounded-lg border border-red-500/20 bg-red-500/5">
-                  <span className="text-xs text-red-400 font-medium">Abandon this deployment?</span>
-                  <Button
-                    onClick={handleSurrender}
-                    variant="outline"
-                    size="sm"
-                    className="transition-all active:scale-95 border-red-500/50 text-red-400 hover:bg-red-500/10"
-                  >
-                    Confirm
-                  </Button>
-                  <Button
-                    onClick={() => setShowSurrenderConfirm(false)}
-                    variant="ghost"
-                    size="sm"
-                    className="transition-all active:scale-95 text-zinc-400"
-                  >
-                    Cancel
-                  </Button>
-                </div>
-              ) : (
-                <Button
-                  onClick={() => setShowSurrenderConfirm(true)}
-                  disabled={isRolling}
-                  variant="ghost"
-                  size="sm"
-                  className="w-full transition-all active:scale-95 text-red-400/60 hover:text-red-400 hover:bg-red-500/5"
-                  icon={Flag}
-                  title="Surrender current deployment"
-                >
-                  Surrender Deployment
-                </Button>
-              )
-            )}
-          </div>
-
-          </div>
-
-        {/* Right Column - History */}
-          <div className="hidden lg:block overflow-y-auto scrollbar-auto-hide pb-6 pl-4 border-gradient-fade">
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => setIsStatsModalOpen(true)}
-              className="mb-4 w-full"
-              icon={Dices}
-            >
-              Select from History
-            </Button>
-            <HistoryList
-              history={history}
-              operatorKills={operatorKills}
-              currentOperatorId={currentOperator?.id || null}
-              onItemClick={setSelectedHistoryItem}
-              onSelectItem={restoreFromHistory}
-              onDeleteItem={(item) => {
-                setHistory(prev => prev.filter(h => h.id !== item.id));
-                if (item.deploymentId) {
-                  deleteDeployment(item.deploymentId);
-                }
-                // If the deleted item is the currently displayed operator, clear the center display
-                if (currentOperator?.id === item.operator.id) {
-                  setCurrentOperator(null);
-                  setCurrentLoadout(null);
-                  setCurrentMatchType(null);
-                  setCurrentPlatform(null);
-                  setCurrentTargetKills(0);
-                  setCurrentRole('');
-                  setKills(0);
-                  setDeaths(0);
-                  setTargetComplete(false);
-                }
-              }}
-            />
-          </div>
-
         </div>
-        ) : viewMode === 'map-advisor' ? (
-          <div className="flex-1 min-h-0 flex pt-4">
-            <MapAdvisorView />
-          </div>
-        ) : (
-          <div className="flex-1 min-h-0 flex pt-4">
-            <StratsView />
-          </div>
-        )}
-
-        {/* History Item Modal */}
-        <OperatorCardModal
-          item={selectedHistoryItem}
-          operatorKills={operatorKills}
-          operatorDeaths={operatorDeaths}
-          onClose={() => setSelectedHistoryItem(null)}
-        />
-
-        {/* Operator Stats / Selection Modal */}
-        {isStatsModalOpen && (
-          <OperatorStatsModal
-            history={history}
-            operatorKills={operatorKillsAggregate}
-            operatorDeaths={operatorDeathsAggregate}
-            onSelect={restoreFromHistory}
-            onClose={() => setIsStatsModalOpen(false)}
-          />
-        )}
-
-        {/* Rivalry Comparison Modal */}
-        <RivalryView
-          isOpen={isRivalryOpen}
-          onClose={() => setIsRivalryOpen(false)}
-        />
-
-        {/* Session Summary Modal — shown when user ends session */}
-        {sessionDeltaData && (
-          <SessionSummaryModal
-            isOpen={sessionSummaryOpen}
-            onClose={handleSessionModalClose}
-            sessionData={sessionDeltaData}
-          />
-        )}
-
-        {/* Reset Run Confirmation Modal */}
-        {resetModalOpen && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm" onClick={() => setResetModalOpen(false)}>
-            <div className="bg-zinc-900 border border-zinc-700 rounded-xl p-6 max-w-sm mx-4 shadow-2xl" onClick={e => e.stopPropagation()}>
-              <div className="flex items-center gap-3 mb-3">
-                <div className="w-10 h-10 rounded-full bg-red-500/20 border border-red-500/40 flex items-center justify-center shrink-0">
-                  <RotateCcw className="w-5 h-5 text-red-400" />
-                </div>
-                <h3 className="text-lg font-black uppercase tracking-tight text-white">Reset Run</h3>
-              </div>
-              <div className="space-y-2 mb-5">
-                <p className="text-sm text-zinc-300">This will permanently delete:</p>
-                <ul className="text-sm text-zinc-400 space-y-1 pl-4">
-                  <li className="flex gap-2"><span className="text-red-400">•</span>All deployment history</li>
-                  <li className="flex gap-2"><span className="text-red-400">•</span>All kill & death stats</li>
-                  <li className="flex gap-2"><span className="text-red-400">•</span>Operator mastery progress</li>
-                  <li className="flex gap-2"><span className="text-red-400">•</span>Cloud data (if signed in)</li>
-                </ul>
-                <p className="text-xs text-red-400/80 font-medium mt-2">This action cannot be undone.</p>
-              </div>
-              <div className="flex gap-2">
-                <button
-                  onClick={() => setResetModalOpen(false)}
-                  className="flex-1 py-2 px-3 text-sm font-bold rounded-lg border border-zinc-700 text-zinc-300 hover:bg-zinc-800 transition-colors"
-                >
-                  Cancel
-                </button>
-                <button
-                  onClick={confirmReset}
-                  className="flex-1 py-2 px-3 text-sm font-bold rounded-lg bg-red-500/20 border border-red-500/40 text-red-400 hover:bg-red-500/30 transition-colors"
-                >
-                  Reset Everything
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
-
-      </div>
-    </main>
+      </main>
     </TacticalEntry>
   );
 }
@@ -1263,7 +1229,7 @@ function GuestModeBanner() {
           clearGuestMode();
           router.push('/login');
         }}
-        className="rounded bg-yellow-500/10 border border-yellow-500/30 px-3 py-1 text-xs font-medium text-yellow-500 transition-colors hover:bg-yellow-500/20 hover:border-yellow-500/50"
+        className="rounded bg-brand-500/10 border border-brand-500/30 px-3 py-1 text-xs font-medium text-brand-500 transition-colors hover:bg-brand-500/20 hover:border-brand-500/50"
       >
         Sign in
       </button>

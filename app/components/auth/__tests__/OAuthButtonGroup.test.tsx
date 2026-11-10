@@ -64,7 +64,7 @@ describe("OAuthButtonGroup", () => {
     });
 
     it("shows a spinner on the Google button when loadingProvider is 'google'", () => {
-      const { container } = render(
+      render(
         <OAuthButtonGroup {...defaultProps} loadingProvider="google" />
       );
       const googleButton = screen.getByRole("button", { name: "Continue with Google" });

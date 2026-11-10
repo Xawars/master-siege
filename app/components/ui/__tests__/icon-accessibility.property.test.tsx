@@ -16,7 +16,7 @@ import { ErrorBanner } from '../ErrorBanner';
  */
 describe('Feature: design-system, Property 9: Decorative Icon Accessibility', () => {
   // Mock LucideIcon component for Button icon prop
-  const MockIcon: React.FC<{ className?: string; 'aria-hidden'?: string }> = (props) => (
+  const MockIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
     <svg data-testid="mock-icon" {...props} />
   );
   const IconComponent = MockIcon as unknown as import('lucide-react').LucideIcon;

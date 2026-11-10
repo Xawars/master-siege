@@ -11,13 +11,13 @@ export function OptionsRow({ showRoles, onToggleRoles }: OptionsRowProps) {
   return (
     <div className="flex items-center justify-between py-3 px-4 bg-zinc-900/50 border border-zinc-800 rounded-lg">
       <div className="flex items-center gap-2">
-        <Shield className="w-4 h-4 text-yellow-500" />
+        <Shield className="w-4 h-4 text-brand-500" />
         <span className="text-sm font-medium text-zinc-300">Operator Roles</span>
       </div>
       <button
         onClick={() => onToggleRoles(!showRoles)}
         className={`relative w-11 h-6 rounded-full transition-colors duration-200 ${
-          showRoles ? 'bg-yellow-500' : 'bg-zinc-700'
+          showRoles ? 'bg-brand-500' : 'bg-zinc-700'
         }`}
         role="switch"
         aria-checked={showRoles}

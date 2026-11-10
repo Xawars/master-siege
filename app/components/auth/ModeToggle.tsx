@@ -28,7 +28,7 @@ export function ModeToggle({ mode, onToggle }: ModeToggleProps) {
           type="button"
           onClick={onToggle}
           aria-label={`Switch to ${mode === 'login' ? 'signup' : 'login'} mode`}
-          className="font-semibold text-yellow-500 hover:text-yellow-400 underline underline-offset-2 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 focus:ring-offset-zinc-900 rounded"
+          className="font-semibold text-brand-500 hover:text-brand-400 underline underline-offset-2 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 focus:ring-offset-zinc-900 rounded"
         >
           {actionText}
         </button>
