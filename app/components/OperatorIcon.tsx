@@ -6,6 +6,7 @@ import { useMemo } from 'react';
 // Custom icon mappings for guest operators not in the r6operators package
 const customIcons: Record<string, string> = {
   snake: '/ops/snake_logo.png',
+  noor: '/ops/noor_logo.png',
 };
 
 interface OperatorIconProps {

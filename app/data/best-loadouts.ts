@@ -400,4 +400,9 @@ export const bestLoadouts: Record<string, Loadout> = {
     secondary: "D-50",
     gadget: "Stun Grenade",
   },
+  noor: {
+    primary: "Commando 9",
+    secondary: "1911 TACOPS",
+    gadget: "Deployable Shield",
+  },
 };

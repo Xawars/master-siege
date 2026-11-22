@@ -135,10 +135,10 @@ export function OperatorPickerModal({ isOpen, onClose, onSelect, currentSide }: 
                           className="w-full h-full flex items-center justify-center [&_svg]:w-full [&_svg]:h-full"
                           dangerouslySetInnerHTML={{ __html: iconSvg }}
                         />
-                      ) : op.id === 'snake' ? (
+                      ) : op.id === 'snake' || op.id === 'noor' ? (
                         <>
                           {/* eslint-disable-next-line @next/next/no-img-element */}
-                          <img src="/ops/snake_logo.png" alt={op.name} className="w-full h-full object-contain" />
+                          <img src={op.id === 'snake' ? '/ops/snake_logo.png' : '/ops/noor_logo.png'} alt={op.name} className="w-full h-full object-contain" />
                         </>
                       ) : (
                         <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold text-white/70 ${op.side === 'attacker' ? 'bg-orange-500/30' : 'bg-blue-500/30'}`}>

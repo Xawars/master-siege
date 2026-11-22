@@ -1,5 +1,38 @@
 [
   {
+    "name": "Noor",
+    "codename": "NOOR",
+    "role": "DEFENDER",
+    "organization": "Rainbow",
+    "country": "Egypt",
+    "release_season": "Y11S3",
+    "release_year": 2026,
+    "health": 2,
+    "speed": 2,
+    "difficulty": 2,
+    "ability_name": "Horus Lance Launcher",
+    "ability_description": "Fires projectiles that pierce shields and destructible surfaces, then ignite to break a shield push and deny the plant.",
+    "playstyles": ["AREA_DENIAL", "ANCHOR"],
+    "strengths": [
+      "SHIELD_COUNTER",
+      "AREA_DENIAL",
+      "PLANT_DENIAL",
+      "ENTRY_DENIAL",
+      "CROWD_CONTROL",
+      "SITE_HOLD"
+    ],
+    "weaknesses": [
+      "WEAK_WITHOUT_SHIELDS",
+      "EXPOSED_WHILE_AIMING",
+      "LIMITED_CHARGES",
+      "SHORT_FLAME_DURATION",
+      "NEEDS_TEAM_FOLLOWUP",
+      "COUNTERED_BY_SPACING"
+    ],
+    "icon_url": "https://static.wikia.nocookie.net/rainbowsix/images/7/70/NOOR_ICON_HIGH_RES.webp/revision/latest?cb=20260818111136",
+    "portrait_url": "https://static.wikia.nocookie.net/rainbowsix/images/5/5b/NOOR_FULL_PORTRAIT_HIGH_RES.webp/revision/latest?cb=20260818105829"
+  },
+  {
     "name": "Solid Snake",
     "codename": "SOLID SNAKE",
     "role": "ATTACKER",
@@ -1023,6 +1056,39 @@
     "portrait_url": "https://static.wikia.nocookie.net/rainbowsix/images/6/68/Thermite_-_Full_Body.png/revision/latest?cb=20200325001654"
   },
   {
+    "name": "Ash",
+    "codename": "ASH",
+    "role": "ATTACKER",
+    "organization": "FBI SWAT",
+    "country": "Israel",
+    "release_season": "Y1S1",
+    "release_year": 2015,
+    "health": 1,
+    "speed": 3,
+    "difficulty": 1,
+    "ability_name": "Breaching Rounds",
+    "ability_description": "A compact launcher that fires explosive rounds through soft walls, floors, and barricades from a distance.",
+    "playstyles": ["SOFT_BREACH", "ENTRY", "FRONT_LINE"],
+    "strengths": [
+      "SOFT_BREACH",
+      "RAPID_ENTRY",
+      "RANGE_BREACH",
+      "BARRICADE_CLEAR",
+      "ENTRY_FRAG",
+      "FLEXIBILITY"
+    ],
+    "weaknesses": [
+      "LOW_HEALTH",
+      "LIMITED_CHARGES",
+      "LOUD_BREACH",
+      "COUNTERED_BY_JAGER",
+      "COUNTERED_BY_WAMAI",
+      "HIGH_RISK_ENTRY"
+    ],
+    "icon_url": "https://static.wikia.nocookie.net/rainbowsix/images/2/25/AshIconN.png/revision/latest?cb=20240706085039",
+    "portrait_url": "https://static.wikia.nocookie.net/rainbowsix/images/4/42/Ash_-_Full_Body.png/revision/latest?cb=20180224040849"
+  },
+  {
     "name": "Montagne",
     "codename": "MONTAGNE",
     "role": "ATTACKER",
@@ -1740,6 +1806,39 @@
     ],
     "icon_url": "https://static.wikia.nocookie.net/rainbowsix/images/a/a2/MozzieIconN.png/revision/latest?cb=20240803112311",
     "portrait_url": "https://static.wikia.nocookie.net/rainbowsix/images/f/f2/MOZZIE_FULL_PORTRAIT_HIGH_RES.webp/revision/latest?cb=20250923110929"
+  },
+  {
+    "name": "Nomad",
+    "codename": "NOMAD",
+    "role": "ATTACKER",
+    "organization": "GSAC",
+    "country": "Morocco",
+    "release_season": "Y3S4",
+    "release_year": 2018,
+    "health": 2,
+    "speed": 2,
+    "difficulty": 2,
+    "ability_name": "Airjab Launcher",
+    "ability_description": "A launcher that sticks repulsion grenades to surfaces and knocks down anyone who triggers them.",
+    "playstyles": ["TRAP", "ANTI_ROAM", "FLANK"],
+    "strengths": [
+      "FLANK_DENIAL",
+      "ANTI_ROAM",
+      "PLANT_SUPPORT",
+      "ENTRY_COVER",
+      "AREA_DENIAL",
+      "POST_PLANT"
+    ],
+    "weaknesses": [
+      "LIMITED_CHARGES",
+      "SETUP_DEPENDENT",
+      "VISIBLE_TRAPS",
+      "WEAK_DIRECT_ENTRY",
+      "REQUIRES_MAP_KNOWLEDGE",
+      "SHOOTABLE_GADGETS"
+    ],
+    "icon_url": "https://static.wikia.nocookie.net/rainbowsix/images/4/4f/NomadIconN.png/revision/latest?cb=20240714033121",
+    "portrait_url": "https://static.wikia.nocookie.net/rainbowsix/images/1/15/NOMAD_FULL_PORTRAIT_HIGH_RES.webp/revision/latest?cb=20250923110929"
   },
   {
     "name": "Kaid",
