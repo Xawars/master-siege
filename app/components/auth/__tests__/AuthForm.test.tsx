@@ -50,16 +50,16 @@ describe('AuthForm', () => {
       expect(screen.getByRole('button', { name: /log in/i })).toBeInTheDocument();
     });
 
-    it('shows "Sign Up" in signup mode', () => {
+    it('shows "Continue" on the first signup step', () => {
       renderAuthForm({ mode: 'signup' });
-      expect(screen.getByRole('button', { name: /sign up/i })).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: /continue/i })).toBeInTheDocument();
     });
   });
 
   describe('loading state disables button and shows spinner', () => {
     it('disables the submit button when isSubmitting is true', () => {
       renderAuthForm({ isSubmitting: true });
-      expect(screen.getByRole('button')).toBeDisabled();
+      expect(screen.getByRole('button', { name: /please wait/i })).toBeDisabled();
     });
 
     it('shows a loading spinner when isSubmitting is true', () => {
@@ -78,7 +78,7 @@ describe('AuthForm', () => {
 
     it('shows "Please wait..." text when isSubmitting is true', () => {
       renderAuthForm({ isSubmitting: true });
-      expect(screen.getByRole('button')).toHaveTextContent('Please wait...');
+      expect(screen.getByRole('button', { name: /please wait/i })).toHaveTextContent('Please wait...');
     });
 
     it('does not show spinner when isSubmitting is false', () => {
@@ -210,11 +210,13 @@ describe('AuthForm', () => {
     it('displays signup-specific password length error', async () => {
       renderAuthForm({ mode: 'signup' });
 
-      const emailInput = screen.getByLabelText('Email');
-      const passwordInput = screen.getByLabelText('Password');
-      fireEvent.change(emailInput, { target: { value: 'user@example.com' } });
+      fireEvent.change(screen.getByLabelText('Callsign'), { target: { value: 'Viper' } });
+      fireEvent.change(screen.getByLabelText('Email'), { target: { value: 'user@example.com' } });
+      fireEvent.click(screen.getByRole('button', { name: /continue/i }));
+
+      const passwordInput = await screen.findByLabelText('Password');
       fireEvent.change(passwordInput, { target: { value: 'short' } });
-      fireEvent.submit(screen.getByRole('button', { name: /sign up/i }).closest('form')!);
+      fireEvent.submit(screen.getByRole('button', { name: /create account/i }).closest('form')!);
 
       await waitFor(() => {
         expect(screen.getByText('Password must be at least 8 characters')).toBeInTheDocument();

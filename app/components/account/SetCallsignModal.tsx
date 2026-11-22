@@ -2,6 +2,7 @@
 
 import { useState, useCallback, useRef, useEffect } from 'react';
 import { User, X } from 'lucide-react';
+import { Button } from '../ui/Button';
 import { validateCallsign } from '../../lib/form-validator';
 import { supabase } from '../../lib/supabase';
 
@@ -118,6 +119,9 @@ export function SetCallsignModal({ onComplete }: SetCallsignModalProps) {
         {/* Form */}
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-1.5">
+            <label htmlFor="set-callsign" className="block text-xs font-bold uppercase tracking-widest text-zinc-400">
+              Callsign
+            </label>
             <div className="relative flex items-center rounded border-2 border-zinc-700 bg-zinc-800/50 transition-colors duration-200 focus-within:border-brand-500 focus-within:ring-2 focus-within:ring-brand-500 focus-within:ring-offset-2 focus-within:ring-offset-zinc-900">
               <span className="pl-4 text-zinc-500" aria-hidden="true">
                 <svg className="h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
@@ -126,6 +130,7 @@ export function SetCallsignModal({ onComplete }: SetCallsignModalProps) {
               </span>
               <input
                 ref={inputRef}
+                id="set-callsign"
                 type="text"
                 value={callsign}
                 onChange={(e) => {
@@ -151,13 +156,9 @@ export function SetCallsignModal({ onComplete }: SetCallsignModalProps) {
             )}
           </div>
 
-          <button
-            type="submit"
-            disabled={isSubmitting}
-            className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-brand-500 px-6 py-3 text-sm font-bold uppercase tracking-wider text-black shadow-lg shadow-brand-500/20 transition-all duration-200 hover:bg-brand-400 active:translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 focus:ring-offset-zinc-900 disabled:cursor-not-allowed disabled:opacity-50"
-          >
+          <Button type="submit" className="w-full" disabled={isSubmitting}>
             {isSubmitting ? 'Saving...' : 'Confirm Callsign'}
-          </button>
+          </Button>
 
           <button
             type="button"

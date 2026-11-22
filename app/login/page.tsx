@@ -9,6 +9,7 @@ import { OAuthButtonGroup } from '@/app/components/auth/OAuthButtonGroup';
 import { ModeToggle, type AuthMode } from '@/app/components/auth/ModeToggle';
 import { enableGuestMode } from '@/app/components/auth/ProtectedRoute';
 import { MasterSiegeLogo } from '@/app/components/MasterSiegeLogo';
+import { Button } from '@/app/components/ui/Button';
 
 /**
  * Validates that a returnUrl is a safe relative path.
@@ -158,9 +159,9 @@ function LoginPageContent() {
         <div className="relative w-full max-w-sm min-w-70 space-y-5 text-center">
           <div className="flex flex-col items-center">
             <MasterSiegeLogo size={56} className="mb-2 drop-shadow-[0_0_12px_rgba(240, 90, 40,0.3)]" />
-            <div className="mt-3 flex h-14 w-14 items-center justify-center rounded-full border-2 border-emerald-500/30 bg-emerald-500/10">
+            <div className="mt-3 flex h-14 w-14 items-center justify-center rounded-full border-2 border-green-500/30 bg-green-500/10">
               <svg
-                className="h-7 w-7 text-emerald-400"
+                className="h-7 w-7 text-green-400"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
@@ -174,23 +175,23 @@ function LoginPageContent() {
           </div>
 
           <div className="space-y-1.5">
-            <h2 className="text-lg font-bold text-white">Check your inbox</h2>
+            <h2 className="text-lg font-bold uppercase tracking-wider text-white">Check your inbox</h2>
             <p className="text-sm text-zinc-400">
               We sent a verification link to your email. Click the link to activate your account.
             </p>
           </div>
 
           <div className="space-y-3 pt-1">
-            <button
+            <Button
               type="button"
+              className="w-full"
               onClick={() => {
                 setSignupSuccess(false);
                 setMode('login');
               }}
-              className="inline-flex w-full items-center justify-center rounded bg-brand-500 px-6 py-2.5 text-sm font-bold uppercase tracking-wider text-black shadow-lg shadow-brand-500/20 transition-all duration-200 hover:bg-brand-400 active:translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 focus:ring-offset-zinc-900"
             >
               Back to Login
-            </button>
+            </Button>
             <p className="text-xs text-zinc-600">
               Didn&apos;t receive it? Check your spam folder.
             </p>

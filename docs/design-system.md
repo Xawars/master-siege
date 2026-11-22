@@ -31,8 +31,8 @@ Raw color values defined as CSS custom properties in `:root`.
 | `--color-zinc-500` | `#71717a` | Muted text, placeholders |
 | `--color-zinc-400` | `#a1a1aa` | Secondary text |
 | `--color-white` | `#ffffff` | Primary text |
-| `--color-yellow-500` | `#eab308` | Brand accent, CTAs |
-| `--color-yellow-400` | `#facc15` | Accent hover |
+| `--color-brand-500` | `#f05a28` | Brand accent, CTAs |
+| `--color-brand-400` | `#f47650` | Accent hover |
 | `--color-orange-500` | `#f97316` | Attack context |
 | `--color-orange-600` | `#ea580c` | Attack active |
 | `--color-blue-500` | `#3b82f6` | Defense context |
@@ -57,11 +57,11 @@ Purpose-driven mappings from foundation tokens to UI roles.
 | `--color-text-secondary` | zinc-400 | Secondary text |
 | `--color-text-muted` | zinc-500 | Muted/helper text |
 | `--color-text-disabled` | zinc-600 | Disabled text |
-| `--color-accent` | yellow-500 | Primary accent |
-| `--color-accent-hover` | yellow-400 | Accent hover state |
+| `--color-accent` | brand-500 | Primary accent |
+| `--color-accent-hover` | brand-400 | Accent hover state |
 | `--color-border-default` | zinc-700 | Default borders |
 | `--color-border-hover` | zinc-500 | Hover borders |
-| `--color-border-focus` | yellow-500 | Focus borders |
+| `--color-border-focus` | brand-500 | Focus borders |
 | `--color-success` | green-500 | Success state |
 | `--color-error` | red-500 | Error state |
 | `--color-warning` | `#f59e0b` | Warning state |
@@ -139,7 +139,7 @@ Based on Tailwind's 4px grid. No arbitrary spacing values allowed.
 
 | Context | Shadow |
 |---------|--------|
-| Primary action | `shadow-yellow-500/20` |
+| Primary action | `shadow-brand-500/20` |
 | Attack action | `shadow-orange-600/20` |
 | Defense action | `shadow-blue-600/20` |
 | Danger action | `shadow-red-600/20` |
@@ -254,7 +254,7 @@ interface ButtonProps {
 
 | Variant | Background | Text | Shadow | Hover |
 |---------|-----------|------|--------|-------|
-| primary | `bg-yellow-500` | `text-black` | `shadow-yellow-500/20` | `bg-yellow-400` |
+| primary | `bg-brand-500` | `text-black` | `shadow-brand-500/20` | `bg-brand-400` |
 | danger | `bg-red-600` | `text-white` | `shadow-red-600/20` | `bg-red-500` |
 | outline | transparent | `text-white` | — | `border-white/50` |
 | ghost | transparent | `text-white/60` | — | `text-white` |
@@ -271,7 +271,7 @@ interface ButtonProps {
 
 - **Hover**: Transition to hover color within 200ms
 - **Active**: `translate-y-0.5` (primary/danger) or background change (outline/ghost)
-- **Focus**: `ring-2 ring-yellow-500 ring-offset-2 ring-offset-zinc-900`
+- **Focus**: `ring-2 ring-brand-500 ring-offset-2 ring-offset-zinc-900`
 - **Disabled**: `opacity-50`, `cursor-not-allowed`
 - **Loading**: Animated spinner + "Please wait..." text, interaction disabled
 
@@ -312,7 +312,7 @@ interface InputProps {
 
 #### States
 
-- **Focus**: `border-yellow-500` + `ring-2 ring-yellow-500 ring-offset-2 ring-offset-zinc-900`
+- **Focus**: `border-brand-500` + `ring-2 ring-brand-500 ring-offset-2 ring-offset-zinc-900`
 - **Error**: `border-red-500`, error message with `role="alert"`, `aria-invalid="true"`, `aria-describedby`
 - **Disabled**: `opacity-50`, `cursor-not-allowed`
 

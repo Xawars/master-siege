@@ -128,7 +128,7 @@ export function Modal({
         {title && (
           <h2
             id={titleId}
-            className="text-lg font-bold text-white mb-4 pr-8"
+            className="mb-4 pr-8 text-xl font-bold uppercase tracking-wider text-white"
           >
             {title}
           </h2>

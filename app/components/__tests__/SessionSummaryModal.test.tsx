@@ -1,4 +1,4 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, within } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
 import { SessionSummaryModal } from '../SessionSummaryModal';
 import type { SessionDeltaData } from '../../types/database';
@@ -123,7 +123,9 @@ describe('SessionSummaryModal', () => {
       <SessionSummaryModal isOpen={true} onClose={onClose} sessionData={sessionData} />
     );
 
-    const operatorNames = screen.getAllByText(/Ash|Thermite|Zofia|Buck/).map(el => el.textContent);
+    const operatorNames = within(screen.getByTestId('session-operators'))
+      .getAllByText(/Ash|Thermite|Zofia|Buck/)
+      .map(el => el.textContent);
     // Ash and Thermite tie at 5 kills — sorted by name asc, then Zofia (3), Buck (2)
     expect(operatorNames).toEqual(['Ash', 'Thermite', 'Zofia', 'Buck']);
   });
@@ -138,6 +140,9 @@ describe('SessionSummaryModal', () => {
       <SessionSummaryModal isOpen={true} onClose={onClose} sessionData={buildNormalSession()} />
     );
 
+    expect(screen.getByText('Best')).toBeInTheDocument();
+    expect(screen.getByText('Worst')).toBeInTheDocument();
+    expect(screen.getByText('Streak')).toBeInTheDocument();
     expect(screen.getByText('Best Map')).toBeInTheDocument();
     expect(screen.getByText('Bank')).toBeInTheDocument();
     expect(screen.getByText('4.50 K/D')).toBeInTheDocument();

@@ -1,7 +1,8 @@
 'use client';
 
-import { DotMatrixLoader } from '../ui/DotMatrixLoader';
 import React, { useState, useRef, useEffect, useMemo, useCallback } from 'react';
+import { Button } from '../ui/Button';
+import { ErrorBanner } from '../ui/ErrorBanner';
 import {
   validateLoginForm,
   validateCallsign,
@@ -29,7 +30,7 @@ function getPasswordStrength(password: string): PasswordStrength {
 const strengthConfig: Record<Exclude<PasswordStrength, 'none'>, { label: string; segments: number; color: string }> = {
   weak: { label: 'Weak', segments: 1, color: 'bg-red-500' },
   fair: { label: 'Fair', segments: 2, color: 'bg-brand-500' },
-  strong: { label: 'Strong', segments: 3, color: 'bg-emerald-500' },
+  strong: { label: 'Strong', segments: 3, color: 'bg-green-500' },
 };
 
 export interface AuthFormProps {
@@ -239,14 +240,9 @@ export function AuthForm({
               disabled={isSubmitting}
             />
             {serverError && <ServerErrorBanner error={serverError} />}
-            <button
-              type="button"
-              onClick={handleNextStep}
-              disabled={isSubmitting}
-              className="inline-flex w-full items-center justify-center gap-2 rounded bg-brand-500 px-6 py-2.5 text-sm font-bold uppercase tracking-wider text-black shadow-lg shadow-brand-500/20 transition-all duration-200 hover:bg-brand-400 active:translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 focus:ring-offset-zinc-900 disabled:cursor-not-allowed disabled:opacity-50"
-            >
+            <Button type="button" onClick={handleNextStep} disabled={isSubmitting} className="w-full">
               Continue
-            </button>
+            </Button>
           </div>
         ) : (
           <div className="space-y-4">
@@ -276,7 +272,7 @@ export function AuthForm({
               type="button"
               onClick={() => animateToStep(1)}
               disabled={isSubmitting}
-              className="w-full text-center text-xs text-zinc-500 hover:text-zinc-300 transition-colors py-1 focus:outline-none"
+              className="w-full py-1 text-center text-xs text-zinc-500 transition-colors hover:text-zinc-300 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 focus:ring-offset-zinc-900 rounded"
             >
               ← Back
             </button>
@@ -314,27 +310,18 @@ function StepDot({ active, completed, label }: { active: boolean; completed: boo
 }
 
 function ServerErrorBanner({ error }: { error: string }) {
-  return (
-    <div role="alert" className="rounded border border-red-500/30 bg-red-500/10 px-3 py-2.5 text-sm text-red-400">
-      {error}
-    </div>
-  );
+  return <ErrorBanner message={error} />;
 }
 
 function SubmitButton({ label, isSubmitting }: { label: string; isSubmitting: boolean }) {
   return (
-    <button
-      type="submit"
-      disabled={isSubmitting}
-      className="inline-flex w-full items-center justify-center gap-2 rounded bg-brand-500 px-6 py-2.5 text-sm font-bold uppercase tracking-wider text-black shadow-lg shadow-brand-500/20 transition-all duration-200 hover:bg-brand-400 active:translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 focus:ring-offset-zinc-900 disabled:cursor-not-allowed disabled:opacity-50"
-    >
-      {isSubmitting && (
-        <DotMatrixLoader size={16} />
-      )}
-      {isSubmitting ? 'Please wait...' : label}
-    </button>
+    <Button type="submit" loading={isSubmitting} className="w-full">
+      {label}
+    </Button>
   );
 }
+
+const fieldLabelClass = 'block text-xs font-bold uppercase tracking-widest text-zinc-400';
 
 // --- Field components ---
 
@@ -345,7 +332,7 @@ const CallsignField = React.forwardRef<HTMLInputElement, {
   disabled: boolean;
 }>(({ value, onChange, error, disabled }, ref) => (
   <div className="space-y-1.5">
-    <label htmlFor="auth-callsign" className="block text-sm font-medium text-zinc-300">
+    <label htmlFor="auth-callsign" className={fieldLabelClass}>
       Callsign
     </label>
     <div className="relative flex items-center rounded border-2 border-zinc-700 bg-zinc-800/50 transition-colors duration-200 focus-within:border-brand-500 focus-within:ring-2 focus-within:ring-brand-500 focus-within:ring-offset-2 focus-within:ring-offset-zinc-900">
@@ -386,7 +373,7 @@ const EmailField = React.forwardRef<HTMLInputElement, {
   disabled: boolean;
 }>(({ value, onChange, error, disabled }, ref) => (
   <div className="space-y-1.5">
-    <label htmlFor="auth-email" className="block text-sm font-medium text-zinc-300">
+    <label htmlFor="auth-email" className={fieldLabelClass}>
       Email
     </label>
     <div className="relative flex items-center rounded border-2 border-zinc-700 bg-zinc-800/50 transition-colors duration-200 focus-within:border-brand-500 focus-within:ring-2 focus-within:ring-brand-500 focus-within:ring-offset-2 focus-within:ring-offset-zinc-900">
@@ -426,7 +413,7 @@ const PasswordField = React.forwardRef<HTMLInputElement, {
   showStrength?: boolean;
 }>(({ value, onChange, error, disabled, showPassword, onToggleShow, autoComplete, showStrength }, ref) => (
   <div className="space-y-1.5">
-    <label htmlFor="auth-password" className="block text-sm font-medium text-zinc-300">
+    <label htmlFor="auth-password" className={fieldLabelClass}>
       Password
     </label>
     <div className="relative flex items-center rounded border-2 border-zinc-700 bg-zinc-800/50 transition-colors duration-200 focus-within:border-brand-500 focus-within:ring-2 focus-within:ring-brand-500 focus-within:ring-offset-2 focus-within:ring-offset-zinc-900">
@@ -475,7 +462,7 @@ const ConfirmPasswordField = React.forwardRef<HTMLInputElement, {
   showPassword: boolean;
 }>(({ value, onChange, password, error, disabled, showPassword }, ref) => (
   <div className="space-y-1.5">
-    <label htmlFor="auth-confirm-password" className="block text-sm font-medium text-zinc-300">
+    <label htmlFor="auth-confirm-password" className={fieldLabelClass}>
       Confirm Password
     </label>
     <div className="relative flex items-center rounded border-2 border-zinc-700 bg-zinc-800/50 transition-colors duration-200 focus-within:border-brand-500 focus-within:ring-2 focus-within:ring-brand-500 focus-within:ring-offset-2 focus-within:ring-offset-zinc-900">
@@ -501,7 +488,7 @@ const ConfirmPasswordField = React.forwardRef<HTMLInputElement, {
     </div>
     {error && <p id="confirm-password-error" className="text-xs text-red-400" role="alert">{error}</p>}
     {value.length > 0 && password === value && (
-      <p className="flex items-center gap-1.5 text-[10px] text-emerald-400">
+      <p className="flex items-center gap-1.5 text-[10px] text-green-400">
         <svg className="h-3 w-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" aria-hidden="true">
           <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
         </svg>
@@ -544,7 +531,7 @@ function PasswordStrengthIndicator({ password }: { password: string }) {
           />
         ))}
       </div>
-      <span className={`text-[10px] font-medium ${strength === 'weak' ? 'text-red-400' : strength === 'fair' ? 'text-brand-400' : 'text-emerald-400'
+      <span className={`text-[10px] font-bold uppercase tracking-wider ${strength === 'weak' ? 'text-red-400' : strength === 'fair' ? 'text-brand-400' : 'text-green-400'
         }`}>
         {config.label}
       </span>

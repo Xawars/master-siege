@@ -31,12 +31,13 @@ import { TacticalEntry, WelcomeModal, FirstActionTooltip } from './components/on
 import { useOnboardingContext } from './components/onboarding/OnboardingProvider';
 import { AccountIndicator, SetCallsignModal, shouldPromptCallsign } from './components/account';
 import { useData } from './context/DataContext';
-import { getRandomOperator, generateLoadout, getRandomMatchType, getRandomTargetKills, getRandomRole, getRandomPlatform } from './data/operators';
+import { operators, getRandomOperator, generateLoadout, getRandomMatchType, getRandomTargetKills, getRandomRole, getRandomPlatform } from './data/operators';
 import { Operator, Loadout, MatchType, Platform, Side } from './data/types';
-import { MasteryHeader } from './components/mastery';
+import { MasteryHeader, MobileMasterySheet, MasteryBoard } from './components/mastery';
 import { MasterSiegeLogo } from './components/MasterSiegeLogo';
 import { RivalryView } from './components/rivalry/RivalryView';
-import { initialStreakState, applyStreakAction, captureSnapshot } from './lib/session-logic';
+import { initialStreakState, applyStreakAction, captureSnapshot, computeSessionDeltas } from './lib/session-logic';
+import { isEditableTarget, shortcutFromKey } from './lib/roulette-shortcuts';
 import { HotStreakIndicator } from './components/HotStreakIndicator';
 import { SessionSummaryModal } from './components/SessionSummaryModal';
 import type { SessionSnapshot, SessionDeltaData } from './types/database';
@@ -176,7 +177,7 @@ function HomeContent() {
   const [targetComplete, setTargetComplete] = useState(false);
   const [selectedHistoryItem, setSelectedHistoryItem] = useState<HistoryItem | null>(null);
   const [isStatsModalOpen, setIsStatsModalOpen] = useState(false);
-  const [viewMode, setViewMode] = useState<'mastery' | 'map-advisor' | 'strats'>('mastery');
+  const [viewMode, setViewMode] = useState<'roulette' | 'mastery' | 'map-advisor' | 'strats'>('roulette');
   const [isPickerOpen, setIsPickerOpen] = useState(false);
   const [isRivalryOpen, setIsRivalryOpen] = useState(false);
 
@@ -235,6 +236,22 @@ function HomeContent() {
     setSessionDeltaData(null);
     recaptureSessionSnapshot();
   }, [recaptureSessionSnapshot]);
+
+  const handleEndSession = useCallback(() => {
+    const snapshot = sessionSnapshotRef.current;
+    if (!snapshot) return;
+    const operatorNames = Object.fromEntries(operators.map((operator) => [operator.id, operator.name]));
+    setSessionDeltaData(computeSessionDeltas(
+      snapshot,
+      kills,
+      deaths,
+      operatorKillsAggregate,
+      operatorDeathsAggregate,
+      {},
+      operatorNames,
+    ));
+    setSessionSummaryOpen(true);
+  }, [kills, deaths, operatorKillsAggregate, operatorDeathsAggregate]);
 
 
 
@@ -435,6 +452,38 @@ function HomeContent() {
     clearDeployments();
     setResetModalOpen(false);
   };
+
+  const shortcutStateRef = useRef({
+    canUse: false,
+    roll: handleRoll,
+  });
+  shortcutStateRef.current = {
+    canUse: viewMode === 'roulette'
+      && !isRolling
+      && !isModalOpen
+      && !isPickerOpen
+      && !sessionSummaryOpen
+      && !isStatsModalOpen
+      && !isRivalryOpen
+      && !resetModalOpen
+      && !showCallsignPrompt
+      && selectedHistoryItem === null,
+    roll: handleRoll,
+  };
+
+  useEffect(() => {
+    const onKeyDown = (event: KeyboardEvent) => {
+      const action = shortcutFromKey(event);
+      if (!action || isEditableTarget(event.target)) return;
+      if (document.querySelector('[role="dialog"][aria-modal="true"]')) return;
+      if (!shortcutStateRef.current.canUse) return;
+      event.preventDefault();
+      if (action === 'roll') shortcutStateRef.current.roll();
+      else setIsPickerOpen(true);
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, []);
 
   const restoreFromHistory = (item: HistoryItem) => {
     const deployId = item.deploymentId || item.operator.id;
@@ -719,28 +768,33 @@ function HomeContent() {
         <div className={`relative z-10 flex flex-col h-full max-w-350 mx-auto px-4 ${isGuestMode() && !session ? 'pt-10' : ''}`}>
 
           {/* Sticky Header */}
-          <header className="shrink-0 flex items-center justify-between py-3 border-b border-white/10">
-            <div className="flex items-center gap-4">
+          <header className="shrink-0 flex items-center gap-3 py-3 border-b border-white/10">
+            <div className="flex min-w-0 flex-1 items-center gap-3">
               <h1 aria-label="Master Siege" className="flex shrink-0 items-center gap-2 text-xl font-black uppercase italic tracking-tighter text-brand-500">
                 <MasterSiegeLogo size={28} className="rounded-md" />
                 <span className="hidden lg:inline whitespace-nowrap">Master <span className="text-white">Siege</span></span>
               </h1>
-              <div className="flex bg-zinc-800 rounded-lg p-0.5">
-                {(['mastery', 'map-advisor', 'strats'] as const).map((tab) => (
+              <div className="flex min-w-0 flex-1 overflow-x-auto bg-zinc-800 rounded-lg p-0.5">
+                {([
+                  ['roulette', 'Roulette'],
+                  ['mastery', 'Mastery'],
+                  ['map-advisor', 'Map Advisor'],
+                  ['strats', 'Strats'],
+                ] as const).map(([tab, label]) => (
                   <button
                     key={tab}
                     onClick={() => setViewMode(tab)}
-                    className={`px-3 py-1 rounded-md text-xs font-bold uppercase tracking-wider transition-colors ${viewMode === tab
+                    className={`shrink-0 whitespace-nowrap px-3 py-1 rounded-md text-xs font-bold uppercase tracking-wider transition-colors ${viewMode === tab
                       ? 'bg-brand-500 text-black'
                       : 'text-zinc-400 hover:text-white'
                       }`}
                   >
-                    {tab === 'mastery' ? 'Operator Mastery' : tab === 'map-advisor' ? 'Map Advisor' : 'Strats'}
+                    {label}
                   </button>
                 ))}
               </div>
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex shrink-0 items-center gap-2">
               <Link href="/operators" className="inline-flex items-center justify-center px-3 py-1.5 text-xs gap-1.5 font-bold uppercase tracking-wider rounded text-white/60 hover:text-white hover:bg-white/5 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 focus:ring-offset-zinc-900">
                 <Users className="w-3 h-3" aria-hidden="true" />
                 <span className="hidden sm:inline">Operators</span>
@@ -760,7 +814,7 @@ function HomeContent() {
           </header>
 
           {/* Content area — fills remaining height */}
-          {viewMode === 'mastery' ? (
+          {viewMode === 'roulette' ? (
             <div className="flex-1 min-h-0 grid grid-cols-1 lg:grid-cols-[1fr_minmax(0,560px)_1fr] gap-4 lg:gap-6 pt-4">
 
               {/* Left Column - Mastery Header */}
@@ -774,6 +828,12 @@ function HomeContent() {
 
               {/* Center Column - Main Content */}
               <div className="max-w-140 w-full mx-auto lg:mx-0 flex flex-col h-full overflow-y-auto overflow-x-hidden scrollbar-auto-hide">
+
+                <MobileMasterySheet
+                  history={history}
+                  operatorKills={operatorKillsAggregate}
+                  operatorDeaths={operatorDeathsAggregate}
+                />
 
                 {/* Stats Row */}
                 <div className="grid grid-cols-2 gap-2 shrink-0">
@@ -1011,12 +1071,9 @@ function HomeContent() {
                       <p className="text-[10px] text-zinc-400">Target eliminated — deploy again or keep playing</p>
 
                       {/* Quick action */}
-                      <button
-                        onClick={handleRoll}
-                        className="mt-1 px-4 py-1.5 text-[10px] font-bold uppercase tracking-wider bg-green-500/15 border border-green-500/30 text-green-400 rounded-lg hover:bg-green-500/25 transition-colors"
-                      >
-                        Next Deployment →
-                      </button>
+                      <Button onClick={handleRoll} size="sm" className="mt-1">
+                        Next Deployment
+                      </Button>
                     </div>
                   </div>
                 )}
@@ -1032,8 +1089,11 @@ function HomeContent() {
                         size="md"
                         className={`flex-1 transition-all active:scale-95 ${isRolling ? 'animate-button-press' : ''}`}
                         icon={Dices}
+                        title="Roll operator (R)"
+                        aria-keyshortcuts="R"
                       >
                         {currentOperator ? 'Reroll Operator' : 'Deploy Operator'}
+                        <kbd className="ml-1 rounded border border-black/20 px-1 text-[10px] leading-none">R</kbd>
                       </Button>
                     </FirstActionTooltip>
                     <Button
@@ -1043,10 +1103,27 @@ function HomeContent() {
                       size="md"
                       className="transition-all active:scale-95"
                       icon={UserRoundSearch}
+                      title="Pick operator (P)"
+                      aria-keyshortcuts="P"
                     >
                       Pick
+                      <kbd className="ml-1 rounded border border-white/20 px-1 text-[10px] leading-none">P</kbd>
                     </Button>
                   </div>
+                  <p className="text-center text-[10px] font-bold uppercase tracking-widest text-zinc-600">
+                    R roll · P pick
+                  </p>
+
+                  {currentOperator && (
+                    <button
+                      type="button"
+                      onClick={handleEndSession}
+                      aria-label="End session and view summary"
+                      className="min-h-[44px] min-w-[44px] px-4 py-2 text-xs text-zinc-500 hover:text-zinc-300 transition-colors rounded-lg hover:bg-zinc-800/50 focus:outline-none focus:ring-2 focus:ring-zinc-500 focus:ring-offset-2 focus:ring-offset-black"
+                    >
+                      End Session
+                    </button>
+                  )}
 
                   {/* Surrender row — only when deployed and target not complete */}
                   {currentOperator && !targetComplete && (
@@ -1127,6 +1204,14 @@ function HomeContent() {
               </div>
 
             </div>
+          ) : viewMode === 'mastery' ? (
+            <div className="flex-1 min-h-0 flex pt-4">
+              <MasteryBoard
+                history={history}
+                operatorKills={operatorKillsAggregate}
+                operatorDeaths={operatorDeathsAggregate}
+              />
+            </div>
           ) : viewMode === 'map-advisor' ? (
             <div className="flex-1 min-h-0 flex pt-4">
               <MapAdvisorView />
@@ -1168,6 +1253,8 @@ function HomeContent() {
               isOpen={sessionSummaryOpen}
               onClose={handleSessionModalClose}
               sessionData={sessionDeltaData}
+              streakCount={killStreak.count}
+              isHotStreak={killStreak.isHotStreak}
             />
           )}
 

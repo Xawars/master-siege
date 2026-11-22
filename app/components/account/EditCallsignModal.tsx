@@ -3,6 +3,7 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
 import { Pencil, X } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
+import { Button } from '../ui/Button';
 import { validateCallsign } from '../../lib/form-validator';
 import { supabase } from '../../lib/supabase';
 
@@ -132,6 +133,9 @@ export function EditCallsignModal({ isOpen, onClose }: EditCallsignModalProps) {
         {/* Form */}
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-1.5">
+            <label htmlFor="edit-callsign" className="block text-xs font-bold uppercase tracking-widest text-zinc-400">
+              Callsign
+            </label>
             <div className="relative flex items-center rounded border-2 border-zinc-700 bg-zinc-800/50 transition-colors duration-200 focus-within:border-brand-500 focus-within:ring-2 focus-within:ring-brand-500 focus-within:ring-offset-2 focus-within:ring-offset-zinc-900">
               <span className="pl-4 text-zinc-500" aria-hidden="true">
                 <svg className="h-[16px] w-[16px]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
@@ -140,6 +144,7 @@ export function EditCallsignModal({ isOpen, onClose }: EditCallsignModalProps) {
               </span>
               <input
                 ref={inputRef}
+                id="edit-callsign"
                 type="text"
                 value={callsign}
                 onChange={(e) => {
@@ -166,13 +171,9 @@ export function EditCallsignModal({ isOpen, onClose }: EditCallsignModalProps) {
             )}
           </div>
 
-          <button
-            type="submit"
-            disabled={isSubmitting || success}
-            className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-brand-500 px-6 py-3 text-sm font-bold uppercase tracking-wider text-black shadow-lg shadow-brand-500/20 transition-all duration-200 hover:bg-brand-400 active:translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 focus:ring-offset-zinc-900 disabled:cursor-not-allowed disabled:opacity-50"
-          >
-            {success ? '✓ Saved' : isSubmitting ? 'Saving...' : 'Save Callsign'}
-          </button>
+          <Button type="submit" className="w-full" disabled={isSubmitting || success}>
+            {success ? 'Saved' : isSubmitting ? 'Saving...' : 'Save Callsign'}
+          </Button>
         </form>
       </div>
     </>

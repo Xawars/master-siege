@@ -1,5 +1,6 @@
 import { useRef, useEffect } from 'react';
 import { Check, X, Swords, ShieldHalf } from 'lucide-react';
+import { Badge } from './ui/Badge';
 import { Button } from './ui/Button';
 import { OperatorDisplay } from './OperatorDisplay';
 import { Operator, Loadout, Platform } from '../data/types';
@@ -53,28 +54,16 @@ export function DeploymentModal({ isOpen, operator, loadout, matchType, platform
                 <div className="p-4 flex flex-col items-center">
                     {/* Info badges */}
                     <div className="flex flex-wrap gap-2 mb-4 justify-center">
-                        {/* Side */}
-                        <Badge
-                            color={isAttacker ? 'orange' : 'blue'}
-                            icon={isAttacker ? <Swords className="w-3 h-3" /> : <ShieldHalf className="w-3 h-3" />}
-                            label={isAttacker ? 'Attacker' : 'Defender'}
-                        />
-                        {/* Match Type */}
-                        {matchType && (
-                            <Badge color="yellow" label={matchType} />
-                        )}
-                        {/* Platform */}
-                        {platform && (
-                            <Badge color="purple" label={platform} />
-                        )}
-                        {/* Target Kills */}
+                        <Badge variant={isAttacker ? 'attack' : 'defense'} size="sm" className="gap-1.5">
+                            {isAttacker ? <Swords className="w-3 h-3" aria-hidden="true" /> : <ShieldHalf className="w-3 h-3" aria-hidden="true" />}
+                            {isAttacker ? 'Attacker' : 'Defender'}
+                        </Badge>
+                        {matchType && <Badge variant="default" size="sm">{matchType}</Badge>}
+                        {platform && <Badge variant="default" size="sm">{platform}</Badge>}
                         {targetKills && targetKills > 0 && (
-                            <Badge color="green" label={`Target: ${targetKills} Kills`} />
+                            <Badge variant="success" size="sm">{`Target: ${targetKills} Kills`}</Badge>
                         )}
-                        {/* Role */}
-                        {role && (
-                            <Badge color="cyan" label={role} />
-                        )}
+                        {role && <Badge variant="warning" size="sm">{role}</Badge>}
                     </div>
 
                     {/* Operator card */}
@@ -113,20 +102,3 @@ export function DeploymentModal({ isOpen, operator, loadout, matchType, platform
     );
 }
 
-const BADGE_COLORS = {
-    orange: 'bg-orange-500/15 border-orange-500/40 text-orange-400',
-    blue: 'bg-blue-500/15 border-blue-500/40 text-blue-400',
-    yellow: 'bg-brand-500/15 border-brand-500/40 text-brand-400',
-    purple: 'bg-purple-500/15 border-purple-500/40 text-purple-400',
-    green: 'bg-green-500/15 border-green-500/40 text-green-400',
-    cyan: 'bg-cyan-500/15 border-cyan-500/40 text-cyan-400',
-} as const;
-
-function Badge({ color, label, icon }: { color: keyof typeof BADGE_COLORS; label: string; icon?: React.ReactNode }) {
-    return (
-        <div className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full border text-[11px] font-bold uppercase tracking-wider ${BADGE_COLORS[color]}`}>
-            {icon}
-            {label}
-        </div>
-    );
-}

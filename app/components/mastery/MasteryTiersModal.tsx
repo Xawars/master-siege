@@ -66,6 +66,7 @@ export function MasteryTiersModal({ isOpen, onClose }: MasteryTiersModalProps) {
 
   return (
     <div
+      data-mastery-nested-modal=""
       className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in duration-200"
       onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
     >
