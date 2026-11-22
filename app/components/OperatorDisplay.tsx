@@ -225,10 +225,10 @@ export function OperatorDisplay({ operator, loadout, matchType, isRolling, hideB
                 className="w-full h-full flex items-center justify-center"
                 dangerouslySetInnerHTML={{ __html: iconSvg }}
               />
-            ) : operator.id === 'snake' ? (
+            ) : operator.id === 'snake' || operator.id === 'noor' ? (
               <>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="/ops/snake_logo.png" alt={operator.name} className="w-full h-full object-contain drop-shadow-lg" />
+                <img src={operator.id === 'snake' ? '/ops/snake_logo.png' : '/ops/noor_logo.png'} alt={operator.name} className="w-full h-full object-contain drop-shadow-lg" />
               </>
             ) : (
               // Fallback Icon

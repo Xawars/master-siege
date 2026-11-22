@@ -1,7 +1,7 @@
 import { Operator, Side, Loadout, MatchType, Platform } from './types';
 import { bestLoadouts } from './best-loadouts';
 
-// FULL ROSTER (Pathfinder - Year 10)
+// FULL ROSTER (Pathfinder - Year 11)
 export const operators: Operator[] = [
   // --- PATHFINDERS (SAS) ---
   {
@@ -715,6 +715,17 @@ export const operators: Operator[] = [
     secondaries: ["Keratos .357"],
     gadgets: ["Barbed Wire", "Observation Blocker"],
     roles: ["Entry Fragger", "Support"]
+  },
+
+  // --- YEAR 11 ---
+  {
+    id: "noor",
+    name: "Noor",
+    side: "defender",
+    primaries: ["Commando 9", "ALDA 5.56"],
+    secondaries: ["1911 TACOPS", "Bailiff 410"],
+    gadgets: ["Deployable Shield", "Barbed Wire"],
+    roles: ["Area Denial", "Anchor"]
   },
 
   // --- GUESTS ---
